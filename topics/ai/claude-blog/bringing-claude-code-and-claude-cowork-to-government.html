@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>将 Claude Code 和 Claude Cowork 引入政府领域 · 个人学习工作台</title>
+<link rel="stylesheet" href="../../../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../../../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../../index.html">首页</a>
+      <a href="../../../ai.html" class="active">AI</a>
+      <a href="../../../english.html">英语</a>
+      <a href="../../../k12.html">学科</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>将 Claude Code 和 Claude Cowork 引入政府领域</h1>
+      <p>topics/ai/claude-blog/bringing-claude-code-and-claude-cowork-to-government.md</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1>将 Claude Code 和 Claude Cowork 引入政府领域</h1>
+<blockquote>原文: https://claude.com/blog/bringing-claude-code-and-claude-cowork-to-government</blockquote>
+<blockquote>日期: 2026-07-07</blockquote>
+<blockquote>分类: Product announcements</blockquote>
+<blockquote>产品: Claude Code</blockquote>
+<h2>文章在讲什么</h2>
+<p>这是一篇<strong>产品发布公告</strong>，宣布 Anthropic 将其商业版 AI 开发工具（Claude Code 和 Claude Cowork）引入政府领域，通过&quot;Claude for Government Desktop&quot;产品提供给公共部门使用。</p>
+<p>作者想解决的核心问题是：<strong>政府机构如何安全、合规地获取和使用企业级 AI 工具</strong>。文章强调了这款产品具备 FedRAMP High 认证、本地化数据存储、符合政府预算体制的计费模式，以及完整的审计和治理功能——这些都是政府采用新技术时的刚性需求。</p>
+<p>---</p>
+<h2>原文结构地图</h2>
+<div class="doc-table-wrap"><table><thead><tr><th>主要章节</th><th>作用</th></tr></thead><tbody><tr><td><strong>开头概览</strong></td><td>用一句话说明产品发布，给出核心价值定位</td></tr><tr><td><strong>What&#39;s new</strong></td><td>详细列举四个新能力维度：工具功能、计费模式、管理机制、安全审计</td></tr><tr><td><strong>Security and oversight</strong></td><td>专门面向安全团队，列出合规文档和支持材料</td></tr><tr><td><strong>Getting started</strong></td><td>收尾部分，说明如何申请和接入</td></tr></tbody></table></div>
+<p>---</p>
+<h2>核心概念讲解</h2>
+<h3>1. Claude Code vs Claude Cowork</h3>
+<p>这是两个互补的工具，定位不同：</p>
+<ul><li><strong>Claude Code</strong>：面向开发团队，用于<strong>构建和现代化改造公共服务背后的软件系统</strong>。它的使用场景是编写代码、调试程序、自动化脚本开发。</li><li><strong>Claude Cowork</strong>：面向行政和业务人员，直接在<strong>桌面上与文件交互</strong>，完成撰写备忘录、审阅 RFP、处理 casework、制作演示文稿等任务。</li></ul>
+<p>两者共享同一个底层应用，但面向不同角色的工作流程。</p>
+<h3>2. FedRAMP High 认证</h3>
+<p>这是美国联邦政府云安全的最高等级认证。<strong>&quot;High&quot;级别</strong>意味着该系统可以处理敏感但非机密（sensitive but unclassified）的政府数据，包括个人身份信息、健康数据、财务数据等。对政府客户来说，FedRAMP 认证是采购云服务的必要条件，而非加分项。</p>
+<p>文章强调产品&quot;built on the same application our commercial customers use&quot;——商业版和政府版底层相同，这意味着政府用户能以与商业用户<strong>相同的更新节奏</strong>获得新功能，不会因为合规要求而被锁定在旧版本上。</p>
+<h3>3. 本地存储 + 云端推理的混合架构</h3>
+<p>文章指出：<strong>对话历史存储在机构管理的设备本地</strong>，而<strong>推理（模型运算）运行在 FedRAMP High 授权环境内</strong>。</p>
+<p>这个设计的逻辑是：用户输入的prompt和上下文可能包含敏感信息，这些不离开本地设备；而真正消耗算力的模型推理在Anthropic的云端完成，保证响应质量和速度。这种架构在政府云产品中很常见，兼顾了数据主权和性能。</p>
+<h3>4. 政府预算适配的计费模式</h3>
+<p>政府机构使用纳税人的钱，有严格的预算管理要求（appropriations）。文章描述了几层适配：</p>
+<ul><li><strong>标准席位（Standard seats）</strong>：固定费用，可绑定特定拨款项目</li><li><strong>自定义席位层级</strong>：可定义消费上限和模型限制</li><li><strong>固定增量购买 + 硬性上限（hard not-to-exceed cap）</strong>：防止超支</li><li><strong>自动消耗预警</strong>：余额不足前自动提醒</li></ul>
+<p>这与商业版按实际用量计费的方式有显著区别，体现了对政府财务合规性的理解。</p>
+<p>---</p>
+<h2>文章主体讲解</h2>
+<h3>开头概览段落</h3>
+<p><strong>这一节讲什么</strong>：文章开篇用三个功能点（Claude Code、Claude Cowork、治理能力）快速说明产品是什么，然后用一句话总结价值——让政府机构更容易获取、授权和分配 AI 以完成使命。</p>
+<p><strong>为什么重要</strong>：产品公告的读者往往是决策者，他们需要在30秒内判断&quot;这和我有没有关系&quot;。作者用了&quot;easier for agencies to acquire, authorize, and allocate&quot;三个动词，直接对应政府机构采购流程中的三个痛点。</p>
+<p><strong>关键点</strong>：</p>
+<ul><li>底层与商业版一致，不是专门为政府重写的&quot;阉割版&quot;</li><li>通过 FedRAMP High 授权环境交付，这是政府云的入场券</li><li>治理能力（配置默认值、消费控制）是专门为多层级行政结构设计的</li></ul>
+<p>---</p>
+<h3>What&#39;s new 部分</h3>
+<p><strong>这一节讲什么</strong>：从四个维度展开新产品能力，每个维度对应一类读者关心的问题。</p>
+<p><strong>为什么重要</strong>：政府采购决策涉及多个利益相关方——项目办公室关心功能、预算部门关心计费、IT 管理员关心部署方式、安全团队关心合规。作者用这四个维度逐一回应，不遗漏任何一个决策链条上的角色。</p>
+<p><strong>关键点</strong>：</p>
+<p><strong>工具层面</strong>：</p>
+<ul><li>Claude Code 和 Claude Cowork 与商业用户同步更新</li><li>推理在云端完成，符合 FedRAMP High 要求</li></ul>
+<p><strong>计费层面</strong>：</p>
+<ul><li>可绑定拨款项目，支持固定增量购买</li><li>有硬性消费上限，防止超支</li><li>管理员可按用户、按模型追踪使用量</li></ul>
+<p><strong>管理层面</strong>：</p>
+<ul><li>支持多级管理架构（部门→子机构→用户）</li><li>SCIM 组映射可以批量设置席位限制</li><li>分层配置可设置默认值，包括允许连接的外部服务、可用功能、与用户交互时的引导指令</li></ul>
+<p><strong>安全层面</strong>：</p>
+<ul><li>所有管理操作记录在哈希链式审计日志中，不可篡改</li><li>Anthropic 端的敏感操作需要双人审批（two-person approval）</li><li>导出的使用数据仅含计量信息（metering data），不含敏感内容，避免数据在流转中泄露</li></ul>
+<p>---</p>
+<h3>Security and oversight 部分</h3>
+<p><strong>这一节讲什么</strong>：专门面向安全团队和合规官员，说明 Anthropic 提供的安全文档和证明材料。</p>
+<p><strong>为什么重要</strong>：政府机构的 ATO（Authority to Operate）审批过程需要大量文档支持，包括安全配置指南、变更通知、渗透测试报告。这些材料不是&quot;有了更好&quot;，而是审批流程中的必需品。</p>
+<p><strong>关键点</strong>：</p>
+<ul><li><strong>FedRAMP Secure Configuration Guide</strong>：公开发布的配置指南，客户可用它以安全方式配置产品</li><li><strong>Formal change notification</strong>：FedRAMP 要求提供的正式变更通知，记录本次更新的安全相关内容</li><li><strong>Penetration-test summary</strong>：桌面客户端的渗透测试摘要，后续测试结果也会陆续提供</li><li>这些敏感材料通过 Anthropic 的信任中心在 NDA 下提供</li><li>应用通过标准机构 MDM（移动设备管理）平台部署，不需要额外的特殊渠道</li></ul>
+<p>---</p>
+<h3>Getting started 部分</h3>
+<p><strong>这一节讲什么</strong>：收尾说明接入方式和联系方式。</p>
+<p><strong>为什么重要</strong>：文章特别指出&quot;<strong>Anthropic remains the contracted and billing party</strong>&quot;——机构不需要与云服务商（如 AWS、Azure）建立单独关系。这降低了采购复杂度，政府机构只需与 Anthropic 一家签约即可。</p>
+<p><strong>关键点</strong>：</p>
+<ul><li>新客户通过 claude.com/solutions/government 申请</li><li>安全团队可下载渗透测试材料</li><li>简化的合同关系是降低采购门槛的重要举措</li></ul>
+<p>---</p>
+<h2>关键对比表</h2>
+<div class="doc-table-wrap"><table><thead><tr><th>对比维度</th><th>商业版 Claude Code</th><th>政府版 Claude for Government Desktop</th></tr></thead><tbody><tr><td><strong>底层应用</strong></td><td>相同</td><td>相同</td></tr><tr><td><strong>更新节奏</strong></td><td>正常节奏</td><td>与商业用户同步</td></tr><tr><td><strong>数据存储</strong></td><td>云端</td><td>本地设备（对话历史）</td></tr><tr><td><strong>推理</strong></td><td>云端</td><td>云端（FedRAMP High 环境）</td></tr><tr><td><strong>认证</strong></td><td>无特殊要求</td><td>FedRAMP High 授权</td></tr><tr><td><strong>计费模式</strong></td><td>按量付费</td><td>固定增量 + 硬性上限，可绑定拨款</td></tr><tr><td><strong>管理架构</strong></td><td>扁平</td><td>多级（部门→子机构→用户）</td></tr><tr><td><strong>审计日志</strong></td><td>基础</td><td>哈希链式、防篡改</td></tr><tr><td><strong>合同方</strong></td><td>Anthropic</td><td>Anthropic（无需额外云服务商关系）</td></tr></tbody></table></div>
+<p>---</p>
+<h2>关键句短摘译</h2>
+<ol><li><strong>&quot;Claude Code and Claude Cowork are now available in public beta in Claude for Government Desktop, built on the same application our commercial customers use&quot;</strong></li></ol>
+<ul><li>中文：Claude Code 和 Claude Cowork 现已在 Claude for Government Desktop 中公开测试，基于商业客户使用的同一应用构建。</li><li>重要性：强调政府版不是&quot;特供版&quot;，底层与商业版一致，保证功能同步。</li></ul>
+<ol><li><strong>&quot;Inference runs inside a FedRAMP High authorized environment&quot;</strong></li></ol>
+<ul><li>中文：推理运行在 FedRAMP High 授权环境内。</li><li>重要性：说明模型运算仍在云端，但该云端已通过政府最高安全等级认证，解决合规顾虑。</li></ul>
+<ol><li><strong>&quot;Program offices can tie AI spend to appropriated funds with standard seats or they can define their own seat tiers with spend and model limits&quot;</strong></li></ol>
+<ul><li>中文：项目办公室可以通过标准席位将 AI 消费与拨款绑定，也可以自定义席位层级并设置消费和模型限制。</li><li>重要性：展示计费模式的灵活性，直接回应政府财务合规需求。</li></ul>
+<ol><li><strong>&quot;Department-level administrators can allocate seats and prepaid usage to sub-agencies while allowing each to manage its own users&quot;</strong></li></ol>
+<ul><li>中文：部门级管理员可以将席位和预付费用量分配给子机构，同时允许各自管理自己的用户。</li><li>重要性：体现对政府多层級组织结构的适配，不是简单的一刀切管理。</li></ul>
+<ol><li><strong>&quot;Every administrative action is recorded in a hash-chained audit log&quot;</strong></li></ol>
+<ul><li>中文：每项管理操作都记录在哈希链式审计日志中。</li><li>重要性：哈希链式结构保证日志不可事后篡改，满足政府审计的严格要求。</li></ul>
+<ol><li><strong>&quot;Usage exports are metering data only so agencies can answer ATO and IG requests without moving sensitive material&quot;</strong></li></ol>
+<ul><li>中文：使用数据导出仅含计量信息，使机构能够响应 ATO 和 IG 请求，而无需搬运敏感材料。</li><li>重要性：说明导出的数据不包含用户内容，避免数据二次泄露风险。</li></ul>
+<ol><li><strong>&quot;Anthropic remains the contracted and billing party—agencies don&#39;t need a separate cloud-provider relationship to get started&quot;</strong></li></ol>
+<ul><li>中文：Anthropic 仍是合同方和账单方——机构无需与云服务商建立单独关系即可开始使用。</li><li>重要性：简化采购流程，政府只需与 Anthropic 一家签约，降低采购复杂度。</li></ul>
+<p>---</p>
+<h2>术语表</h2>
+<div class="doc-table-wrap"><table><thead><tr><th>英文术语</th><th>中文解释</th></tr></thead><tbody><tr><td><strong>FedRAMP</strong></td><td>Federal Risk and Authorization Management Program，美国联邦政府的云安全认证项目，所有政府云服务必须获得其授权才能使用</td></tr><tr><td><strong>FedRAMP High</strong></td><td>FedRAMP 认证的最高等级，适用于处理敏感非机密数据的系统，包括 PII、健康信息、财务数据等</td></tr><tr><td><strong>Claude Code</strong></td><td>Anthropic 的 AI 编程助手，面向开发者，用于编写、调试、重构代码</td></tr><tr><td><strong>Claude Cowork</strong></td><td>Anthropic 的桌面协作工具，面向行政和业务人员，直接处理本地文件（备忘录、RFP 审阅、演示文稿等）</td></tr><tr><td><strong>ATO (Authority to Operate)</strong></td><td>运营授权，美国政府机构在新 IT 系统上线前必须获得的正式批准</td></tr><tr><td><strong>IG (Inspector General)</strong></td><td>监察长，美国政府机构内的独立审计机构，有权审查任何业务活动</td></tr><tr><td><strong>SCIM (System for Cross-domain Identity Management)</strong></td><td>跨域身份管理标准，允许自动化用户和组信息的同步</td></tr><tr><td><strong>MDM (Mobile Device Management)</strong></td><td>移动设备管理，企业/政府用于统一管理员工设备的平台</td></tr><tr><td><strong>Appropriations</strong></td><td>拨款，美国政府的法定预算分配，机构只能在拨款范围内支出</td></tr><tr><td><strong>Metering data</strong></td><td>计量数据，仅记录使用量（次数、时长等），不含具体内容的数据</td></tr><tr><td><strong>Two-person approval</strong></td><td>双人审批，敏感操作需要两人同时批准才能执行的安全机制</td></tr><tr><td><strong>Hash-chained audit log</strong></td><td>哈希链式审计日志，每条日志包含前一条的哈希值，篡改任一条会导致链条断裂，可被发现</td></tr></tbody></table></div>
+<p>---</p>
+<h2>文章结尾怎么收束</h2>
+<p>文章以<strong>行动号召</strong>收尾，提供两个具体的接入入口（产品申请页面和渗透测试材料下载链接），并用一句关键表述完成逻辑闭合：</p>
+<blockquote><strong>&quot;Anthropic remains the contracted and billing party—agencies don&#39;t need a separate cloud-provider relationship to get started.&quot;</strong></blockquote>
+<p>这句话的逻辑是：全文一直在说明产品如何合规、如何安全、如何适配政府流程，但读者最后会有一个实际问题——&quot;我买了这个产品，还需要签多少合同、走多少流程？&quot;作者直接回答：<strong>只需和 Anthropic 一家打交道</strong>。这句话把之前分散的四个维度（功能、计费、管理、安全）都收拢到一个简单的结论上，让决策者感到&quot;这件事没那么复杂&quot;。</p>
+<p>全文的逻辑线是：<strong>痛点（政府需要 AI 但采购合规难）→ 解决方案（基于商业版的合规产品）→ 为什么可信（FedRAMP High、审计机制、双人审批）→ 如何落地（简化合同关系、直接申请接入）</strong>。结尾的回答消除了最后一个顾虑——采购复杂度，从而完成从&quot;这东西好吗&quot;到&quot;我可以开始了吗&quot;的转化。</p>
+    </article>
+  </main>
+</div>
+</body>
+</html>

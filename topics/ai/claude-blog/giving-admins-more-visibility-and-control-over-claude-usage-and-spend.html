@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>为管理员提供更高的可见性和 Claude 消费控制能力 · 个人学习工作台</title>
+<link rel="stylesheet" href="../../../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../../../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../../index.html">首页</a>
+      <a href="../../../ai.html" class="active">AI</a>
+      <a href="../../../english.html">英语</a>
+      <a href="../../../k12.html">学科</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>为管理员提供更高的可见性和 Claude 消费控制能力</h1>
+      <p>topics/ai/claude-blog/giving-admins-more-visibility-and-control-over-claude-usage-and-spend.md</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1>为管理员提供更高的可见性和 Claude 消费控制能力</h1>
+<blockquote>原文: https://claude.com/blog/giving-admins-more-visibility-and-control-over-claude-usage-and-spend</blockquote>
+<blockquote>日期: Jul 02, 2026</blockquote>
+<blockquote>分类: Product announcements</blockquote>
+<blockquote>产品: Claude Enterprise</blockquote>
+<p>---</p>
+<h2>文章在讲什么</h2>
+<p>这篇文章是 Anthropic 官方发布的<strong>产品功能更新公告</strong>，核心主题是：为 Claude Enterprise 的管理员（Admin）提供更强大的<strong>用量可见性</strong>和<strong>成本控制能力</strong>。</p>
+<p><strong>背景是什么？</strong> 随着 Claude 从简单的聊天工具演变为承担复杂代理任务（agentic work）的平台，用量模式和成本结构发生了根本变化——不再是&quot;每人每天问几个问题&quot;那么简单，而是涉及代码生成、文件编辑、API 调用、团队协作等多维度消耗。</p>
+<p><strong>作者想解决什么问题？</strong> 管理员（尤其是 IT 和财务人员）在管理企业级 AI 工具时面临三个核心痛点：</p>
+<ol><li><strong>看不见</strong>：不知道团队怎么用、用多少、值不值</li><li><strong>控不住</strong>：缺乏灵活的分级控制手段</li><li><strong>措手不及</strong>：费用超支后才发现问题，没有预警</li></ol>
+<p>这篇文章就是围绕这三个问题，介绍一系列新推出的管理功能。</p>
+<p>---</p>
+<h2>原文结构地图</h2>
+<div class="doc-table-wrap"><table><thead><tr><th>章节</th><th>作用</th></tr></thead><tbody><tr><td>开篇引言</td><td>抛出背景：代理工作任务带来的新挑战，引出三大更新方向</td></tr><tr><td>Track adoption and cost</td><td>详细讲解<strong>可见性</strong>功能：分析面板、Analytics Chat、API、个人用量视图</td></tr><tr><td>Controls for managing spend</td><td>详细讲解<strong>控制</strong>功能：模型默认设置、消费阈值预警、Admin API</td></tr><tr><td>用户引言（引用）</td><td>用真实用户（PM、CIO、Product Director）的视角佐证功能价值</td></tr><tr><td>Getting started</td><td>操作指引，引导管理员快速上手</td></tr></tbody></table></div>
+<p>---</p>
+<h2>核心概念讲解</h2>
+<p>在深入正文之前，我们需要理解几个贯穿全文的核心概念：</p>
+<h3>1. Admin Console（管理控制台）</h3>
+<p>这是管理员登录 Claude Enterprise 后访问的专属界面，用于配置组织设置、查看分析数据、管理用户权限。所有新功能都集成在这里。</p>
+<h3>2. 模型默认设置与权限控制（Model Defaults &amp; Entitlements）</h3>
+<p>&quot;Entitlements&quot; 在企业软件中指&quot;授权&quot;或&quot;权限配额&quot;。这篇文章里指的是：管理员可以决定哪些<strong>角色（roles）</strong>或<strong>组织层级</strong>可以使用哪些 Claude 模型。</p>
+<p>打个比方：初级员工默认使用轻量级模型完成简单任务，资深工程师才能调用最强大的模型处理复杂任务。这是一种<strong>按角色分配资源</strong>的策略。</p>
+<h3>3. Analytics API</h3>
+<p>允许程序化获取用量数据的接口。管理员可以把 Claude 的使用数据导出到外部系统（如 Datadog、CloudZero），与企业其他云成本一起统一管理。</p>
+<h3>4. Spend Cap（消费上限）</h3>
+<p>文章提到 Anthropic 已有&quot;各层级的消费上限&quot;功能。这类似于手机套餐的流量封顶——达到上限后服务受限或暂停。</p>
+<h3>5. Skills 和 Connectors</h3>
+<p>这是 Claude Code 的扩展机制：</p>
+<ul><li><strong>Skills</strong>：预定义的技能包，增强 Claude 在特定任务上的能力</li><li><strong>Connectors</strong>：连接外部数据源或工具的桥梁（如连接企业 MCP 服务器）</li></ul>
+<p>这两个概念会在&quot;追踪采用情况&quot;部分频繁出现，因为管理员需要了解团队使用了哪些扩展功能。</p>
+<p>---</p>
+<h2>文章主体讲解</h2>
+<h3>开篇：为什么需要这些更新</h3>
+<p>文章开头指出，随着 Claude 承担越来越多&quot;代理性质的工作&quot;（agentic work），用量和成本模式与标准聊天工具截然不同。</p>
+<p><strong>这句话的含义是什么？</strong></p>
+<p>传统的 AI 对话工具使用模式简单：用户问一句，AI 答一句，成本可预测。但代理任务不同——Claude 可能需要：</p>
+<ul><li>多次调用模型完成一个复杂任务</li><li>生成并保存多个制品（artifacts）</li><li>编辑代码文件</li><li>调用外部工具和 API</li></ul>
+<p>这些行为叠加起来，成本增长是非线性的。管理员如果没有合适的工具，很容易在月底看到账单时&quot;大吃一惊&quot;。</p>
+<p>作者用&quot;We’re introducing&quot;引出三大类更新：</p>
+<ol><li>更丰富的分析功能</li><li>模型级别的权限控制</li><li>消费预警机制</li></ol>
+<p><strong>注意</strong>：作者强调这些功能是&quot;building on controls Anthropic already provides&quot;——意思是这不是从零开始，而是在已有的控制能力基础上扩展。</p>
+<p>---</p>
+<h3>第一部分：追踪采用情况和成本</h3>
+<p>这一部分的核心是<strong>可见性</strong>——让管理员&quot;看得见&quot;团队怎么用 Claude。</p>
+<h4>1. 管理员分析面板升级</h4>
+<p><strong>讲什么</strong>：原有的分析面板增加了按<strong>组（group）</strong>和<strong>用户（user）</strong>分解的视图，每个用户的用量旁边直接显示对应的成本。</p>
+<p><strong>为什么重要</strong>：这是最基本但最关键的改进。管理员终于可以回答&quot;哪个团队用得最多、花得最多、产出了什么&quot;这类问题。</p>
+<p><strong>关键点</strong>：</p>
+<ul><li>视图可以直接看到 <strong>artifacts 创建数量</strong>、<strong>文件编辑次数</strong>、<strong>使用的 Skills 和 Connectors</strong></li><li>按 <strong>SCIM 组</strong>过滤——SCIM 是企业身份管理系统（如 Okta、Azure AD）的标准协议，管理员可以用 IT 团队已有的组织结构来查看用量，不需要重新建组</li></ul>
+<h4>2. Claude Code 的两个新标签页</h4>
+<p><strong>讲什么</strong>：Claude Code（面向开发者的 CLI 工具）的管理界面新增 <strong>Usage</strong> 和 <strong>Value</strong> 两个标签页。</p>
+<p><strong>为什么重要</strong>：开发者是 Claude Enterprise 的核心用户群体之一，代码工具的使用数据需要专门处理。</p>
+<p><strong>关键点</strong>：</p>
+<div class="doc-table-wrap"><table><thead><tr><th>标签页</th><th>内容</th></tr></thead><tbody><tr><td>Usage</td><td>活跃开发者数量、会话次数、常用命令排行榜，数据每日更新</td></tr><tr><td>Value</td><td>用量与成本汇总，估算生产力提升、每次提交成本、年度价值。公式公开且参数可调</td></tr></tbody></table></div>
+<p><strong>Value 标签页的设计意图</strong>：让管理员不只看到&quot;花了多少钱&quot;，还能量化&quot;带来了多少价值&quot;——这是向管理层汇报的重要素材。</p>
+<h4>3. Analytics Chat（分析对话）</h4>
+<p><strong>讲什么</strong>：管理员可以用自然语言提问，Claude 直接生成图表回答。</p>
+<p><strong>为什么重要</strong>：传统 BI 工具需要写 SQL 或拖拽配置，门槛高。Analytics Chat 把这一过程简化成&quot;问问题&quot;。</p>
+<p><strong>关键点</strong>：</p>
+<ul><li>示例问题：&quot;Which teams doubled their Claude usage this month?&quot;（哪些团队本月用量翻倍了？）</li><li>示例问题：&quot;Where are we getting the most value per seat?&quot;（哪个座位的单位价值最高？）</li><li>生成的图表可导出分享给利益相关方</li></ul>
+<h4>4. Analytics API</h4>
+<p><strong>讲什么</strong>：提供程序化获取数据的接口，支持外部系统集成。</p>
+<p><strong>为什么重要</strong>：企业的财务和 IT 团队通常不使用管理控制台，而是在自己的系统（Datadog、CloudZero 等）中追踪成本。Analytics API 让数据&quot;流&quot;到他们熟悉的地方。</p>
+<p><strong>关键点</strong>：</p>
+<ul><li>支持按日期范围、团队、产品、模型过滤</li><li>Skills 报告自己的用量和成本</li><li>新增端点追踪插件使用和制品创建</li></ul>
+<h4>5. 个人用量视图</h4>
+<p><strong>讲什么</strong>：管理员可以给单个用户开通详细用量数据的访问权限，用户自己也能看到。</p>
+<p><strong>为什么重要</strong>：防止&quot;惊讶式封停&quot;——用户不知道自己的用量快到上限了，突然被中断会很恼火。让用户看到自己的使用趋势，他们会更主动地调整行为。</p>
+<p>---</p>
+<h3>第二部分：管理消费的控制功能</h3>
+<p>这一部分的核心是<strong>控制</strong>——让管理员不只能&quot;看见&quot;，还能&quot;动手&quot;。</p>
+<h4>1. 模型默认设置与权限</h4>
+<p><strong>讲什么</strong>：管理员可以设定新对话的默认模型，并控制哪些角色可以使用哪些模型。</p>
+<p><strong>为什么重要</strong>：不同模型的定价差异很大。如果简单任务默认使用最贵的模型，成本会快速膨胀。合理的默认设置能让日常任务使用性价比更高的模型，复杂任务才调用高级模型。</p>
+<p><strong>关键点</strong>：</p>
+<ul><li>设置影响 chat、Cowork、Claude Code 三个入口</li><li>可以按角色或全组织设置</li><li>目的不是限制，而是引导更合理的资源使用</li></ul>
+<h4>2. 消费阈值预警</h4>
+<p><strong>讲什么</strong>：在消费达到上限的 75% 和 90% 时通知管理员；在 75% 和 95% 时通知用户。</p>
+<p><strong>为什么重要</strong>：这是一道&quot;提前量&quot;机制。管理员不会等到 100% 封顶才措手不及，用户也不会在关键任务进行到一半时被强制中断。</p>
+<p><strong>关键点</strong>：</p>
+<ul><li>管理员收到预警后可以提前提高上限</li><li>用户在 75% 时收到通知，95% 时再次通知并可以<strong>直接在应用内申请提高限额</strong>，无需切换工具找管理员</li></ul>
+<h4>3. Admin API</h4>
+<p><strong>讲什么</strong>：允许管理员把成本控制工作流写成脚本，批量执行。</p>
+<p><strong>为什么重要</strong>：对于大型组织，手动管理每个团队的配额不现实。Admin API 让自动化成为可能。</p>
+<p><strong>关键点</strong>：</p>
+<ul><li>自动审核限额提升申请</li><li>识别接近限额的成员</li><li>标记用量快速变化的异常情况</li></ul>
+<p>---</p>
+<h3>引用部分：用户的真实声音</h3>
+<p>文章中插入了三位用户的简短引言，他们从不同角度印证了这些功能的价值：</p>
+<div class="doc-table-wrap"><table><thead><tr><th>引言者</th><th>角度</th><th>核心观点</th></tr></thead><tbody><tr><td>Kyra Abbu（产品经理）</td><td>数据可见性</td><td>成本可见性不是月末一次的事，需要持续的&quot;轻推&quot;</td></tr><tr><td>Carter Busse（CIO）</td><td>ROI 证明</td><td>CFO 要的是投资回报率，不是让团队慢下来</td></tr><tr><td>Ciro Yamada（产品总监）</td><td>真实价值信号</td><td>Token 数量本身意义不大，Skills 的重复使用才是价值信号</td></tr></tbody></table></div>
+<p>这三句话从不同立场（PM、CIO、Product Director）呼应了文章的两大主题：<strong>可见性</strong>和<strong>价值量化</strong>。</p>
+<p>---</p>
+<h3>Getting Started：收尾指引</h3>
+<p>文章结尾给出了具体的操作步骤，引导管理员：</p>
+<ol><li>在管理控制台查看用量和成本分解</li><li>按组设置模型默认和消费限额</li><li>配置消费阈值预警</li><li>使用 Analytics API 将数据拉入现有报表系统</li></ol>
+<p>这是一个典型的产品公告结尾结构：<strong>用具体的&quot;怎么做&quot;把读者从&quot;理解了&quot;推向&quot;去试试&quot;</strong>。</p>
+<p>---</p>
+<h2>关键对比表</h2>
+<p>本文涉及的主要功能可以从两个维度理解：</p>
+<div class="doc-table-wrap"><table><thead><tr><th>维度</th><th>功能</th><th>解决的问题</th></tr></thead><tbody><tr><td><strong>可见性</strong></td><td>分析面板、Analytics Chat、Analytics API、Value 标签页</td><td>不知道用了多少、谁用的、值不值</td></tr><tr><td><strong>控制</strong></td><td>模型默认设置、消费预警、Admin API</td><td>不知道怎么限制、预警滞后、无法规模化管控</td></tr></tbody></table></div>
+<p>---</p>
+<h2>关键句短摘译</h2>
+<ol><li><strong>&quot;As Claude takes on increasingly difficult and complex agentic work...usage and cost patterns look different from a standard chat tool.&quot;</strong></li></ol>
+<p>*随着 Claude 承担越来越复杂的代理任务，用量和成本模式与标准聊天工具截然不同。*</p>
+<p><strong>重要性</strong>：开篇即点明背景——场景变了，管理需求自然也要升级。</p>
+<ol><li><strong>&quot;Routine work doesn&#39;t necessarily default to the most expensive option.&quot;</strong></li></ol>
+<p>*日常任务不一定非要默认使用最贵的选项。*</p>
+<p><strong>重要性</strong>：概括了模型默认设置的核心设计理念——引导合理使用，而非强制限制。</p>
+<ol><li><strong>&quot;Spend-threshold alerts notify admins at 75% and 90%...giving them time to raise the cap before anyone gets blocked mid-task.&quot;</strong></li></ol>
+<p>*在达到 75% 和 90% 时向管理员发送预警，让他们在任何人被任务中途阻断之前有时间提高上限。*</p>
+<p><strong>重要性</strong>：说明预警机制的核心价值——提前干预，避免中断。</p>
+<ol><li><strong>&quot;Cost visibility isn&#39;t a once-a-month exercise.&quot;</strong></li></ol>
+<p>*成本可见性不是每月一次的事情。*</p>
+<p><strong>重要性</strong>：Kyra Abbu 的引言，直接点出传统成本管理思维的局限。</p>
+<ol><li><strong>&quot;He&#39;s asking for ROI.&quot;</strong></li></ol>
+<p>*他（CFO）要的是投资回报率。*</p>
+<p><strong>重要性</strong>：Carter Busse 的话揭示了企业采购 AI 工具的真实驱动力——不是&quot;省钱&quot;，而是&quot;值回票价&quot;。</p>
+<ol><li><strong>&quot;Token usage alone doesn&#39;t tell you much. What I actually want to see is which skills get run again and again.&quot;</strong></li></ol>
+<p>*仅看 Token 用量说明不了什么。我真正想看到的是哪些 Skills 被反复使用。*</p>
+<p><strong>重要性</strong>： Ciro Yamada 指出衡量价值的关键指标——重复使用率，而非绝对消耗量。</p>
+<p>---</p>
+<h2>术语表</h2>
+<div class="doc-table-wrap"><table><thead><tr><th>英文术语</th><th>中文解释</th></tr></thead><tbody><tr><td>Admin Console</td><td>管理员控制台，Claude Enterprise 中管理员配置组织和查看数据的界面</td></tr><tr><td>Analytics Chat</td><td>分析对话功能，允许管理员用自然语言提问并获得图表化的数据分析结果</td></tr><tr><td>Analytics API</td><td>分析接口，允许程序化获取用量和成本数据</td></tr><tr><td>Agentic work</td><td>代理任务，指 AI 自主完成多步骤、复杂目标的工作模式</td></tr><tr><td>Entitlements</td><td>权限配额，指谁可以使用什么资源</td></tr><tr><td>Model defaults</td><td>模型默认设置，新对话默认启动的模型</td></tr><tr><td>Spend cap</td><td>消费上限，控制组织或用户可消耗的最高金额</td></tr><tr><td>Spend-threshold alerts</td><td>消费阈值预警，在消耗达到特定百分比时触发通知</td></tr><tr><td>SCIM</td><td>System for Cross-domain Identity Management，企业身份管理标准协议</td></tr><tr><td>Skills</td><td>技能包，扩展 Claude 在特定任务上的能力</td></tr><tr><td>Connectors</td><td>连接器，连接外部数据源或工具的桥梁</td></tr><tr><td>Artifacts</td><td>制品，Claude 生成的代码、文档等输出物</td></tr><tr><td>Admin API</td><td>管理接口，允许批量自动化管理操作</td></tr></tbody></table></div>
+<p>---</p>
+<h2>文章结尾怎么收束</h2>
+<p>这篇文章的结尾采用了<strong>操作指引式收束</strong>：</p>
+<ol><li><strong>回顾功能范围</strong>：从可见性（分析面板、API）到控制（模型设置、预警）做了一个快速扫描</li><li><strong>给出具体行动</strong>：四个步骤，清晰引导管理员去做什么</li><li><strong>附加外部资源</strong>：提到&quot;learn more here&quot;引导深入学习</li></ol>
+<p><strong>全文逻辑如何闭合？</strong></p>
+<p>文章开头提出的核心问题是：&quot;当 Claude 从聊天工具变成代理任务平台时，管理员如何管得住、用得好？&quot;</p>
+<p>结尾的回答是：&quot;我们有工具让你<strong>看得见</strong>（分析功能）、<strong>控得住</strong>（模型设置和预警）、<strong>自动化</strong>（API）。去试试吧。&quot;</p>
+<p>从&quot;场景变了 → 需要新工具 → 工具介绍 → 操作指引&quot;，这是一个完整的产品公告闭环。</p>
+    </article>
+  </main>
+</div>
+</body>
+</html>

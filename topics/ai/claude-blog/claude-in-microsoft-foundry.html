@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude in Microsoft Foundry 正式发布 · 个人学习工作台</title>
+<link rel="stylesheet" href="../../../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../../../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../../index.html">首页</a>
+      <a href="../../../ai.html" class="active">AI</a>
+      <a href="../../../english.html">英语</a>
+      <a href="../../../k12.html">学科</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>Claude in Microsoft Foundry 正式发布</h1>
+      <p>topics/ai/claude-blog/claude-in-microsoft-foundry.md</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1>Claude in Microsoft Foundry 正式发布</h1>
+<blockquote>原文: https://claude.com/blog/claude-in-microsoft-foundry</blockquote>
+<blockquote>日期: 2025-06-29</blockquote>
+<blockquote>分类: 产品发布</blockquote>
+<blockquote>产品: Claude Platform</blockquote>
+<p>---</p>
+<h2>文章在讲什么</h2>
+<p>这是一篇<strong>产品发布公告</strong>，宣布 Anthropic 的 Claude 模型正式在 Microsoft Foundry（微软的企业 AI 平台，托管在 Azure 云上）上线。</p>
+<p>文章的核心信息是：<strong>企业用户现在可以直接通过自己的 Azure 账户使用 Claude 模型</strong>，而不需要单独注册 Anthropic 账号或管理另一套计费体系。这对于已经深度使用微软生态的企业来说，降低了采用 Claude 的门槛。</p>
+<p>文章还通过四家企业的真实使用案例（NVIDIA、Bolt、Momentic、核能领域公司）来展示 Claude 在生产环境中的实际价值——从 AI 代理、代码生成到软件测试验证。</p>
+<p>---</p>
+<h2>原文结构地图</h2>
+<div class="doc-table-wrap"><table><thead><tr><th>文章主要部分</th><th>作用</th></tr></thead><tbody><tr><td>开场公告</td><td>直接宣告 Claude in Foundry 正式发布，点明核心价值：Azure 环境内的企业级访问</td></tr><tr><td>客户证言（4 家企业）</td><td>用真实用户的声音（而非官方宣传语气）展示 Claude 在不同场景下的表现，增加可信度</td></tr><tr><td>&quot;Build with Claude through your Azure account&quot;</td><td>具体说明可用的模型、API 功能、与 Azure 的集成方式</td></tr><tr><td>&quot;Run Claude in Azure, operated by Anthropic&quot;</td><td>解释两种托管方式的区别，帮企业根据需求选型</td></tr><tr><td>&quot;Get started&quot;</td><td>行动指引，告知用户如何上手</td></tr></tbody></table></div>
+<p>---</p>
+<h2>核心概念讲解</h2>
+<h3>什么是 Microsoft Foundry</h3>
+<p>Microsoft Foundry 是微软推出的企业级 AI 平台（类似 Azure AI Studio 的升级版），它让企业可以在 Azure 云环境中访问、部署和管理各种 AI 模型。Foundry 提供了统一的身份认证、网络配置、计费系统和治理工具。</p>
+<h3>Azure-native（Azure 原生）的含义</h3>
+<p>文章反复强调 Claude in Foundry 是&quot;Azure-native&quot;的。这指的是 Claude 与 Azure 平台深度集成：</p>
+<ul><li><strong>身份集成</strong>：使用你已有的 Azure AD / Entra ID 账号登录</li><li><strong>网络集成</strong>：受你现有的 Azure 虚拟网络、防火墙规则约束</li><li><strong>计费集成</strong>：统一在 Azure 账单中显示</li><li><strong>治理集成</strong>：受你配置的 Azure Policy 管控</li></ul>
+<p>对于 IT 部门来说，这意味着<strong>不需要为 AI 单独维护一套权限体系</strong>。</p>
+<h3>两种托管方式</h3>
+<p>文章指出了两种运行 Claude 的方式：</p>
+<div class="doc-table-wrap"><table><thead><tr><th>托管方式</th><th>特点</th><th>适用场景</th></tr></thead><tbody><tr><td><strong>Hosted on Azure</strong></td><td>Claude 运行在你的 Azure 订阅中，使用 Azure 认证和计费，有美国数据区域选项</td><td>已有 Azure 投资、重视数据主权、需要统一账单的企业</td></tr><tr><td><strong>Hosted on Anthropic</strong>（原 Foundry Preview）</td><td>Claude 运行在 Anthropic 基础架构上，可使用完整的 API 功能</td><td>需要最新功能、模型尚未在 Azure 上线的情况</td></tr></tbody></table></div>
+<p>这是<strong>同一套 API 接口，两种后端部署方式</strong>的架构设计。长期目标是让两种方式的<strong>功能和模型保持一致</strong>。</p>
+<h3>Anthropic 作为数据处理者</h3>
+<p>文章明确指出：<strong>Anthropic 是数据处理者（Data Processor）</strong>。这意味着当你在 Azure 上运行 Claude 时：</p>
+<ul><li>推理计算由 Anthropic 负责执行</li><li>但 Anthropic 受 Azure 的合同条款约束</li><li>你仍然在 Azure 的治理框架下</li></ul>
+<p>这是一个&quot;联合运营&quot;模式——既利用了 Anthropic 的模型能力，又保留了 Azure 的企业治理框架。</p>
+<p>---</p>
+<h2>文章主体讲解</h2>
+<h3>第一部分：开场公告</h3>
+<p><strong>这一节讲什么</strong>：文章开门见山宣布 Claude in Microsoft Foundry 正式可用，并简要说明核心价值——在 Azure 环境中运行 Claude，使用现有的企业控制体系。</p>
+<p><strong>为什么重要</strong>：对于企业决策者来说，最关心的不是&quot;模型有多强&quot;，而是&quot;能不能安全、合规、低摩擦地使用&quot;。开篇就强调 Azure 环境内的托管，直接回应了这个顾虑。</p>
+<p><strong>关键点</strong>：</p>
+<ul><li>&quot;Claude runs in your Azure environment&quot;——不是新建一个系统，而是接入已有体系</li><li>&quot;US data zone for teams with data residency requirements&quot;——数据主权选项，满足受监管行业（如金融、医疗、政府）的合规需求</li></ul>
+<p>---</p>
+<h3>第二部分：客户证言</h3>
+<p><strong>这一节讲什么</strong>：通过四家真实客户的评价，展示 Claude + Azure 的实际应用效果。每条证言都暗示了特定的行业场景和使用价值。</p>
+<p><strong>为什么重要</strong>：产品发布公告如果只有官方宣传，容易让人觉得是自卖自夸。引入真实用户的声音，可以快速建立可信度。NVIDIA、Enterprise 客户 Bolt、核能领域、Momentic——这四个案例覆盖了科技巨头、中型企业、高度监管行业、SaaS 创业公司，说明方案的适用范围。</p>
+<p><strong>关键点解析</strong>：</p>
+<div class="doc-table-wrap"><table><thead><tr><th>企业</th><th>场景</th><th>证言中的关键词</th></tr></thead><tbody><tr><td><strong>NVIDIA</strong></td><td>AI 代理自动化</td><td>&quot;autonomous AI agents&quot;、&quot;think bigger&quot;、&quot;GB300 GPUs&quot;</td></tr><tr><td><strong>Bolt</strong></td><td>企业级可靠性</td><td>&quot;sustained throughput and reliability&quot;、&quot;Fortune 500&quot;</td></tr><tr><td><strong>核能领域公司</strong></td><td>高安全要求</td><td>&quot;best security in the world&quot;、&quot;200 human days → 1 day&quot;</td></tr><tr><td><strong>Momentic</strong></td><td>软件测试自动化</td><td>&quot;plain English test descriptions&quot;、&quot;millions of tokens per minute&quot;</td></tr></tbody></table></div>
+<p>这些证言的共同主题是：<strong>性能 + 可靠性 + 安全性 = 生产级可用</strong>。</p>
+<p>---</p>
+<h3>第三部分：Build with Claude through your Azure account</h3>
+<p><strong>这一节讲什么</strong>：具体说明最初上线的模型、功能和与 Azure 的集成细节。</p>
+<p><strong>为什么重要</strong>：这是给技术决策者和开发者看的部分——他们需要知道具体能用什么、怎么用、和现有系统怎么对接。</p>
+<p><strong>关键点</strong>：</p>
+<ul><li><strong>可用模型</strong>：Claude Opus 4.8 和 Claude Haiku 4.5（通过 Messages API 访问）</li><li><strong>核心功能</strong>：Prompt Caching（减少重复输入的成本）、Extended Thinking（扩展思考能力）</li><li><strong>适用场景</strong>：Coding（代码生成）、Agentic Work（代理任务）、Complex Reasoning（复杂推理）</li><li><strong>计费方式</strong>：单一统一发票；已签署 Microsoft Enterprise Agreement 的客户可以直接用 Azure 承诺额抵扣 Claude 使用费用</li></ul>
+<p>---</p>
+<h3>第四部分：Run Claude in Azure, operated by Anthropic</h3>
+<p><strong>这一节讲什么</strong>：解释两种托管方式的区别，帮企业在&quot;Azure 环境托管&quot;和&quot;Anthropic 托管&quot;之间做选择。</p>
+<p><strong>为什么重要</strong>：企业级产品必须考虑灵活性。不同企业的合规要求、安全策略、预算结构不同，不可能用一刀切的方案。</p>
+<p><strong>关键点</strong>：</p>
+<ul><li>&quot;Hosted on Azure&quot;：适合重视 Azure 环境、需要数据区域选项的企业</li><li>&quot;Hosted on Anthropic&quot;（原 Foundry Preview）：适合需要完整 API 功能或尚未在 Azure 上线的模型的场景</li><li>长期目标：Feature and model parity（功能和模型对齐），最终让两种方式体验一致</li></ul>
+<p>---</p>
+<h3>第五部分：Get started</h3>
+<p><strong>这一节讲什么</strong>：行动指引，告诉读者下一步该做什么。</p>
+<p><strong>为什么重要</strong>：公告类文章如果停在&quot;发布&quot;而没有&quot;如何使用&quot;，读者会感到悬而未决。这里提供了直接入口。</p>
+<p><strong>关键点</strong>：</p>
+<ul><li>提供两个链接：&quot;Open Claude in Microsoft Foundry&quot;（直接访问）和&quot;Explore the documentation&quot;（文档入口）</li></ul>
+<p>---</p>
+<h2>关键对比表</h2>
+<div class="doc-table-wrap"><table><thead><tr><th>维度</th><th>Hosted on Azure</th><th>Hosted on Anthropic</th></tr></thead><tbody><tr><td><strong>基础设施</strong></td><td>你的 Azure 订阅</td><td>Anthropic 基础设施</td></tr><tr><td><strong>认证方式</strong></td><td>Azure AD / Entra ID</td><td>Anthropic API Key</td></tr><tr><td><strong>计费方式</strong></td><td>Azure 账单（含 Enterprise Agreement）</td><td>Anthropic 账单</td></tr><tr><td><strong>数据区域</strong></td><td>支持美国数据区域</td><td>标准区域</td></tr><tr><td><strong>功能完整度</strong></td><td>部分功能（逐步增加）</td><td>完整功能</td></tr><tr><td><strong>适用人群</strong></td><td>已有 Azure 投资的企业</td><td>需要最新功能或特定模型的企业</td></tr></tbody></table></div>
+<p>---</p>
+<h2>关键句短摘译</h2>
+<h3>1</h3>
+<blockquote><strong>英文</strong>: &quot;Claude runs in your Azure environment with the authentication, billing, and governance controls your teams already use.&quot;</blockquote>
+<p><strong>中文</strong>: Claude 运行在你的 Azure 环境中，使用你的团队已经在用的认证、计费和治理控制。</p>
+<p><strong>为什么重要</strong>: 这句话直接回答了企业最关心的问题——<strong>不需要学新东西，现有体系直接能用</strong>。</p>
+<p>---</p>
+<h3>2</h3>
+<blockquote><strong>英文</strong>: &quot;You can choose where inference is processed, including a US data zone for teams with data residency requirements.&quot;</blockquote>
+<p><strong>中文</strong>: 你可以选择推理处理的位置，包括满足数据主权要求的美国数据区域。</p>
+<p><strong>为什么重要</strong>: 这是对受监管行业的明确信号——<strong>合规需求被认真对待了</strong>。</p>
+<p>---</p>
+<h3>3</h3>
+<blockquote><strong>English</strong>: &quot;Anthropic operates the inference and is the data processor.&quot;</blockquote>
+<p><strong>中文</strong>: Anthropic 运营推理服务，是数据处理者。</p>
+<p><strong>为什么重要</strong>: 明确了<strong>责任划分</strong>——Azure 提供平台，Anthropic 提供模型能力，双方各司其职。</p>
+<p>---</p>
+<h3>4</h3>
+<blockquote><strong>English</strong>: &quot;We compressed a safety analysis that would have taken 200 human days into a single day.&quot;</blockquote>
+<p><strong>中文</strong>: 我们把一个原本需要 200 人天的安全分析压缩到了一天。</p>
+<p><strong>为什么重要</strong>: 用具体的量化数字展示 Claude 在专业领域的<strong>生产力提升</strong>，不是泛泛的&quot;效率提高&quot;。</p>
+<p>---</p>
+<h3>5</h3>
+<blockquote><strong>English</strong>: &quot;Over time, we aim to have feature and model parity between the hosted on Azure offering and the Anthropic-hosted one.&quot;</blockquote>
+<p><strong>中文</strong>: 我们长期目标是让 Azure 托管方案和 Anthropic 托管方案在功能和模型上保持一致。</p>
+<p><strong>为什么重要</strong>: 这是一个<strong>路线图承诺</strong>，让企业知道现在的差异是暂时的，未来会消除。</p>
+<p>---</p>
+<h3>6</h3>
+<blockquote><strong>English</strong>: &quot;For eligible customers with a Microsoft Enterprise Agreement, Claude usage draws down a Microsoft Azure commitment.&quot;</blockquote>
+<p><strong>中文</strong>: 对于符合条件且签署 Microsoft Enterprise Agreement 的客户，Claude 使用费用可以消耗其 Azure 承诺额。</p>
+<p><strong>为什么重要</strong>: 对于大企业，这意味着<strong>不需要单独谈判新的采购合同</strong>，直接用已有预算。</p>
+<p>---</p>
+<h2>术语表</h2>
+<div class="doc-table-wrap"><table><thead><tr><th>英文术语</th><th>中文解释</th></tr></thead><tbody><tr><td><strong>Generally Available (GA)</strong></td><td>正式发布，表示产品已成熟，可用于生产环境。区别于 Preview（预览）和 Beta（测试）</td></tr><tr><td><strong>Microsoft Foundry</strong></td><td>微软的企业 AI 平台，提供在 Azure 上访问和管理 AI 模型的能力</td></tr><tr><td><strong>Azure-native</strong></td><td>深度集成到 Azure 平台的产品形态，与 Azure 的身份、网络、计费、治理系统无缝对接</td></tr><tr><td><strong>Data Processor</strong></td><td>数据处理者。在数据保护法规（如 GDPR）下，指处理个人数据的主体，需承担相应法律责任</td></tr><tr><td><strong>Data Residency</strong></td><td>数据驻留，指数据物理存储的地理位置，满足特定国家/地区的法规要求</td></tr><tr><td><strong>Prompt Caching</strong></td><td>一种 API 功能，允许模型复用之前请求中相同的提示前缀，减少重复输入的成本</td></tr><tr><td><strong>Extended Thinking</strong></td><td>Claude 的扩展思考能力，允许模型在给出最终答案前进行更深入的推理</td></tr><tr><td><strong>Enterprise Agreement</strong></td><td>微软大客户协议，企业与微软签署的多年期采购合同，通常包含承诺消费额和折扣</td></tr><tr><td><strong>Messages API</strong></td><td>Anthropic 提供的 API 接口格式，用于与 Claude 模型交互</td></tr></tbody></table></div>
+<p>---</p>
+<h2>文章结尾怎么收束</h2>
+<p>文章以简洁的 &quot;Get started&quot; 收尾，提供直接入口链接，逻辑闭合清晰：</p>
+<p><strong>从问题到答案的完整链条</strong>：</p>
+<ol><li><strong>开篇提出痛点</strong>：企业想用 Claude，但担心与现有 Azure 体系的集成、计费、合规问题</li><li><strong>中间展示验证</strong>：通过四家真实客户（覆盖科技、金融、监管、创业等场景）证明方案的可行性</li><li><strong>具体说明方案</strong>：两种托管方式、可用的模型和功能、计费细节</li><li><strong>结尾给出行动</strong>：直接点击开始</li></ol>
+<p>这个收束方式属于<strong>行动号召型</strong>——文章的目的不仅是&quot;告知&quot;，更是&quot;促动&quot;。作者没有做复杂的总结，而是用最少的文字告诉你：<strong>现在可以用，去试试吧</strong>。</p>
+<p>对于一篇产品发布公告来说，这是一个干净利落的结尾方式。</p>
+    </article>
+  </main>
+</div>
+</body>
+</html>

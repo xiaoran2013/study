@@ -155,12 +155,23 @@ for p in ['/', '/ai.html', '/english.html', '/k12.html']:
 PY
 ```
 
-如果改了文档阅读器或 Markdown 文档, 也检查:
+如果改了文档阅读器或根目录 Markdown 文档, 也检查:
 
 ```bash
 python3 - <<'PY'
 from urllib.request import urlopen
 for p in ['/doc.html?src=PROJECT_BACKGROUND.md', '/doc.html?src=AGENTS.md']:
+    with urlopen('http://localhost:8080' + p, timeout=5) as r:
+        print(p, r.status)
+PY
+```
+
+如果新增或修改了 `topics/**/*.md`, 先跑 `node scripts/render-topic-docs.js` 生成对应 `.html`, 再抽查生成的页面能直接返回 200(不经过 `doc.html`):
+
+```bash
+python3 - <<'PY'
+from urllib.request import urlopen
+for p in ['/topics/ai-roadmap.html', '/topics/ai/agent-ontology.html']:
     with urlopen('http://localhost:8080' + p, timeout=5) as r:
         print(p, r.status)
 PY
@@ -202,6 +213,16 @@ find . -maxdepth 3 -type f \( -name '.env' -o -name '.env.*' -o -name '*secret*'
 | --- | --- |
 | `scripts/translate-claude-blog-one.js` | AI 主题文章翻译/处理(单篇) |
 | `scripts/translate-claude-blog-batch.js` | AI 主题文章翻译/处理(批量) |
+| `scripts/render-topic-docs.js` | 把 `topics/**/*.md` 渲染成同名 `.html`, 供双击直接打开(见第 9.1 节) |
+
+### 9.1 topics/ 下 Markdown 的发布方式
+
+`topics/` 里的学习内容用 Markdown 撰写(方便编辑和飞书同步), 但发布时会额外生成同名的静态 `.html`:
+
+- 原因: `doc.html` 用浏览器 `fetch()` 现读 `.md`, 双击本地文件(`file://`)会被 CORS 挡住, 报 "Failed to fetch"; 静态 `.html` 不依赖 `fetch`, 双击就能看。
+- 规则: 新增或修改 `topics/**/*.md` 后, 运行一次 `node scripts/render-topic-docs.js`(或加 `--file <path>` 只渲染单个文件), 把生成的 `.html` 和 `.md` 一起提交。
+- 站点入口(`index.html`/`ai.html`/`english.html`/`k12.html`/`topics/**/index.html`)应直接链接到 `topics/xxx.html`, 不再使用 `doc.html?src=...`。
+- `doc.html` 仍然保留, 作为通用 fallback: 浏览 JSON/日志文件, 或预览还没跑生成脚本的新 Markdown 草稿时使用; 根目录的项目文档(`PROJECT_BACKGROUND.md`、`AGENTS.md`、`DIRECTORY_STRUCTURE.md`、`ITERATION_LOG.md`、`README.md`)目前仍只通过 `doc.html` 浏览, 没有生成静态 `.html`。
 
 ## 10. 自动化原则
 

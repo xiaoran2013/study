@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 新增 Artifacts 功能 · 个人学习工作台</title>
+<link rel="stylesheet" href="../../../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../../../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../../index.html">首页</a>
+      <a href="../../../ai.html" class="active">AI</a>
+      <a href="../../../english.html">英语</a>
+      <a href="../../../k12.html">学科</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>Claude Code 新增 Artifacts 功能</h1>
+      <p>topics/ai/claude-blog/artifacts-in-claude-code.md</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1>Claude Code 新增 Artifacts 功能</h1>
+<blockquote>原文: https://claude.com/blog/artifacts-in-claude-code</blockquote>
+<blockquote>日期: Jun 18, 2026</blockquote>
+<blockquote>分类: Product announcements</blockquote>
+<blockquote>产品: Claude Code</blockquote>
+<p>---</p>
+<h2>文章在讲什么</h2>
+<p>这是一篇<strong>产品发布公告</strong>，介绍 Claude Code 新增的 <strong>Artifacts（产物）功能</strong>。</p>
+<p>作者想解决的核心问题是：在使用 Claude Code 执行复杂任务（如调查事故、重构服务、分析数据）的过程中，<strong>工作进展和结果很难与团队成员实时共享</strong>。传统做法需要大量沟通来同步状态，而 Artifacts 功能让 Claude Code 可以把工作成果自动转换成<strong>可分享、可更新的网页</strong>，团队成员打开同一个链接就能看到最新进展，省去了反复&quot;汇报 agent 发现了什么&quot;的沟通成本。</p>
+<p>文章的核心逻辑是：<strong>先讲功能是什么，再讲它为什么有用，然后介绍使用场景，最后说明如何开始</strong>。</p>
+<p>---</p>
+<h2>原文结构地图</h2>
+<div class="doc-table-wrap"><table><thead><tr><th>章节</th><th>作用</th></tr></thead><tbody><tr><td>开头导语</td><td>用一句话概括功能：用 session 上下文构建实时可分享的页面</td></tr><tr><td>Built on the context from your session</td><td>解释技术原理——Artifacts 依赖什么数据</td></tr><tr><td>Live pages that update in place</td><td>讲核心体验——实时更新、版本历史、画廊管理</td></tr><tr><td>用法举例段落</td><td>用&quot;事故调查&quot;场景展示实际工作流</td></tr><tr><td>Private to your organization</td><td>说明隐私和安全机制</td></tr><tr><td>Getting started</td><td>按角色给出具体提示词示例</td></tr><tr><td>Availability</td><td>说明可用范围和入口</td></tr></tbody></table></div>
+<p>---</p>
+<h2>核心概念讲解</h2>
+<h3>什么是 Artifact</h3>
+<p><strong>Artifact（产物）</strong>是 Claude Code 把 session 工作自动生成的<strong>网页</strong>。这个网页不是静态截图，而是包含可交互元素（如下拉筛选、排序功能）的动态页面，可以是 PR 走查、仪表板、检查清单等不同形式。</p>
+<p>关键理解：<strong>Artifact 不是你手动创建的，而是 Claude Code 根据你的 session 上下文&quot;生成&quot;的</strong>。你只需要说&quot;给我建一个页面&quot;，它就会从代码、连接器、对话历史中提取内容组装成网页。</p>
+<h3>Session 上下文是什么</h3>
+<p>Claude Code 的 session（会话）包含三部分核心数据：</p>
+<ul><li><strong>你的代码库</strong>（codebase）</li><li><strong>你连接的外部工具</strong>（connectors），如监控工具、基础设施代码</li><li><strong>对话本身</strong>（conversation），即你与 Claude 的交互历史</li></ul>
+<p>Artifacts 的独特之处在于，它<strong>不需要你额外配置数据源或搭建基础设施</strong>，而是直接利用 session 中已经存在的信息。</p>
+<h3>分享机制</h3>
+<p>Artifacts 默认<strong>仅对创建者可见</strong>，需要主动分享才能让队友和组织内成员查看。发布后所有更新都在同一链接上自动同步，队友打开页面就能看到最新版本。</p>
+<p>---</p>
+<h2>文章主体讲解</h2>
+<h3>开头导语</h3>
+<p><strong>这一节讲什么：</strong> 用一句话介绍 Artifacts 功能的核心价值。</p>
+<p><strong>为什么重要：</strong> 读者扫一眼就能知道这个功能是做什么的——把 Claude Code 的工作变成可分享的网页。</p>
+<p><strong>关键点：</strong> &quot;live, shareable visual pages&quot; 和 &quot;update themselves as your session works&quot; 这两个定语揭示了功能的两个本质特征：<strong>实时更新</strong> 和 <strong>可分享</strong>。</p>
+<p>---</p>
+<h3>Built on the context from your session</h3>
+<p><strong>这一节讲什么：</strong> 解释 Artifacts 的数据来源和技术基础。</p>
+<p><strong>为什么重要：</strong> 这是 Artifacts 与普通截图或文档的根本区别——它能自动聚合来自多个来源的信息，不需要用户手动拼接。</p>
+<p><strong>关键点：</strong></p>
+<ul><li>Artifacts 聚合的是<strong>代码、连接器数据、对话</strong>三方面的信息</li><li>例子：一页事故报告可以同时包含&quot;失败的测试&quot;、&quot;相关函数&quot;、&quot;监控数据中的错误峰值&quot;、&quot;调查推理过程&quot;</li><li>核心理念：<strong>你只管问&quot;给我一个页面&quot;，Claude Code 负责从现有上下文里拼出来</strong></li></ul>
+<p>---</p>
+<h3>Live pages that update in place</h3>
+<p><strong>这一节讲什么：</strong> 描述 Artifact 的使用体验——实时更新、版本管理、画廊视图。</p>
+<p><strong>为什么重要：</strong> 这一节回答了&quot;分享之后怎么保持同步&quot;的问题，是功能实用性的关键。</p>
+<p><strong>关键点：</strong></p>
+<ul><li><strong>原地刷新</strong>：在浏览器中打开的页面会自动刷新，队友能看到你刚发布的内容</li><li><strong>同一链接的版本迭代</strong>：每次发布都是新版本，支持回溯</li><li><strong>画廊</strong>：集中管理和浏览所有 Artifact</li></ul>
+<p>---</p>
+<h3>用法举例段落（事故调查场景）</h3>
+<p><strong>这一节讲什么：</strong> 用一个具体场景展示 Artifacts 的完整工作流。</p>
+<p><strong>为什么重要：</strong> 把抽象功能具象化，让读者&quot;看见&quot;它怎么用。<strong>这是文章最生动的段落</strong>。</p>
+<p><strong>关键点：</strong></p>
+<p>工程师在站会前启动事故调查 → Claude Code 分析日志后发布 Artifact（时间线、可疑提交、错误率图表）→ 工程师把链接分享给团队 → 站会期间 Claude Code 又发布了两个更新版本 → 所有人看的是<strong>同一个视图、同样的上下文</strong>，不需要工程师再做口头汇报。</p>
+<p><strong>这句话点出了功能的核心价值：</strong> &quot;With artifacts, team members and stakeholders don&#39;t have to &#39;walk us through what the agent found&#39; because they&#39;re all looking at the same view, with the same context.&quot;</p>
+<p>---</p>
+<h3>Private to your organization</h3>
+<p><strong>这一节讲什么：</strong> 安全和权限控制。</p>
+<p><strong>为什么重要：</strong> 企业用户最关心数据能不能安全分享，这节打消顾虑。</p>
+<p><strong>关键点：</strong></p>
+<ul><li>默认仅创建者可见，发布需主动操作</li><li>仅组织内认证成员可查看，<strong>无法设为公开</strong></li><li>管理员可控制开关、设置角色权限、配置保留策略、通过合规 API 获取全组织可见性</li></ul>
+<p>---</p>
+<h3>Getting started</h3>
+<p><strong>这一节讲什么：</strong> 按不同角色给出提示词示例，帮助读者快速上手。</p>
+<p><strong>为什么重要：</strong> 这节是整篇文章的<strong>实践转化部分</strong>——作者知道读者看完功能介绍后最想知道&quot;我能怎么用&quot;，所以直接给出 8 个角色的具体请求方式。</p>
+<p><strong>关键点：</strong> 提示词模板的共同结构是：<strong>&quot;Build an artifact of [具体内容], [附加要求]&quot;</strong>。例如：</p>
+<ul><li>安全审计：&quot;Build an artifact of the auth findings from this review, each linked to the code.&quot;</li><li>工程经理：&quot;Build an artifact of what merged on my team this week from the PRs, grouped by project.&quot;</li></ul>
+<p>---</p>
+<h3>Availability</h3>
+<p><strong>这一节讲什么：</strong> 说明功能可用范围。</p>
+<p><strong>为什么重要：</strong> 读者需要知道自己能不能用。</p>
+<p><strong>关键点：</strong> 目前是 Beta 阶段，仅对 <strong>Claude Team 和 Enterprise</strong> 组织开放，通过 CLI 或桌面应用创建，浏览器可查看。</p>
+<p>---</p>
+<h2>关键对比表</h2>
+<p>文章本身没有明确的分类表格，但可以把<strong>使用 Artifact 前后</strong>的工作方式做个对比，帮助理解价值：</p>
+<div class="doc-table-wrap"><table><thead><tr><th>维度</th><th>没有 Artifact</th><th>有 Artifact</th></tr></thead><tbody><tr><td>共享进展</td><td>需要截图、写文档、口头汇报</td><td>生成链接直接分享</td></tr><tr><td>信息同步</td><td>每次更新都要重新发送</td><td>同一链接自动更新</td></tr><tr><td>信息来源</td><td>需要手动从多处拼凑</td><td>自动从 session 上下文聚合</td></tr><tr><td>查看体验</td><td>静态文档，需想象上下文</td><td>交互式页面，实时同步视图</td></tr><tr><td>版本管理</td><td>多个文档版本，难以追踪</td><td>同一链接有版本历史可回溯</td></tr></tbody></table></div>
+<p>---</p>
+<h2>关键句短摘译</h2>
+<ol><li><strong>&quot;Artifacts translate the work into a web page anyone can open and explore.&quot;</strong></li></ol>
+<ul><li>中文：Artifacts 把工作成果&quot;翻译&quot;成任何人都能打开和探索的网页。</li><li>为什么重要：点明功能本质——不是输出报告文档，而是生成可交互的网页。</li></ul>
+<ol><li><strong>&quot;With artifacts, you don&#39;t need to wire up data sources or stand up infrastructure.&quot;</strong></li></ol>
+<ul><li>中文：有了 Artifacts，你不需要自己接线数据源或搭建基础设施。</li><li>为什么重要：说明门槛低——数据已经在 session 里，你只管用。</li></ul>
+<ol><li><strong>&quot;The open page refreshes in place and teammates see the updates the moment they&#39;re published.&quot;</strong></li></ol>
+<ul><li>中文：打开的页面原地刷新，队友在发布瞬间就能看到更新。</li><li>为什么重要：这是&quot;实时协作&quot;体验的技术保障。</li></ul>
+<ol><li><strong>&quot;They don&#39;t have to &#39;walk us through what the agent found&#39; because they&#39;re all looking at the same view, with the same context.&quot;</strong></li></ol>
+<ul><li>中文：他们不需要&quot;听我们讲 agent 发现了什么&quot;，因为大家看的是同一个视图、同样的上下文。</li><li>为什么重要：这是功能解决的核心痛点——减少沟通成本，保证信息一致。</li></ul>
+<ol><li><strong>&quot;Artifacts are viewable only by authenticated members of your org and cannot be made public.&quot;</strong></li></ol>
+<ul><li>中文：Artifact 仅对组织内已认证成员可见，且无法设为公开。</li><li>为什么重要：明确了安全边界，企业用户可以放心使用。</li></ul>
+<ol><li><strong>&quot;You ask for a page, and Claude Code builds it from what already exists.&quot;</strong></li></ol>
+<ul><li>中文：你只要请求一个页面，Claude Code 就会从现有内容中构建它。</li><li>为什么重要：一句话总结操作方式和使用哲学——零配置，按需生成。</li></ul>
+<p>---</p>
+<h2>术语表</h2>
+<div class="doc-table-wrap"><table><thead><tr><th>英文术语</th><th>中文解释</th></tr></thead><tbody><tr><td>Artifact</td><td>产物，本文中指 Claude Code 根据 session 上下文自动生成的交互式网页</td></tr><tr><td>Session</td><td>会话，指在 Claude Code 中进行的一次完整工作过程，包含代码、连接器和对话历史</td></tr><tr><td>Connectors</td><td>连接器，Claude Code 连接的外部数据源（如监控工具、IaC 配置）</td></tr><tr><td>Live pages</td><td>实时页面，指会自动同步更新的网页</td></tr><tr><td>Beta</td><td>公测版，功能尚未正式发布，用户可以提前试用并反馈</td></tr><tr><td>Claude Team / Enterprise</td><td>Claude 的团队版和企业版订阅计划</td></tr><tr><td>On-call</td><td>值班，指 SRE 或运维人员在非工作时间处理生产环境故障</td></tr><tr><td>Postmortem</td><td>事后分析报告，通常在事故处理完后撰写，分析根因和改进措施</td></tr><tr><td>PR walkthrough</td><td>PR 走查，指带领团队通读代码变更评审的过程</td></tr></tbody></table></div>
+<p>---</p>
+<h2>文章结尾怎么收束</h2>
+<p>文章以 <strong>&quot;Get started today with Claude Code.&quot;</strong> 和 <strong>&quot;Claude Code builds the page and gives you a link.&quot;</strong> 收尾。</p>
+<p>从结构上看，结尾是<strong>闭合的</strong>：</p>
+<ol><li><strong>开头承诺</strong>：Claude Code 可以把工作变成可分享的实时网页</li><li><strong>中间论证</strong>：从技术原理、使用体验、安全机制、使用场景逐一展开</li><li><strong>结尾行动</strong>：直接告诉读者怎么开始——用 Claude Code，提请求，拿链接</li></ol>
+<p>全文的逻辑是<strong>&quot;介绍 → 解释 → 示范 → 收尾&quot;</strong>，没有拖沓的总结，直接引导行动。</p>
+    </article>
+  </main>
+</div>
+</body>
+</html>

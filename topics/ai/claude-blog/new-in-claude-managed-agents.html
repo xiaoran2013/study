@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Managed Agents 新功能讲解 · 个人学习工作台</title>
+<link rel="stylesheet" href="../../../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../../../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../../index.html">首页</a>
+      <a href="../../../ai.html" class="active">AI</a>
+      <a href="../../../english.html">英语</a>
+      <a href="../../../k12.html">学科</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>Claude Managed Agents 新功能讲解</h1>
+      <p>topics/ai/claude-blog/new-in-claude-managed-agents.md</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1>Claude Managed Agents 新功能讲解</h1>
+<blockquote>原文: https://claude.com/blog/new-in-claude-managed-agents</blockquote>
+<blockquote>日期: May 19, 2026</blockquote>
+<blockquote>分类: Product announcements</blockquote>
+<blockquote>产品: Claude Platform</blockquote>
+<p>---</p>
+<h2>文章在讲什么</h2>
+<p>这是一篇产品发布公告，介绍 Claude Managed Agents 平台新增的三个核心功能：<strong>Dreaming</strong>（做梦）、<strong>Outcomes</strong>（结果导向）和 <strong>Multiagent Orchestration</strong>（多智能体编排）。</p>
+<p>作者想解决的问题是：如何让 AI Agent 在处理复杂任务时能够<strong>自我改进</strong>、<strong>达到质量标准</strong>、<strong>并行高效工作</strong>。</p>
+<p>传统的 AI Agent 通常是&quot;一次性&quot;执行——做完就结束，不积累经验，也不知道自己做得够不够好。这篇文章介绍的功能正是为了解决这三个痛点：让 Agent 能从过去的工作中学习（Dreaming）、能自我评估并修正（Outcomes）、能把大任务分解给多个专门 Agent 同时处理（Multiagent Orchestration）。</p>
+<p>---</p>
+<h2>原文结构地图</h2>
+<div class="doc-table-wrap"><table><thead><tr><th>主要章节</th><th>作用</th></tr></thead><tbody><tr><td><strong>Build self-improving agents with dreaming</strong></td><td>介绍 Dreaming 功能，解释它如何让 Agent 跨会话学习和自我改进</td></tr><tr><td><strong>Deliver better outcomes</strong></td><td>介绍 Outcomes 功能，说明如何用评分标准让 Agent 自我检验并达标</td></tr><tr><td><strong>Handle complex tasks with multiple agents</strong></td><td>介绍 Multiagent Orchestration，展示如何用多个 Agent 并行处理复杂任务</td></tr><tr><td><strong>What teams are building</strong></td><td>用四个真实案例说明这三个功能在实际中的应用效果</td></tr><tr><td><strong>Getting started</strong></td><td>收尾，提供访问和使用指引</td></tr></tbody></table></div>
+<p>---</p>
+<h2>核心概念讲解</h2>
+<p>在进入具体功能之前，我们需要理解几个核心概念及其关系：</p>
+<h3>1. Memory（记忆系统）</h3>
+<p>Memory 是 Managed Agents 的基础能力——让每个 Agent 能够<strong>在工作时捕获和保存它学到的内容</strong>。比如一个 Agent 处理了某个文件格式的兼容性问题，下次遇到类似情况，它可以直接查阅记忆，而不需要重新摸索。</p>
+<h3>2. Dreaming（做梦）</h3>
+<p>Dreaming 是<strong>在两次工作之间运行的&quot;反思&quot;机制</strong>。它不是让 Agent 在工作时思考，而是<strong>在 Agent 空闲时（如深夜）回顾之前的会话和记忆存储，提取模式，发现问题，并主动更新记忆</strong>。</p>
+<p><strong>为什么叫&quot;Dreaming&quot;？</strong> 作者用这个比喻说明：Agent 在&quot;睡眠&quot;时回顾经历、整理经验、形成更深层的理解——就像人类的做梦/反思过程。</p>
+<h3>3. Outcomes（结果导向）</h3>
+<p>Outcomes 是<strong>一种质量控制机制</strong>。你定义&quot;成功是什么样子的&quot;（一个 rubric，即评分标准），然后 Agent 执行任务，另一个独立的&quot;grader&quot;（评判者）会对照标准评估输出。如果不达标，Agent 重新尝试，直到通过。</p>
+<p>关键设计点：<strong>grader 有自己的 context window，不受 Agent 推理过程的影响</strong>，保证了评估的客观性。</p>
+<h3>4. Multiagent Orchestration（多智能体编排）</h3>
+<p>当任务太复杂、一个 Agent 难以胜任时，可以让<strong>一个 lead agent（主导 Agent）</strong> 将任务拆分成多个子任务，分别交给<strong>专门的 subagent（子 Agent）</strong> 处理。这些 subagent 可以<strong>并行运行</strong>，各自使用不同的模型、不同的提示词、不同的工具。</p>
+<h3>概念之间的关系</h3>
+<pre><code>Memory ←—— Dreaming（定期优化记忆）
+              ↓
+        Agent 执行工作
+              ↓
+         Outcomes（评估质量）
+              ↓
+    如果复杂 → Multiagent Orchestration（分工并行）</code></pre>
+<p>这三个功能<strong>不是孤立的</strong>，它们共同构成了一个完整的&quot;自我改进闭环&quot;：</p>
+<ul><li>Agent 通过 <strong>Memory</strong> 积累经验</li><li>通过 <strong>Dreaming</strong> 提炼和优化这些经验</li><li>通过 <strong>Outcomes</strong> 确保工作质量达标</li><li>通过 <strong>Multiagent Orchestration</strong> 扩大处理能力</li></ul>
+<p>---</p>
+<h2>文章主体讲解</h2>
+<h3>第一部分：Build self-improving agents with dreaming</h3>
+<p><strong>这一节讲什么：</strong></p>
+<p>作者介绍了 Dreaming 功能——一个在后台定期运行的研究预览功能。</p>
+<p><strong>为什么重要：</strong></p>
+<p>传统 AI 应用是&quot;无状态&quot;的，每次对话都是全新的。但现实中的工作往往是<strong>持续的、跨会话的</strong>。一个 Agent 上午处理了某类问题，下午又遇到类似问题，却&quot;忘记&quot;了上午的经验。Dreaming 要解决的就是这个&quot;遗忘&quot;问题，让 Agent 具备<strong>跨会话学习和改进</strong>的能力。</p>
+<p><strong>关键点：</strong></p>
+<ol><li><strong>模式发现</strong>：Dreaming 能发现单个 Agent 在单次会话中无法看到的模式——比如反复犯的错误、团队共享的偏好、工作流程的收敛方向。</li></ol>
+<ol><li><strong>记忆重构</strong>：随着时间推移，记忆会变得冗余和混乱。Dreaming 会<strong>重构记忆结构</strong>，保持高信噪比。</li></ol>
+<ol><li><strong>可控性</strong>：用户可以选择全自动更新记忆，或者先审查 Dreaming 提出的修改建议，再决定是否采纳。</li></ol>
+<ol><li><strong>适用场景</strong>：对<strong>长期运行的任务</strong>和<strong>多智能体协作</strong>特别有价值——多个 Agent 之间可以通过 Dreaming 共享学习成果。</li></ol>
+<p>---</p>
+<h3>第二部分：Deliver better outcomes</h3>
+<p><strong>这一节讲什么：</strong></p>
+<p>作者介绍了 Outcomes 功能——通过定义明确的成功标准，让 Agent 自我评估输出质量，不达标就重试。</p>
+<p><strong>为什么重要：</strong></p>
+<p>很多任务的质量标准是<strong>模糊的、主观的</strong>，比如&quot;这份文案是否符合品牌调性&quot;&quot;这个设计是否符合视觉规范&quot;。传统的做法是让人工审核每一步输出，但这样效率低且不可扩展。Outcomes 让 Agent 能够<strong>自行判断&quot;够不够好&quot;，直到达到标准</strong>。</p>
+<p><strong>关键点：</strong></p>
+<ol><li><strong>Rubric（评分标准）</strong>：用户定义&quot;成功的样子&quot;，比如结构框架、演示标准、需求清单等。</li></ol>
+<ol><li><strong>独立 Grader</strong>：评判者有自己独立的上下文窗口，不会被 Agent 的推理过程&quot;污染&quot;，保证了评估的客观性。</li></ol>
+<ol><li><strong>自我修正循环</strong>：不达标 → Grader 指出问题 → Agent 修正 → 再次评估，直到通过。</li></ol>
+<ol><li><strong>性能数据</strong>：作者给出了内部测试结果——</li></ol>
+<ul><li>整体任务成功率提升<strong>最高 10 个百分点</strong></li><li>Word 文档生成质量提升 <strong>+8.4%</strong></li><li>PowerPoint 生成质量提升 <strong>+10.1%</strong></li></ul>
+<p>这说明 Outcomes 对<strong>细节要求高、覆盖要全面的任务</strong>效果最明显。</p>
+<ol><li><strong>主观质量也适用</strong>：不仅能评估客观标准（如&quot;是否包含所有章节&quot;），也能评估主观标准（如&quot;是否符合品牌调性&quot;）。</li></ol>
+<p>---</p>
+<h3>第三部分：Handle complex tasks with multiple agents</h3>
+<p><strong>这一节讲什么：</strong></p>
+<p>作者介绍了 Multiagent Orchestration——用多个 Agent 分工协作处理复杂任务。</p>
+<p><strong>为什么重要：</strong></p>
+<p>当任务规模太大或类型太多样时，单个 Agent 会&quot;力不从心&quot;。比如一个故障排查任务，需要同时查看部署历史、错误日志、监控指标、工单系统——这些并行的工作让一个 Agent 来做效率太低。Multiagent Orchestration 让<strong>专业化分工 + 并行执行</strong>成为可能。</p>
+<p><strong>关键点：</strong></p>
+<ol><li><strong>Lead Agent（主导 Agent）</strong>：负责任务分解、调度和整合结果。</li></ol>
+<ol><li><strong>Subagent（子 Agent）</strong>：各自拥有独立的模型配置、提示词和工具，专门处理某一类任务。</li></ol>
+<ol><li><strong>并行执行</strong>：子 Agent 可以<strong>同时运行</strong>，大大提升效率。</li></ol>
+<ol><li><strong>共享上下文</strong>：所有 Agent 共享一个文件系统，可以互相传递信息。</li></ol>
+<ol><li><strong>状态持久化</strong>：事件是持久化的，每个 Agent 都能记住自己做过什么，支持<strong>工作流中途的&quot;回访&quot;</strong>。</li></ol>
+<ol><li><strong>完整可追溯</strong>：在 Claude Console 中可以看到完整的执行链路——哪个 Agent 做了什么、按什么顺序、为什么这样做。</li></ol>
+<p>---</p>
+<h3>第四部分：What teams are building</h3>
+<p><strong>这一节讲什么：</strong></p>
+<p>作者用四个真实案例展示这三个功能如何落地应用。</p>
+<p><strong>为什么重要：</strong></p>
+<p>功能介绍容易抽象，案例能帮助读者理解&quot;这能解决什么实际问题&quot;。这四个案例覆盖了不同场景——法律文档、平台工程、写作工具、文档审查。</p>
+<p><strong>关键案例：</strong></p>
+<div class="doc-table-wrap"><table><thead><tr><th>公司</th><th>用什么功能</th><th>解决什么问题</th><th>效果</th></tr></thead><tbody><tr><td><strong>Harvey</strong>（法律科技）</td><td>Dreaming</td><td>Agent 记住文件类型处理技巧、工具特定模式</td><td>完成率提升 <strong>~6 倍</strong></td></tr><tr><td><strong>Netflix 平台团队</strong></td><td>Multiagent Orchestration</td><td>并行分析数百个构建来源的日志，找出跨应用的重复问题</td><td>批量并行分析，快速定位关键问题</td></tr><tr><td><strong>Spiral by Every</strong>（写作工具）</td><td>Multiagent + Outcomes</td><td>Haiku 接待请求，Opus 生成草稿； Outcomes 评分确保写作质量</td><td>多草稿并行 + 质量把控</td></tr><tr><td><strong>Wisedocs</strong></td><td>Outcomes</td><td>按内部标准评估文档审查质量</td><td>审查速度提升 <strong>50%</strong>，同时保持标准一致性</td></tr></tbody></table></div>
+<p>这些案例说明：这三个功能<strong>可以单独使用，也可以组合使用</strong>，关键看场景需求。</p>
+<p>---</p>
+<h2>文章结尾怎么收束</h2>
+<p>文章最后一段是典型的&quot;Getting Started&quot;（入门指引）：</p>
+<ol><li><strong>明确状态</strong>：Dreaming 是研究预览（research preview），其余功能是公开 beta。</li><li><strong>提供入口</strong>：给 Dreaming 的访问申请链接，指向文档和 Claude Console。</li><li><strong>降低门槛</strong>：邀请读者立刻尝试——&quot;deploy your first agent&quot;。</li></ol>
+<p><strong>逻辑闭合</strong>：</p>
+<p>全文从&quot;为什么需要&quot;（痛点）→ &quot;我们提供了什么&quot;（三个功能）→ &quot;别人用得怎么样&quot;（案例验证）→ &quot;你现在可以开始&quot;（行动召唤），形成了一个完整的<strong>价值叙事闭环</strong>：发现问题 → 提出方案 → 证明有效 → 邀请行动。</p>
+<p>---</p>
+<h2>关键句短摘译</h2>
+<div class="doc-table-wrap"><table><thead><tr><th>英文短摘</th><th>中文意思</th><th>为什么重要</th></tr></thead><tbody><tr><td>&quot;Dreaming extends memory by reviewing past sessions to find patterns and help agents self-improve.&quot;</td><td>Dreaming 通过回顾过去的会话来发现模式、帮助 Agent 自我改进，从而扩展了记忆能力。</td><td>点明了 Dreaming 的核心价值——让 Agent 在空闲时&quot;反思&quot;并成长。</td></tr><tr><td>&quot;A separate grader evaluates the output against your criteria in its own context window, so it isn&#39;t influenced by the agent&#39;s reasoning.&quot;</td><td>一个独立的评判者用自己的上下文窗口对照你的标准评估输出，不受 Agent 推理的影响。</td><td>这是 Outcomes 设计的核心——评估必须客观，不能&quot;自己评自己&quot;。</td></tr><tr><td>&quot;Agents do their best work when they know what &#39;good&#39; looks like.&quot;</td><td>当 Agent 知道&quot;好&quot;是什么样的时候，它能发挥最佳表现。</td><td>一句话点明了质量标准的重要性——模糊的目标导致模糊的结果。</td></tr><tr><td>&quot;When there is too much work for a single agent to do well, multiagent orchestration lets a lead agent break the job into pieces.&quot;</td><td>当单个 Agent 难以胜任工作时，多智能体编排让主导 Agent 把任务拆解成多个部分。</td><td>说明了 Multiagent Orchestration 的适用边界——复杂、大量、多样化的任务。</td></tr><tr><td>&quot;These specialists work in parallel on a shared filesystem and contribute to the lead agent&#39;s overall context.&quot;</td><td>这些专家 Agent 在共享文件系统上并行工作，并将结果贡献给主导 Agent 的整体上下文。</td><td>解释了并行如何实现、结果如何汇总——分工但不割裂。</td></tr><tr><td>&quot;Completion rates went up ~6x in their tests.&quot;</td><td>在他们的测试中，完成率提升了约 6 倍。</td><td>提供了 Dreaming 功能的具体效果数据，有说服力。</td></tr></tbody></table></div>
+<p>---</p>
+<h2>术语表</h2>
+<div class="doc-table-wrap"><table><thead><tr><th>英文术语</th><th>解释</th></tr></thead><tbody><tr><td><strong>Dreaming</strong></td><td>&quot;做梦&quot;，一种定期运行的 Agent 反思机制，在工作间隙回顾会话、提取模式、优化记忆。</td></tr><tr><td><strong>Outcomes</strong></td><td>&quot;结果导向&quot;，通过定义质量标准（rubric）和独立评判者（grader），让 Agent 自我检验输出并持续修正直到达标。</td></tr><tr><td><strong>Multiagent Orchestration</strong></td><td>&quot;多智能体编排&quot;，用多个 Agent 分工协作处理复杂任务，主导 Agent 负责任务分解和结果整合。</td></tr><tr><td><strong>Memory</strong></td><td>&quot;记忆系统&quot;，让 Agent 能够保存和检索在工作中积累的经验和知识。</td></tr><tr><td><strong>Lead Agent</strong></td><td>&quot;主导 Agent&quot;，在多智能体架构中负责分解任务、调度子 Agent、整合结果的核心角色。</td></tr><tr><td><strong>Subagent</strong></td><td>&quot;子 Agent&quot;，在多智能体架构中专门负责某类子任务的 Agent，可独立配置模型和工具。</td></tr><tr><td><strong>Grader</strong></td><td>&quot;评判者&quot;，在 Outcomes 机制中独立评估 Agent 输出是否符合标准的组件。</td></tr><tr><td><strong>Rubric</strong></td><td>&quot;评分标准&quot;，用户定义的任务成功标准，grader 据此判断输出是否达标。</td></tr><tr><td><strong>Research Preview</strong></td><td>&quot;研究预览&quot;，功能尚在早期阶段，向部分用户开放测试。</td></tr><tr><td><strong>Public Beta</strong></td><td>&quot;公开测试版&quot;，功能基本成熟，向所有用户开放。</td></tr></tbody></table></div>
+<p>---</p>
+<p><strong>总结</strong>：这篇文章的核心信息是——Claude Managed Agents 的三项新功能（Dreaming、Outcomes、Multiagent Orchestration）共同实现了 Agent 从&quot;被动执行&quot;到&quot;主动改进&quot;的跨越。它们让 Agent 能够<strong>学习</strong>（Dreaming）、<strong>自律</strong>（Outcomes）、<strong>协作</strong>（Multiagent），从而在复杂任务面前更加可靠和高效。</p>
+    </article>
+  </main>
+</div>
+</body>
+</html>
