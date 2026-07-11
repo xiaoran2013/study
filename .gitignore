@@ -1,0 +1,10 @@
+.DS_Store
+*.tmp
+*.bak
+*.pyc
+hermes.log
+.pages/
+
+# Local automation artifacts. The public site is built from an allowlist.
+_sources/
+_assets/__pycache__/

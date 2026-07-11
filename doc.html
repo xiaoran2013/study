@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>文档 · 个人学习工作台</title>
+<link rel="stylesheet" href="_assets/style.css?v=20260704-pagination">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="ai.html">AI</a>
+      <a href="english.html">英语</a>
+      <a href="k12.html">学科</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1 id="doc-title">文档</h1>
+      <p id="doc-path">正在载入</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article id="doc-content" class="doc-content">正在载入...</article>
+  </main>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const source = params.get('src') || 'PROJECT_BACKGROUND.md';
+const title = document.getElementById('doc-title');
+const pathLabel = document.getElementById('doc-path');
+const content = document.getElementById('doc-content');
+
+function escapeHtml(value) {
+  const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+  return String(value ?? '').replace(/[&<>"']/g, char => map[char]);
+}
+
+function safeSource(src) {
+  const decoded = decodeURIComponent(src);
+  if (!decoded || decoded.startsWith('/') || decoded.includes('..') || /^[a-z]+:/i.test(decoded)) return null;
+  if (!/\.(md|json|txt|log)$/i.test(decoded)) return null;
+  return decoded;
+}
+
+function docLink(href, text) {
+  if (/^(https?:|mailto:|#)/i.test(href)) return `<a href="${escapeHtml(href)}">${text}</a>`;
+  if (/\.(md|json|txt|log)$/i.test(href) && !href.includes('..')) {
+    return `<a href="doc.html?src=${encodeURIComponent(href)}">${text}</a>`;
+  }
+  return `<a href="${escapeHtml(href)}">${text}</a>`;
+}
+
+function inlineMarkdown(value) {
+  let html = escapeHtml(value);
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => docLink(href, escapeHtml(label)));
+  return html;
+}
+
+function isTableStart(lines, index) {
+  return lines[index]?.trim().startsWith('|') && /^\s*\|?\s*:?-{3,}:?\s*\|/.test(lines[index + 1] || '');
+}
+
+function renderTable(lines, start) {
+  const rows = [];
+  let index = start;
+  while (index < lines.length && lines[index].trim().startsWith('|')) {
+    rows.push(lines[index].trim());
+    index += 1;
+  }
+  const cells = row => row.replace(/^\||\|$/g, '').split('|').map(cell => inlineMarkdown(cell.trim()));
+  const head = cells(rows[0]);
+  const body = rows.slice(2).map(row => cells(row));
+  const html = `<div class="doc-table-wrap"><table><thead><tr>${head.map(cell => `<th>${cell}</th>`).join('')}</tr></thead><tbody>${body.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  return { html, next: index };
+}
+
+function renderMarkdown(markdown) {
+  const lines = markdown.replace(/\r\n/g, '\n').split('\n');
+  const blocks = [];
+  let index = 0;
+  let inCode = false;
+  let code = [];
+  let list = [];
+
+  function flushList() {
+    if (!list.length) return;
+    blocks.push(`<ul>${list.map(item => `<li>${inlineMarkdown(item)}</li>`).join('')}</ul>`);
+    list = [];
+  }
+
+  while (index < lines.length) {
+    const line = lines[index];
+    const trimmed = line.trim();
+
+    if (trimmed.startsWith('```')) {
+      if (inCode) {
+        blocks.push(`<pre><code>${escapeHtml(code.join('\n'))}</code></pre>`);
+        code = [];
+        inCode = false;
+      } else {
+        flushList();
+        inCode = true;
+      }
+      index += 1;
+      continue;
+    }
+
+    if (inCode) {
+      code.push(line);
+      index += 1;
+      continue;
+    }
+
+    if (!trimmed) {
+      flushList();
+      index += 1;
+      continue;
+    }
+
+    if (isTableStart(lines, index)) {
+      flushList();
+      const table = renderTable(lines, index);
+      blocks.push(table.html);
+      index = table.next;
+      continue;
+    }
+
+    const heading = trimmed.match(/^(#{1,4})\s+(.+)$/);
+    if (heading) {
+      flushList();
+      const level = heading[1].length;
+      blocks.push(`<h${level}>${inlineMarkdown(heading[2])}</h${level}>`);
+      index += 1;
+      continue;
+    }
+
+    if (/^[-*]\s+/.test(trimmed)) {
+      list.push(trimmed.replace(/^[-*]\s+/, ''));
+      index += 1;
+      continue;
+    }
+
+    if (trimmed.startsWith('> ')) {
+      flushList();
+      blocks.push(`<blockquote>${inlineMarkdown(trimmed.slice(2))}</blockquote>`);
+      index += 1;
+      continue;
+    }
+
+    flushList();
+    blocks.push(`<p>${inlineMarkdown(trimmed)}</p>`);
+    index += 1;
+  }
+  flushList();
+  return blocks.join('\n');
+}
+
+async function main() {
+  const src = safeSource(source);
+  if (!src) {
+    content.innerHTML = '<p>文档路径不安全或不支持。</p>';
+    pathLabel.textContent = '无法打开';
+    return;
+  }
+  pathLabel.textContent = src;
+  title.textContent = src.split('/').pop().replace(/\.(md|json|txt|log)$/i, '').replace(/[-_]+/g, ' ');
+  try {
+    const response = await fetch(src);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const text = await response.text();
+    if (src.endsWith('.json')) {
+      content.innerHTML = `<pre><code>${escapeHtml(JSON.stringify(JSON.parse(text), null, 2))}</code></pre>`;
+    } else {
+      const firstHeading = text.match(/^#\s+(.+)$/m);
+      if (firstHeading) title.textContent = firstHeading[1].replace(/[*_`]/g, '').trim();
+      content.innerHTML = renderMarkdown(text);
+    }
+  } catch (error) {
+    content.innerHTML = `<p>无法载入文档: ${escapeHtml(error.message)}</p>`;
+  }
+}
+
+main();
+</script>
+</body>
+</html>

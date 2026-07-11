@@ -1,0 +1,153 @@
+# Apple 平台智能应用与 Claude 的 Foundation Models 框架集成
+
+> 原文: https://claude.com/blog/claude-for-foundation-models
+> 日期: Jun 08, 2026
+> 分类: Product announcements
+> 产品: Claude Platform
+
+---
+
+## 文章在讲什么
+
+这篇文章 announced 一个新的 Swift 包，它将 Apple 的 Foundation Models 框架与 Claude 连接起来。作者想解决的问题是：Apple 开发者已经可以使用 Foundation Models 框架调用本地模型处理简单任务（如摘要、关键词提取），但当任务变得复杂——比如多步推理、代码生成、需要搜索最新信息时，本地模型能力有限。Claude 正好可以填补这个空白。
+
+作者的核心思路是：**一个用户体验，两种模型各司其职**。本地模型处理快速、轻量的任务；Claude 处理需要复杂推理的任务。两者通过同一个框架衔接，开发者不需要维护两套完全独立的代码逻辑。
+
+---
+
+## 原文结构地图
+
+| 部分 | 作用 |
+|------|------|
+| 标题 + 首段 | 抛出核心产品：一个连接 Foundation Models 和 Claude 的 Swift 包 |
+| What this unlocks | 解释这个集成能做什么——用两个具体场景说明应用模式 |
+| Getting started | 告知开发者如何使用：支持的平台、依赖添加方式、基本流程 |
+
+---
+
+## 核心概念讲解
+
+### Foundation Models 框架
+
+这是 Apple 在 iOS/macOS 等系统中提供的官方框架，让开发者可以用纯 Swift 代码调用 AI 模型。它的特点是：
+
+- **原生集成**：不需要额外网络请求，直接在设备上跑模型
+- **类型安全**：通过 `@Generable` 注解，模型输出的内容可以直接变成 Swift 的 struct、enum 等类型，而不是返回一段原始文本
+- **适合轻量任务**：摘要、提取、解释概念这类任务在本地就能完成，延迟低、不需要联网
+
+### 为什么要"交接"给 Claude
+
+本地模型的限制在于：能力有上限，无法做复杂推理、无法搜索实时信息、无法执行代码。当用户的需求超出本地模型能力时，开发者需要把请求发给更强大的云端模型——Claude 正是这个角色。
+
+### 这个 Swift 包做了什么
+
+简单说，它是一个"桥梁"：
+
+```
+用户交互 → Foundation Models 框架（本地处理简单任务）
+                              ↓ 类型安全的输入
+                       Swift 包（桥接层）
+                              ↓
+                        Claude API
+                              ↓ 流式响应
+                       SwiftUI 视图（展示结果）
+```
+
+开发者只需要写少量代码，就能让本地模型和 Claude 协同工作。
+
+---
+
+## 文章主体讲解
+
+### 开头：产品发布
+
+文章开门见山说明发布了什么：一个让 Foundation Models 框架能调用 Claude 的新 Swift 包。
+
+作者这样写的目的是让读者立刻知道这篇文章要介绍什么工具。接着解释了 Foundation Models 框架本身的特点——三行代码就能返回类型化的 Swift 值，适合本地任务。
+
+### What this unlocks：用场景说明价值
+
+这一节是文章的核心说理部分。作者没有直接讲技术细节，而是举了两个具体场景：
+
+**场景一：日记应用**
+
+- 本地模型：生成每日写作提示（prompt）
+- Claude：跨月分析日记，找出主题线索
+
+**场景二：学习应用**
+
+- 本地模型：解释一个术语的定义
+- Claude：当学生追问"这对整个课程体系有什么意义"时，做深入的多步推理
+
+作者在这里点出了关键理念：**one experience for the user, backed by the right model for each step**——用户感知到的是一个连贯的体验，但背后是不同的模型在不同阶段各尽其责。
+
+### Getting started：快速上手
+
+这一节非常简洁，只用几行文字说明了：
+
+- 支持的平台（iOS 27, iPadOS 27, macOS 27, visionOS 27, watchOS 27）
+- 使用步骤：添加依赖 → 登录 Anthropic API key → 把本地模型的类型化输出传给 Claude 请求
+- 包本身负责流式响应、工具调用、结构化返回
+
+作者没有展开讲 API 细节，显然这是一篇 announcement 类型文章，目标是让开发者知道这个工具存在、能在哪里用。
+
+---
+
+## 关键对比表
+
+| 维度 | 本地模型（Foundation Models） | Claude（云端） |
+|------|------------------------------|----------------|
+| 延迟 | 低（本地推理） | 取决于网络 |
+| 能力 | 适合简单任务（摘要、提取） | 复杂推理、代码生成、实时搜索 |
+| 数据 | 不离开设备 | 发送到云端 |
+| 成本 | 设备算力 | API 调用计费 |
+| 适用场景 | 快速响应、轻量任务 | 多步推理、需要外部信息 |
+
+---
+
+## 关键句短摘译
+
+1. **"Hand off complex reasoning from on-device models with typed Swift outputs."**
+   - 中文意思：将复杂推理任务从本地模型交接出去，同时保留类型化的 Swift 输出。
+   - 为什么重要：这是整个集成的核心价值——既用上了 Claude 的强大能力，又保持了 Swift 代码的类型安全。
+
+2. **"It is very easy to use and can return typed Swift values through guided generation in as few as three lines of code."**
+   - 中文意思：Foundation Models 框架非常易用，最少三行代码就能通过引导生成返回类型化的 Swift 值。
+   - 为什么重要：说明 Apple 框架的设计初衷就是降低开发门槛。
+
+3. **"One experience for the user, backed by the right model for each step."**
+   - 中文意思：对用户来说是一个连贯体验，背后每一步由最合适的模型支撑。
+   - 为什么重要：这是作者对混合使用本地+云端模型这一架构的理念总结。
+
+4. **"Developers can now use Apple's Foundation Models framework to hand off to Claude when a request calls for multi-step reasoning, code generation, and more."**
+   - 中文意思：当请求需要多步推理、代码生成等能力时，开发者可以通过 Foundation Models 框架将任务交接给 Claude。
+   - 为什么重要：明确了交接（hand off）的触发条件。
+
+5. **"The package handles streaming, tool calls, and structured responses back into your SwiftUI view."**
+   - 中文意思：这个包负责处理流式响应、工具调用，并将结构化结果返回到你的 SwiftUI 视图中。
+   - 为什么重要：告诉开发者这个桥接层做了哪些脏活累活，简化了开发工作。
+
+---
+
+## 术语表
+
+| 英文术语 | 中文解释 |
+|----------|----------|
+| Foundation Models framework | Apple 提供的官方框架，让开发者能在 Swift 中调用 AI 模型，支持本地推理和类型化输出 |
+| Swift package | Swift 生态的代码包管理机制，类似于 npm 或 Maven |
+| @Generable | Foundation Models 框架中的注解，声明某个类型可以被 AI 模型生成 |
+| Hand off | 交接/转交，这里指把任务从本地模型转到云端模型 |
+| Streaming | 流式响应，模型边生成边返回，不需要等全部完成 |
+| Tool calls | 工具调用，Claude 可以调用外部工具（如搜索、代码执行） |
+| Typed Swift values | 类型化的 Swift 值，指 struct、enum 等有明确类型的对象，而非原始字符串 |
+| API key | API 密钥，用于认证和授权调用云端服务 |
+
+---
+
+## 文章结尾怎么收束
+
+文章结尾非常简短，只用 Getting started 一节告知了可用性和基本步骤，然后戛然而止。
+
+从全文逻辑来看，作者没有做传统的"总结"动作，而是把"怎么用"放在最后——这符合产品 announcement 的写法：先讲价值（ What this unlocks ），再给入口（ Getting started ）。读者读完已经知道这个工具能做什么、为什么有用、去哪里找。
+
+全文的逻辑闭合点是：**一个用户体验，背后是本地模型和 Claude 各司其职的协作模式**。开头提出这个可能性，主体用场景说明价值，结尾指向具体实现路径。
