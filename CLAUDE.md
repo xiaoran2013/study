@@ -8,7 +8,7 @@
 
 ## 最常用的三件事
 
-1. **沉淀一篇新内容**: 按 AGENTS.md 第 2 节决策树选位置(主题目录 → 系列子目录或 `notes/`), 渲染 `node scripts/render-topic-docs.js`, 更新主题入口页卡片 + 首页"最近沉淀", 记 `ITERATION_LOG.md`, 提交推送。
+1. **沉淀一篇新内容**: 按 AGENTS.md 第 2 节决策树选位置(主题目录 → 系列子目录或 `notes/`), 同步提炼/更新 `wiki/` 概念卡片(AGENTS.md 第 5 节 ingest 流程), 渲染 `node scripts/render-topic-docs.js`, 更新主题入口页卡片 + 首页"最近沉淀", 记 `ITERATION_LOG.md`, 提交推送。
 2. **改站点页面**: 复用 `_assets/style.css` 已有类, 尽量不加新样式; 本地 `python3 -m http.server 8080` 抽查 200 后提交。
 3. **验证上线**: 推送后 1-3 分钟, `curl -s https://xiaoran2013.github.io/study/<路径>` 确认生效。
 

@@ -42,6 +42,10 @@ jobs:
             cp -R topics .pages/topics
           fi
 
+          if [ -d "wiki" ]; then
+            cp -R wiki .pages/wiki
+          fi
+
           find .pages -name "__pycache__" -type d -prune -exec rm -rf {} +
           find .pages -name "*.pyc" -type f -delete
       - name: Upload artifact

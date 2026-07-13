@@ -8,3 +8,6 @@ hermes.log
 # Local automation artifacts. The public site is built from an allowlist.
 _sources/
 _assets/__pycache__/
+
+# Obsidian vault 配置(本地阅读器, 不入库)
+.obsidian/
