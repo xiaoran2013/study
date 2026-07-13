@@ -37,6 +37,7 @@ python3 -m http.server 8080
 - `ai.html`: AI 学习主题入口。
 - `english.html`: 英语学习主题入口。
 - `k12.html`: 小学、初中和各学科学习主题入口。
+- `investment.html`: 投资学习主题入口。
 - `doc.html`: Markdown/JSON 文档浏览器。
 - `PROJECT_BACKGROUND.md`: 项目背景与定位。
 - `DIRECTORY_STRUCTURE.md`: 项目目录结构和 GitHub/飞书边界。

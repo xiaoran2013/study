@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>认识我们 Claude Opus 4.8 Build Day 黑客松的获奖者</title>
+<style>
+:root{--bg:#fafaf8;--bg-elev:#fff;--bg-soft:#f4f3ee;--fg:#1a1a1a;--fg-soft:#555;--fg-mute:#888;--border:#e2e0d8;--accent:#285c4d;--accent-soft:#e8f2ee;--link:#0969da;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;}
+.page{max-width:860px;margin:0 auto;padding:40px 28px 96px;}
+.sitebar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--fg-mute);}
+.sitebar a{color:var(--accent);text-decoration:none;font-weight:600;}
+.sitebar a:hover{text-decoration:underline;}
+h1{font-size:30px;line-height:1.3;margin:0 0 10px;color:var(--fg);}
+.meta{font-size:13.5px;color:var(--fg-mute);margin-bottom:6px;}
+.meta a{color:var(--accent);}
+.lead{font-size:17px;color:var(--fg-soft);font-style:italic;border-left:3px solid var(--accent);padding-left:14px;margin:20px 0 28px;}
+h2{font-size:22px;margin-top:38px;margin-bottom:12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px;}
+p{margin:12px 0;}
+figure{margin:20px 0;text-align:center;}
+figcaption{font-size:13px;color:var(--fg-mute);margin-top:6px;font-style:italic;}
+.footer-note{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--fg-mute);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sitebar">
+    <a href="index.html">← 返回 Claude Blog 中文全译目录</a>
+    <span>Claude Blog 全文翻译</span>
+  </div>
+  <article>
+    <h1>认识我们 Claude Opus 4.8 Build Day 黑客松的获奖者</h1>
+    <p class="meta">
+      原文标题：Meet the winners of our Claude Opus 4.8 Build Day hackathon ｜
+      发布日期：2026 年 6 月 17 日 ｜ 分类：Claude Code ｜ 产品：Claude Code ｜ 阅读时长：约 7 分钟 ｜
+      <a href="https://claude.com/blog/meet-the-winners-of-our-claude-opus-4-8-build-day-hackathon" target="_blank">查看原文</a>
+    </p>
+    <p class="lead">从复原唐代建筑，到对一个"合成旧金山"做民意调查，看看我们最近一次黑客松的获奖者们，用 Claude Opus 4.8 在一天之内做出了什么。</p>
+
+    <p>6 月 13 日，我们邀请了 300 多位创始人和开发者来到旧金山，参加一场为期 12 小时、围绕 Claude Opus 4.8 展开的黑客松。超过 1500 人报名申请，最终 310 人参与其中，许多人从世界各地专程赶来，每人获得 500 美元的额度，在一天之内把一个想法变成一个可运行的演示。</p>
+
+    <p>我们采访了三支获奖团队，了解他们做了什么，以及是如何使用 Claude 完成的。</p>
+
+    <p>祝贺各位获奖者，也祝贺所有参与者。希望他们的项目能给你带来一些属于自己的灵感。</p>
+
+    <h2>第一名：Tekton，Holly Tang 与 Austin Burgess</h2>
+
+    <figure><figcaption>Holly Tang 与 Austin Burgess 打造了 Tekton，一个能够让唐代建筑重现生机的 3D 复原平台，其中每一个构件都可以追溯到具体的历史来源。</figcaption></figure>
+
+    <p>当一座历史悠久的木造建筑被大火烧毁时，数百年的工艺可能会随之消失。Tekton 把这些建筑在 3D 中重建出来，并将每一个构件追溯回一份有据可查的资料来源。</p>
+
+    <p>给 Tekton 一座历史建筑，Claude 就会展开研究，汇集图纸、施工文档、照片和示意图，然后跨越 339 个渐进式建造状态，组装出一个 3D 模型。当你点击模型中的任意一个构件时，Tekton 会展示这个细节的来源，以及它被这样放置的原因。团队把这称为一条"证据链"，从原始资料一路延伸到经过验证的模型。他们打造这个平台是为了服务学术验证、修复工作和文化保护，起点是唐代建筑和巴黎圣母院的尖塔。</p>
+
+    <p>整个验证过程完全在 Opus 4.8 上运行。独立的验证者子智能体在各自隔离的上下文窗口中为每一次复原打分，自我纠正循环反复检查构件的摆放位置，直到全部 20 项测试通过。每一次构建都会对照历史记录及其引用来源进行核验，因此最终完成的模型遵循的是该建筑最初建造方式的文献记载规则。</p>
+
+    <p>Holly Tang 和 Austin Burgess 是一个月前在一场 Code with Claude 活动排队买咖啡时认识的。Holly 是一名设计师，一直在帮助 Austin 打理他的创业公司 Pearl。"我很喜欢看纪录片，看到美丽的建筑毁于大火，我总是很难过，"Holly 说。她曾独自搭建过一个单体复原原型；Austin 的贡献，是把它扩展成能够端到端适用于任意建筑的系统。</p>
+
+    <p>为了打造 Tekton，两人分阶段推进：先把巴黎圣母院的尖塔按规模渲染出来，再添加更精细的细节，然后再向整座建筑的其余部分扩展。时间耗尽时，整座大教堂还没有全部完成。即便如此，仍有不少黑客松参与者询问这个项目，或提出愿意帮忙让它更精确。Holly 和 Austin 希望把 Tekton 开源，让博物馆、历史学家、非营利组织和政府机构都能在此基础上继续构建。</p>
+
+    <p><strong>给其他开发者的建议：</strong> 在动手构建任何部分之前，先把整个项目规划出来。</p>
+
+    <p>"我们做了一份完整的 PRD，还有一个大约 50 张任务卡片的 Notion 看板，每张卡片对应一项具体任务，"Austin 说。"这几乎就像是——这是端到端的完整项目，而这正是我们希望每一步都要实现的东西。"计划确定之后，他把整个构建过程拆分成不同的工作流，并行运行。</p>
+
+    <p><em>Tekton 的 GitHub 仓库</em></p>
+
+    <h2>第二名：Sim Francisco，Tanmayi Priya Dasari 与 Tejas Prabhune</h2>
+
+    <figure><figcaption>Tanmayi Priya Dasari 与 Tejas Prabhune 打造了 Sim Francisco，一个以人口普查数据为种子的旧金山人口数字孪生系统，能够在数秒内对一座"合成城市"做民意调查，并预测现实世界的结果。</figcaption></figure>
+
+    <p>Sim Francisco 是一个可运行的旧金山人口模型。它包含 10,000 名基于美国人口普查数据生成的合成居民，每个人都拥有各自的人口统计特征、个人经历和世界观，被放置在城市地图上，并对新闻实时做出反应。</p>
+
+    <p>向这座城市提出一个问题，它就会对整个合成选民群体逐个街区展开民意调查。在知识截止日期为 2023 年 10 月的模型基础上运行，它对 2024 年总统选举投票的预测为民主党得票率 81.3%，而实际结果为 83.8%；对旧金山 2024 年 3 月的 A 提案预测为 70% 支持，实际结果为 70.38%。它对 Kalshi 和 Polymarket 等预测市场的追踪误差保持在几个百分点以内。*</p>
+
+    <p>Opus 4.8 编写了整个前后端，并对后端行为进行了端到端验证。为了验证模型的工作成果，团队让 Claude 与一个验证者智能体和一个对抗性智能体协同工作，构建出一个能够复现城市真实人口分布的后端。</p>
+
+    <p>Tanmayi Priya Dasari 和 Tejas Prabhune 是加州大学伯克利分校电气工程与计算机科学专业的学生，两人是通过校园内的机器学习社团认识的。对 Tejas 来说，Sim Francisco 同时也是他正在创办的后训练（post-training）公司的一次测试，用来验证模拟人格是否能够保持足够的一致性，从而被用来训练模型完成长周期任务。</p>
+
+    <p><strong>给其他开发者的建议：</strong> 不要满足于第一个可行的方案，尤其是当它成本高昂的时候。</p>
+
+    <p>团队的第一个版本，为每一位居民（共 10,000 人）单独发起一次推理调用，成本变得很高。"随着时间推移，Claude 自己设计并运行了一个演化聚类算法，"Tejas 说，把居民分批聚合成大约 300 个具有代表性的人格画像。分组后的版本在对照 Kalshi、Polymarket 和历史结果时保持了同样的准确度，同时把推理成本降低了 10 到 100 倍。</p>
+
+    <p><em>Sim Francisco 的 GitHub 仓库</em></p>
+
+    <h2>第三名：Custom Universe，Jake Stevens 与 Mauricio Pereira</h2>
+
+    <figure><figcaption>Jake Stevens 与 Mauricio Pereira 打造了 Custom Universe，一个能把一张手机照片转化为完全可编辑、逼真的 3D 场景的实时引擎。</figcaption></figure>
+
+    <p>用手机给一把椅子拍张照，Custom Universe 就能把它变成一个 3D 物体，你可以把它放进一个场景里，用文字提示重新设定风格，并在四处移动它的同时让渲染图像实时更新。</p>
+
+    <p>这个项目的目标用户是机器人实验室，它们需要大量的合成数据，来针对特定任务和场景训练机器人。一个实验室可以扫描工厂车间里的一台机器，把它放进一个场景中，生成数据，用来针对这个确切的环境微调机器人模型。搭建这样一套设置，通常意味着要雇佣物理学家和工程师来处理物理效果和碰撞几何形状。Custom Universe 让你可以通过拖拽物体来布置场景，团队计划增加精确摆放功能，比如把一个物体在厨房台面上挪动 30 厘米。</p>
+
+    <p>Opus 4.8 端到端地构建了整个项目，并在整场黑客松期间操作运行模型的远程 NVIDIA H100。团队还用 Claude 来判断哪些模型能产生正确的输出，并构建了把手机扫描物体（通过苹果的 RealityKit 采集）导入 Web 应用的处理流程。</p>
+
+    <p>Jake Stevens 和 Mauricio Pereira 是在这次活动上认识的。Jake 是罗切斯特理工学院（RIT）计算机视觉专业的毕业生，运营着一家专注于加速 AI 模型的创业公司 Luminal；这个场景搭建工具最初是他一直想尝试的一个 side project。Mauricio 是麻省理工学院机器人专业的毕业生，运营着 Coat Robotics，他带来的是自己亲身了解的问题：机器人领域仍然缺乏训练数据，搭建合成环境非常困难。Custom Universe 依赖开源模型和算法，可以免费使用；团队表示用户可以在自己的 GPU 上运行它。</p>
+
+    <p><strong>给其他开发者的建议：</strong> 用 Claude 来帮你挑选工具，而不只是用来写代码。</p>
+
+    <p>"很多迭代工作，都是在看哪个模型能给出正确的输出，所以我们用 Claude 做了大量的调研，"Mauricio 说。团队还把不熟悉的技术交给 Claude 去做集成。"比如苹果的 RealityKit，以及如何确保人们能把自己扫描的物体导入我们的网站。我们直接告诉 Claude：把这个加进处理流程里。"</p>
+
+    <p><em>Custom Universe 的 GitHub 仓库</em></p>
+
+    <p>了解我们的 Claude Community 项目，包括聚会活动、黑客松等更多内容。</p>
+
+    <p><em>* Sim Francisco 是一个独立的黑客松项目，以预测选举结果作为示例场景。这并不代表 Anthropic 认可将 AI 模拟选举预测作为一种正式的使用场景。</em></p>
+
+    <p class="footer-note">本文由个人学习工作台整理翻译，仅供学习参考，如需引用请以<a href="https://claude.com/blog/meet-the-winners-of-our-claude-opus-4-8-build-day-hackathon" target="_blank">原文</a>为准。</p>
+  </article>
+</div>
+</body>
+</html>

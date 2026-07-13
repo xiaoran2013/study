@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>完整的 Claude 桌面体验现已登陆 AWS、Google Cloud 和 Microsoft Foundry</title>
+<style>
+:root{--bg:#fafaf8;--bg-elev:#fff;--bg-soft:#f4f3ee;--fg:#1a1a1a;--fg-soft:#555;--fg-mute:#888;--border:#e2e0d8;--accent:#285c4d;--accent-soft:#e8f2ee;--link:#0969da;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;}
+.page{max-width:860px;margin:0 auto;padding:40px 28px 96px;}
+.sitebar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--fg-mute);}
+.sitebar a{color:var(--accent);text-decoration:none;font-weight:600;}
+.sitebar a:hover{text-decoration:underline;}
+h1{font-size:30px;line-height:1.3;margin:0 0 10px;color:var(--fg);}
+.meta{font-size:13.5px;color:var(--fg-mute);margin-bottom:6px;}
+.meta a{color:var(--accent);}
+h2{font-size:22px;margin-top:38px;margin-bottom:12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px;}
+h3{font-size:18px;margin-top:26px;margin-bottom:8px;color:#1f2937;}
+p{margin:12px 0;}
+ul{margin:12px 0;padding-left:24px;}
+li{margin:8px 0;}
+blockquote{margin:16px 0;padding:10px 16px;background:var(--accent-soft);border-left:4px solid var(--accent);color:var(--fg-soft);}
+.footer-note{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--fg-mute);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sitebar">
+    <a href="index.html">← 返回 Claude Blog 中文全译目录</a>
+    <span>Claude Blog 全文翻译</span>
+  </div>
+  <article>
+    <h1>完整的 Claude 桌面体验现已登陆 AWS、Google Cloud 和 Microsoft Foundry</h1>
+    <p class="meta">
+      原文标题：The full Claude Desktop experience on AWS, Google Cloud, and Microsoft Foundry ｜
+      发布日期：2026 年 6 月 22 日 ｜ 分类：Enterprise AI ｜ 产品：Claude Enterprise ｜ 阅读时长：约 5 分钟 ｜
+      <a href="https://claude.com/blog/the-full-claude-desktop-experience-on-aws-google-cloud-and-microsoft-foundry" target="_blank">查看原文</a>
+    </p>
+
+    <p>通过 AWS、Google Cloud 和 Microsoft Foundry 使用 Claude Desktop 的组织，现在可以获得完整的桌面体验——聊天、Claude Cowork 和 Claude Code，全部集成在一个应用中。</p>
+
+    <p>现在，IT 团队可以让所有产品的推理都保留在自己的环境内，并在全公司范围内部署 Claude Desktop，配备按用户的 SSO、MDM 策略模板、离线安装选项，以及一个可以完全在设备本地运行的 M365 连接器。</p>
+
+    <p>推理运行在你自己配置的云区域中，对话历史记录本地存储。你可以控制数据连接器所触达的端点，以及 Anthropic 所接收的聚合遥测数据。</p>
+
+    <h3>面向整个组织的统一界面</h3>
+
+    <p>在此之前，通过 AWS、Google Cloud 和 Microsoft Foundry 使用 Claude Desktop 的客户，只能访问 Claude Cowork 和 Claude Code。现在，一次部署即可覆盖每一种角色，每个功能面板都拥有自己独立的策略密钥，你可以自主决定谁在何时获得哪些权限。</p>
+
+    <p>聊天用于快速获取答案、理清思路。Claude Cowork 用于处理你的员工更愿意交出去的工作：Claude 在获批的信息来源中进行调研，处理设备上已有的文件，构建交付成果，完成后再呈现结果。Claude Code 面向那些想要智能体编程、又不想整天泡在终端里的工程师。</p>
+
+    <h3>部署控制</h3>
+
+    <p>在全公司范围内部署 Claude Desktop，意味着要融入你已有的各类系统之中。</p>
+
+    <ul>
+      <li><strong>像任何一款办公应用一样登录。</strong> 员工使用他们用于其他一切工作的同一个工作账户：IAM Identity Center、Workforce Identity Federation、Microsoft Entra ID，或任何 Okta 这样的 OIDC 提供商。无需轮换共享密钥，终端用户设备上也不会留有云凭证。</li>
+      <li><strong>像部署任何你已经在管理的应用一样部署它。</strong> 从设置界面导出策略模板，并通过 Intune、GPO 或 Jamf 推送出去。离线安装包可以覆盖物理隔离（air-gapped）环境。</li>
+      <li><strong>在任何人看到之前，先确认它能正常运作。</strong> 在推广上线之前，测试每一个连接器，确认你的服务商提供哪些 Claude 模型，并验证连接是否正常。一个模型守护机制会确保路由始终指向 Claude（包括在 GovCloud 环境中），即便某项设置出现误配置也不例外。</li>
+      <li><strong>从小范围开始，随着采用率提升逐步扩展。</strong> 聊天、Claude Cowork 和 Claude Code 各自拥有独立的策略密钥，因此你可以先给非技术团队开放聊天和 Claude Cowork，给工程团队开放 Claude Code，随着各团队逐步采用再扩大访问范围。你的强制拒绝规则会适用于每一个功能面板。</li>
+      <li><strong>把 Claude 带到工作真正发生的地方。</strong> 一个 Microsoft 365 连接器让 Claude 能够通过你自己的 Entra 应用访问邮件和文档，支持租户白名单，并对 GCC High/DoD 端点提供测试版支持。对于最严格的数据驻留要求，可以使用我们的本地连接器，这样连接就只发生在设备和 Microsoft 之间。</li>
+    </ul>
+
+    <blockquote>"我们通过现有的云环境，快速地把 Claude Desktop 推广了出去——没有额外签订单独的供应商合同。我们自己的 LLM Gateway 让一个团队就能把它部署给全球数百名用户，而无需搭建繁重的基础设施。"<br>—— Sarang Oh，分析/AI 团队负责人（Hanwha Solutions）</blockquote>
+
+    <h3>开始使用</h3>
+
+    <p>对于管理员来说，部署指南详细介绍了 SSO、策略模板和上线前验证的完整流程。或者，你也可以联系你的客户团队，我们会帮助你规划推广方案。</p>
+
+    <p class="footer-note">本文由个人学习工作台整理翻译，仅供学习参考，如需引用请以<a href="https://claude.com/blog/the-full-claude-desktop-experience-on-aws-google-cloud-and-microsoft-foundry" target="_blank">原文</a>为准。</p>
+  </article>
+</div>
+</body>
+</html>

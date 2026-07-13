@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude in Microsoft Foundry 正式全面上线</title>
+<style>
+:root{--bg:#fafaf8;--bg-elev:#fff;--bg-soft:#f4f3ee;--fg:#1a1a1a;--fg-soft:#555;--fg-mute:#888;--border:#e2e0d8;--accent:#285c4d;--accent-soft:#e8f2ee;--link:#0969da;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;}
+.page{max-width:860px;margin:0 auto;padding:40px 28px 96px;}
+.sitebar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--fg-mute);}
+.sitebar a{color:var(--accent);text-decoration:none;font-weight:600;}
+.sitebar a:hover{text-decoration:underline;}
+h1{font-size:30px;line-height:1.3;margin:0 0 10px;color:var(--fg);}
+.meta{font-size:13.5px;color:var(--fg-mute);margin-bottom:6px;}
+.meta a{color:var(--accent);}
+h2{font-size:22px;margin-top:38px;margin-bottom:12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px;}
+h3{font-size:18px;margin-top:26px;margin-bottom:8px;color:#1f2937;}
+p{margin:12px 0;}
+blockquote{margin:16px 0;padding:10px 16px;background:var(--accent-soft);border-left:4px solid var(--accent);color:var(--fg-soft);}
+.footer-note{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--fg-mute);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sitebar">
+    <a href="index.html">← 返回 Claude Blog 中文全译目录</a>
+    <span>Claude Blog 全文翻译</span>
+  </div>
+  <article>
+    <h1>Claude in Microsoft Foundry 正式全面上线</h1>
+    <p class="meta">
+      原文标题：Claude in Microsoft Foundry is now generally available ｜
+      发布日期：2026 年 6 月 29 日 ｜ 分类：Product announcements ｜ 产品：Claude Platform ｜ 阅读时长：约 5 分钟 ｜
+      <a href="https://claude.com/blog/claude-in-microsoft-foundry" target="_blank">查看原文</a>
+    </p>
+
+    <p>从今天起，Claude 模型在托管于 Azure 的 Microsoft Foundry 中正式全面上线。Claude 会在你的 Azure 环境中运行，使用你的团队已经在用的身份验证、计费和治理控制。你可以选择推理在哪里处理，包括面向有数据驻留要求的团队提供的美国数据区。Anthropic 负责运营推理服务，并担任数据处理方角色。</p>
+
+    <blockquote>"在 NVIDIA，我们每天都在使用自主 AI 智能体，帮助团队更快行动、想得更大。Claude 模型带来了强大的推理、编程和企业级能力，这些能力对复杂的技术工作很有价值。现在 Claude 已经可以在运行于 NVIDIA GB300 GPU 之上的 Microsoft Foundry 中使用，更多组织能够以生产环境所需的性能、规模和安全性，运行先进的专业化 AI 智能体。"<br>—— Justin Boitano，企业计算部副总裁兼总经理（NVIDIA）</blockquote>
+
+    <blockquote>"在 Azure 上运行 Claude 模型，为我们带来了企业客户所期望的持续吞吐量和可靠性。前沿模型的质量与企业级基础设施的结合，正是 Bolt 能够服务于财富 500 强企业的关键所在。"<br>—— Gary Ballabio，合作伙伴关系副总裁（Bolt）</blockquote>
+
+    <blockquote>"在 Anthropic 和 Azure 之间，我们得到了世界上最好的能力，也得到了世界上最好的安全性。而这正是核能行业所需要的。正因如此，我们把一次原本需要 200 人天才能完成的安全分析，压缩到了一天之内。"<br>—— Matt Huang，创始产品负责人（Everstar）</blockquote>
+
+    <blockquote>"我们的客户用日常语言描述他们的测试用例，Momentic 会在界面中逐步执行，在发布上线前验证一切是否正常。我们发现 Claude Opus 特别适合这个场景，通过在 Azure Foundry 上运行它，我们现在能以客户所依赖的可靠性，每分钟处理数百万个 token。"<br>—— Jeff An，联合创始人兼 CTO（Momentic）</blockquote>
+
+    <h3>通过你的 Azure 账户使用 Claude 进行构建</h3>
+
+    <p>目前，Claude Opus 4.8 和 Claude Haiku 4.5 已在 Messages API 中可用，并配备提示缓存、扩展思考等核心能力，支持从编程、智能体工作到复杂推理的各类使用场景。我们会持续扩展 Foundry 中可用的功能。</p>
+
+    <p>Claude in Microsoft Foundry 是原生的 Azure 服务，可以与你现有的 Azure 身份验证、网络和治理控制无缝配合。你会收到一份统一整合的账单；对于持有 Microsoft 企业协议（Enterprise Agreement）的符合条件的客户，Claude 的使用量会从 Microsoft Azure 承诺额度中扣减。</p>
+
+    <h3>在 Azure 中运行由 Anthropic 运营的 Claude</h3>
+
+    <p>在 Microsoft Foundry 中运行 Claude 有两种方式。当你需要在自己的 Azure 环境中运行、并使用 Azure 的身份验证、计费、治理以及美国数据区时，选择"托管于 Azure（hosted on Azure）"。当你需要完整的一整套 API 功能，或者需要一个尚未在 Azure 上线的模型时，选择"托管于 Anthropic（hosted on Anthropic，此前称为 Foundry Preview）"。随着时间推移，我们的目标是让"托管于 Azure"和"托管于 Anthropic"这两种方案在功能和模型上实现对等。</p>
+
+    <h3>开始使用</h3>
+
+    <p>Claude in Microsoft Foundry 从今天起正式全面上线。要开始使用，请打开 Claude in Microsoft Foundry，或查阅相关文档。</p>
+
+    <p class="footer-note">本文由个人学习工作台整理翻译，仅供学习参考，如需引用请以<a href="https://claude.com/blog/claude-in-microsoft-foundry" target="_blank">原文</a>为准。</p>
+  </article>
+</div>
+</body>
+</html>

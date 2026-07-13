@@ -18,6 +18,7 @@
       <a href="../../../ai.html" class="active">AI</a>
       <a href="../../../english.html">英语</a>
       <a href="../../../k12.html">学科</a>
+      <a href="../../../investment.html">投资</a>
     </nav>
   </header>
 
@@ -31,94 +32,94 @@
 
   <main class="doc-shell">
     <article class="doc-content">
-<h1>驾驭 Claude Code：CLAUDE.md、skills、hooks 与子代理的使用时机</h1>
+<h1 id="驾驭-claude-codeclaudemdskillshooks-与子代理的使用时机">驾驭 Claude Code：CLAUDE.md、skills、hooks 与子代理的使用时机</h1>
 <blockquote>原文: https://claude.com/blog/steering-claude-code-skills-hooks-rules-subagents-and-more</blockquote>
 <blockquote>日期: Jun 18, 2026</blockquote>
 <blockquote>分类: Claude Code</blockquote>
 <blockquote>产品: Claude Code</blockquote>
 <p>---</p>
-<h2>文章在讲什么</h2>
+<h2 id="文章在讲什么">文章在讲什么</h2>
 <p>这篇文章解决的问题很实际：当你想要定制 Claude Code 的行为时，应该把指令放在哪里？</p>
 <p>作者指出 Claude Code 提供了七种定制方法，但这七种方法在&quot;何时加载&quot;&quot;是否会因为对话压缩而丢失&quot;&quot;消耗多少上下文成本&quot;这三个维度上各不相同。如果把指令放在错误的位置，可能导致：无关的上下文不断累积消耗 token、关键指令在长对话中被遗忘、或者本该确定执行的自动化变成了&quot;看心情&quot;的概率行为。</p>
 <p>文章的核心框架是<strong>上下文成本（context cost）与指令权威性（authority）的权衡</strong>。不同方法在这个权衡谱上占据不同位置，理解这一点，就能为你的每条指令找到正确的归属地。</p>
 <p>---</p>
-<h2>原文结构地图</h2>
+<h2 id="原文结构地图">原文结构地图</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>主要章节</th><th>作用</th></tr></thead><tbody><tr><td>开篇与对比表格</td><td>建立七种方法的整体印象，用表格快速对比关键维度差异</td></tr><tr><td>CLAUDE.md files</td><td>讲解项目级&quot;常驻&quot;指令的两个变体（根目录 vs 子目录）及其适用场景</td></tr><tr><td>Rules</td><td>讲解&quot;硬约束&quot;式的指令，以及 path-scoped 规则如何降低无关上下文</td></tr><tr><td>Skills</td><td>讲解&quot;按需加载&quot;的过程性工作流，以及与压缩行为的交互</td></tr><tr><td>Subagents</td><td>讲解&quot;隔离执行&quot;模式——子代理在独立上下文运行，只返回摘要</td></tr><tr><td>Hooks</td><td>讲解&quot;确定性自动化&quot;——通过生命周期事件触发，执行结果不一定回到主对话</td></tr><tr><td>Output styles</td><td>讲解&quot;系统级角色改变&quot;——替换默认的编程助手身份</td></tr><tr><td>Appending the system prompt</td><td>讲解&quot;追加式系统提示&quot;——只叠加、不覆盖，适合单次调整</td></tr><tr><td>When to use each method</td><td>反面案例：五种常见的错误放法，以及为什么应该迁移到其他方法</td></tr><tr><td>Getting started</td><td>总结建议：可以打包成插件分享给团队</td></tr></tbody></table></div>
 <p>---</p>
-<h2>核心概念讲解</h2>
-<h3>上下文成本（Context Cost）</h3>
+<h2 id="核心概念讲解">核心概念讲解</h2>
+<h3 id="上下文成本context-cost">上下文成本（Context Cost）</h3>
 <p>每次对话中，能放进 Claude 上下文窗口的 token 数量是有限的，token 越多，成本越高、推理质量可能下降。把指令放在哪里，决定了它多久被加载一次、占用多少空间。</p>
 <ul><li><strong>高成本</strong>：整段内容在每个会话开始就进入上下文，且在压缩后重新加载</li><li><strong>低成本</strong>：只有在相关场景下才加载，或者完全在主上下文之外运行</li></ul>
-<h3>压缩行为（Compaction Behavior）</h3>
+<h3 id="压缩行为compaction-behavior">压缩行为（Compaction Behavior）</h3>
 <p>Claude Code 的&quot;压缩&quot;机制会在长对话中将早期上下文移出，以腾出空间给新内容。不同方法对压缩的处理不同：</p>
 <ul><li><strong>重新注入（Re-injected）</strong>：压缩后会被重新读入，不会永久丢失</li><li><strong>丢失（Lost）</strong>：压缩后不会自动恢复，除非再次触发加载条件</li><li><strong>不参与压缩（Never compacted）</strong>：始终在上下文中</li></ul>
-<h3>生命周期事件（Lifecycle Events）</h3>
+<h3 id="生命周期事件lifecycle-events">生命周期事件（Lifecycle Events）</h3>
 <p>Claude Code 运行过程中会触发特定事件，如：会话启动（SessionStart）、文件读取（FileRead）、工具调用（PreToolUse）、压缩前（PreCompact）、会话结束（On杀戮）。Hooks 就是通过监听这些事件来实现确定性自动化的。</p>
-<h3>子代理隔离（Subagent Isolation）</h3>
+<h3 id="子代理隔离subagent-isolation">子代理隔离（Subagent Isolation）</h3>
 <p>子代理运行在一个全新的、独立的上下文窗口中，父会话看不到它的中间过程，只有最终摘要会返回。这与 Skills 的&quot;在主线程展开&quot;形成对比。</p>
 <p>---</p>
-<h2>文章主体讲解</h2>
-<h3>第一部分：开篇对比表</h3>
+<h2 id="文章主体讲解">文章主体讲解</h2>
+<h3 id="第一部分开篇对比表">第一部分：开篇对比表</h3>
 <p><strong>这一节讲什么：</strong> 作者先给出一张总览表格，从&quot;何时加载&quot;&quot;压缩行为&quot;&quot;上下文成本&quot;&quot;何时使用&quot;四个维度对比七种方法。</p>
 <p><strong>为什么重要：</strong> 这张表是全文的&quot;索引&quot;，读者可以先建立整体印象，再深入各章节了解细节。</p>
 <p><strong>关键点：</strong> 表格的核心信息是——没有一种方法在所有维度上都是最优的，必须根据具体指令的特点做取舍。</p>
 <p>---</p>
-<h3>第二部分：CLAUDE.md 文件</h3>
+<h3 id="第二部分claudemd-文件">第二部分：CLAUDE.md 文件</h3>
 <p><strong>这一节讲什么：</strong> CLAUDE.md 是放在项目根目录或子目录的 Markdown 文件，内容在会话开始时加载。全文详细解释了它的两种变体。</p>
 <p><strong>为什么重要：</strong> 这是最直觉的定制方式，但也是最容易&quot;膨胀&quot;并导致 token 浪费的地方。</p>
 <p><strong>关键点：</strong></p>
 <ul><li><strong>根目录 CLAUDE.md</strong>：会话开始时加载，压缩后重新读入。整个会话期内都有效，高上下文成本。适合放&quot;始终要知道的事实&quot;：构建命令、目录结构、团队编码规范。</li><li><strong>子目录 CLAUDE.md</strong>：只在 Claude 读取该子目录下文件时才加载，压缩后丢失，直到再次访问该子目录才恢复。适合放&quot;仅在特定区域有效的约定&quot;。</li><li><strong>膨胀问题</strong>：在多人共享的仓库中，CLAUDE.md 容易被团队成员不断追加内容，每一行都会在每个工程师的每个会话中加载，无论他们是否在做相关工作。</li><li><strong>建议</strong>：保持 CLAUDE.md 在 200 行以内，指定负责人，像代码一样审查变更。</li></ul>
 <p>---</p>
-<h3>第三部分：Rules</h3>
+<h3 id="第三部分rules">第三部分：Rules</h3>
 <p><strong>这一节讲什么：</strong> Rules 放在 <code>.claude/rules/</code> 目录下，是针对特定约束或约定的指令文件。</p>
 <p><strong>为什么重要：</strong> Rules 提供了一种比 CLAUDE.md 更细粒度的控制方式，特别是 path-scoped 规则。</p>
 <p><strong>关键点：</strong></p>
 <ul><li><strong>无作用域规则（Unscoped rules）</strong>：会话开始加载，压缩后重新注入，行为与根目录 CLAUDE.md 相同，可能浪费 token。</li><li><strong>路径作用域规则（Path-scoped rules）</strong>：通过 frontmatter 中的 <code>paths</code> 字段指定，只有当 Claude 读取匹配路径的文件时，规则才加载。</li><li><strong>示例</strong>：<code>src/api/<strong></code> 和 <code></strong>/*.handler.ts</code> 下的所有 API 处理器必须用 Zod 验证输入。这样的规则在只做文档工作时不会进入上下文。</li><li><strong>使用时机</strong>：当约束是&quot;跨多个角落存在但不是全局适用&quot;的横切关注点时，优先选 path-scoped 规则而非嵌套 CLAUDE.md。</li></ul>
 <p>---</p>
-<h3>第四部分：Skills</h3>
+<h3 id="第四部分skills">第四部分：Skills</h3>
 <p><strong>这一节讲什么：</strong> Skills 放在 <code>.claude/skills/</code> 目录下，是包含指令、脚本和资源的文件夹。只有名称和描述在会话开始时加载，完整内容在技能被调用时才加载。</p>
 <p><strong>为什么重要：</strong> 这是存放&quot;过程性工作流&quot;的正确位置——它们不需要一直占据上下文，只在需要时按需激活。</p>
 <p><strong>关键点：</strong></p>
 <ul><li><strong>加载机制</strong>：会话开始只加载名称和描述；完整内容通过斜杠命令（如 <code>/code-review</code>）或自动匹配任务时加载。</li><li><strong>内置技能示例</strong>：<code>/code-review</code> 可以审查当前差异并报告结果，但不编辑文件。</li><li><strong>压缩行为</strong>：会话中被调用的技能会重新注入，总量有上限（budget），超出后最早调用的技能被丢弃。</li><li><strong>使用时机</strong>：部署工作流、发布检查清单、安全审查流程等过程性内容适合放在 skills 中。</li></ul>
 <p>---</p>
-<h3>第五部分：Subagents</h3>
+<h3 id="第五部分subagents">第五部分：Subagents</h3>
 <p><strong>这一节讲什么：</strong> Subagents 放在 <code>.claude/agents/</code> 目录下，通过 YAML frontmatter 定义独立的助手，可以在完全隔离的上下文窗口中运行，只返回最终摘要。</p>
 <p><strong>为什么重要：</strong> 当任务需要&quot;旁路执行&quot;——产生大量中间结果但主对话不需要关心这些时——子代理是最佳选择。</p>
 <p><strong>关键点：</strong></p>
 <ul><li><strong>隔离运行</strong>：子代理在全新的上下文窗口中运行，中间过程和结果永远不进入父会话。</li><li><strong>返回方式</strong>：只有最终消息（通常是聚合后的摘要）和元数据返回给主会话。</li><li><strong>嵌套能力</strong>：子代理可以嵌套最多五层，可以动态编排数十到数百个后台代理。</li><li><strong>与 Skills 的区别</strong>：子代理适合&quot;隔离运行&quot;；Skills 适合&quot;在主线程展开以便你看到和把控每一步&quot;。</li><li><strong>使用场景</strong>：深度搜索、日志分析、依赖审计等。</li></ul>
 <p>---</p>
-<h3>第六部分：Hooks</h3>
+<h3 id="第六部分hooks">第六部分：Hooks</h3>
 <p><strong>这一节讲什么：</strong> Hooks 是用户定义的命令、HTTP 端点或 LLM 提示，通过监听 Claude 生命周期事件触发确定性自动化。</p>
 <p><strong>为什么重要：</strong> 这是唯一能实现&quot;强制执行&quot;而非&quot;建议遵守&quot;的方法类型。</p>
 <p><strong>关键点：</strong></p>
 <ul><li><strong>事件类型</strong>：Command hook、HTTP hook、MCP tool hook（确定性执行）；Prompt hook、Agent hook（使用 Claude 判断）。</li><li><strong>上下文成本低</strong>：配置不在主上下文中，由 harness 在独立环境中执行。</li><li><strong>结果不一定回传</strong>：大多数 hook 的输出不会自动保存到主上下文，除非显式配置。</li><li><strong>典型用法</strong>：编辑后自动运行 linter、完成时发 Slack 通知、用 PreToolUse hook 检查工具调用并用 exit code 2 拒绝。</li><li><strong>PreCompact 事件</strong>：可以在压缩前备份聊天历史——但 Claude 不会知道历史保存到了哪个文件。</li></ul>
 <p>---</p>
-<h3>第七部分：Output Styles</h3>
+<h3 id="第七部分output-styles">第七部分：Output Styles</h3>
 <p><strong>这一节讲什么：</strong> Output styles 放在 <code>.claude/output-styles/</code> 目录下，直接注入系统提示符（system prompt），永不压缩，会话开始时加载。</p>
 <p><strong>为什么重要：</strong> 这是权威性最高的方法，直接改变 Claude 的默认角色定位。</p>
 <p><strong>关键点：</strong></p>
 <ul><li><strong>覆盖默认行为</strong>：自定义 output style 会替换掉默认的软件工程师助手身份，包括：如何界定变更范围、何时添加注释、如何处理安全问题、验证习惯（如提交前运行测试）。</li><li><strong>上下文成本高</strong>：因为永不压缩，始终占据上下文空间。</li><li><strong>内置样式</strong>：在创建自定义样式前，先检查内置的 Proactive、Explanatory、Learning 样式——它们覆盖了最常见的需求（自主模式、教学模式、协作编码），无需维护额外文件。</li><li><strong>保留默认设置</strong>：如果想保留默认编程助手的核心指令，可以在 frontmatter 中设置 <code>keep-coding-instructions: true</code>。</li></ul>
 <p>---</p>
-<h3>第八部分：Appending the System Prompt</h3>
+<h3 id="第八部分appending-the-system-prompt">第八部分：Appending the System Prompt</h3>
 <p><strong>这一节讲什么：</strong> 通过 CLI 的 <code>--append-system-prompt</code> 标志在调用时追加指令，与 Output styles 的&quot;覆盖&quot;不同，这是&quot;叠加&quot;。</p>
 <p><strong>为什么重要：</strong> 提供了一种不影响默认角色的临时调整方式。</p>
 <p><strong>关键点：</strong></p>
 <ul><li><strong>仅追加、不覆盖</strong>：不影响默认角色，只添加额外指令。</li><li><strong>单次生效</strong>：通过 CLI 标志传递，只在该次调用中生效，不持久化为文件。</li><li><strong>上下文成本</strong>：首次请求后会被缓存，但指令越多、越长，输出 token 也会增加。</li><li><strong>递减效应</strong>：作者提示，这个方法的指令遵循度会随数量增加而递减，尤其是存在相互矛盾的指令时。</li><li><strong>适用场景</strong>：添加特定编码标准、输出格式偏好或领域特定知识。</li></ul>
 <p>---</p>
-<h3>第九部分：反面案例（When to Use Each Method）</h3>
+<h3 id="第九部分反面案例when-to-use-each-method">第九部分：反面案例（When to Use Each Method）</h3>
 <p><strong>这一节讲什么：</strong> 作者列出了五种常见的错误放置方式，并解释了为什么应该迁移。</p>
 <p><strong>为什么重要：</strong> 这部分将前面各节的抽象概念落到具体场景，帮助读者&quot;反查&quot;自己的配置是否合理。</p>
 <p><strong>关键点：</strong></p>
 <div class="doc-table-wrap"><table><thead><tr><th>错误做法</th><th>正确做法</th></tr></thead><tbody><tr><td>&quot;每次 X 都 Y&quot;写在 CLAUDE.md</td><td>用 Hook（确定性执行 vs 模型选择执行）</td></tr><tr><td>&quot;永远不要做这个&quot;写在 CLAUDE.md</td><td>用 Hook 或权限设置（强制 vs 建议）</td></tr><tr><td>30行流程写在 CLAUDE.md</td><td>迁移到 Skills（按需加载 vs 常驻）</td></tr><tr><td>API 相关规则没有 paths 作用域</td><td>添加 paths 字段（只在相关目录加载）</td></tr><tr><td>个人偏好写在项目级 CLAUDE.md</td><td>用用户级配置文件（个人 vs 团队）</td></tr></tbody></table></div>
 <p>---</p>
-<h3>第十部分：Getting Started</h3>
+<h3 id="第十部分getting-started">第十部分：Getting Started</h3>
 <p><strong>这一节讲什么：</strong> 作者建议读者从最基础的方法开始，逐步尝试，然后可以将多种配置打包成插件分享。</p>
 <p><strong>为什么重要：</strong> 这是全文的收尾，从&quot;理解方法&quot;过渡到&quot;开始行动&quot;。</p>
 <p>---</p>
-<h2>关键对比表</h2>
+<h2 id="关键对比表">关键对比表</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>方法</th><th>何时加载</th><th>压缩行为</th><th>上下文成本</th><th>适用场景</th></tr></thead><tbody><tr><td><strong>CLAUDE.md（根目录）</strong></td><td>会话开始，整个会话期</td><td>重新注入</td><td>高</td><td>构建命令、目录结构、团队编码规范</td></tr><tr><td><strong>CLAUDE.md（子目录）</strong></td><td>读取该子目录下文件时</td><td>丢失直到再次访问</td><td>低</td><td>仅在特定子目录有效的约定</td></tr><tr><td><strong>Rules（无作用域）</strong></td><td>会话开始</td><td>重新注入</td><td>中</td><td>全局硬约束</td></tr><tr><td><strong>Rules（路径作用域）</strong></td><td>匹配路径时</td><td>重新注入</td><td>低</td><td>特定文件/目录的约束</td></tr><tr><td><strong>Skills</strong></td><td>名称描述在开始；完整内容在调用时</td><td>调用后重新注入，有总量上限</td><td>低</td><td>过程性工作流（部署、检查清单）</td></tr><tr><td><strong>Subagents</strong></td><td>名称描述在开始；完整内容在调用时</td><td>完全隔离，只返回摘要</td><td>极低（主上下文零成本直到调用）</td><td>并行/隔离任务（搜索、分析、审计）</td></tr><tr><td><strong>Hooks</strong></td><td>生命周期事件触发</td><td>完全不参与主上下文</td><td>极低</td><td>确定性自动化（linter、通知、阻止命令）</td></tr><tr><td><strong>Output styles</strong></td><td>会话开始</td><td>永不压缩</td><td>高</td><td>角色改变（编程助手→通用助手）</td></tr><tr><td><strong>System prompt 追加</strong></td><td>调用时传入</td><td>永不压缩（仅该次）</td><td>中</td><td>语气、长度、格式偏好</td></tr></tbody></table></div>
 <p>---</p>
-<h2>关键句短摘译</h2>
+<h2 id="关键句短摘译">关键句短摘译</h2>
 <ol><li><strong>&quot;The model choosing to run a formatter is different from the formatter running automatically.&quot;</strong></li></ol>
 <p>模型选择运行格式化工具 ≠ 格式化工具自动运行。</p>
 <p>→ 解释了为什么&quot;每次编辑后运行 prettier&quot;应该用 Hook 而非写在 CLAUDE.md 里。</p>
@@ -141,10 +142,10 @@
 <p>保持 CLAUDE.md 在 200 行以内，指定负责人，像审查代码一样审查变更。</p>
 <p>→ 实用的 CLAUDE.md 维护建议。</p>
 <p>---</p>
-<h2>术语表</h2>
+<h2 id="术语表">术语表</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>英文术语</th><th>中文解释</th></tr></thead><tbody><tr><td><strong>Context cost</strong></td><td>上下文成本。指令占据上下文窗口的空间，用 token 计量。</td></tr><tr><td><strong>Compaction</strong></td><td>压缩。Claude Code 在长对话中清理早期上下文以腾出空间的机制。</td></tr><tr><td><strong>Authority</strong></td><td>权威性。指令被 Claude 遵守的确定程度。</td></tr><tr><td><strong>Re-injected</strong></td><td>重新注入。压缩后自动恢复加载的机制。</td></tr><tr><td><strong>Path-scoped</strong></td><td>路径作用域。通过文件路径匹配控制指令何时加载。</td></tr><tr><td><strong>Lifecycle events</strong></td><td>生命周期事件。Claude Code 运行过程中触发的事件节点（如 PreToolUse、PreCompact）。</td></tr><tr><td><strong>Isolation</strong></td><td>隔离。子代理在独立上下文窗口中运行，与主会话完全分离。</td></tr><tr><td><strong>System prompt</strong></td><td>系统提示符。定义 Claude 角色和核心行为的高优先级指令集。</td></tr><tr><td><strong>Instruction-following weight</strong></td><td>指令遵循权重。不同位置的指令被 Claude 执行的优先级。</td></tr><tr><td><strong>Token budget</strong></td><td>Token 预算。对技能调用总量的限制，超出后最早调用的技能被丢弃。</td></tr></tbody></table></div>
 <p>---</p>
-<h2>文章结尾怎么收束</h2>
+<h2 id="文章结尾怎么收束">文章结尾怎么收束</h2>
 <p>文章的收束逻辑很清晰：从&quot;工具介绍&quot;回到&quot;使用者决策&quot;。</p>
 <p>作者没有简单地列举七种方法就结束，而是专门用一节&quot;反面案例&quot;告诉读者：<strong>如果你的指令放错了位置，会有什么后果，以及应该迁移到哪里</strong>。这让整篇文章从&quot;这是什么&quot;过渡到了&quot;我怎么用它&quot;。</p>
 <p>最后，作者给出了一个递进式的行动建议：<strong>先从基础方法开始尝试 → 有几个运行稳定后 → 打包成插件分享</strong>。这个节奏暗示：定制 Claude Code 是一个渐进过程，不需要一次性搞定所有配置。</p>

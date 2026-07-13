@@ -18,6 +18,7 @@
       <a href="../../ai.html" class="active">AI</a>
       <a href="../../english.html">英语</a>
       <a href="../../k12.html">学科</a>
+      <a href="../../investment.html">投资</a>
     </nav>
   </header>
 
@@ -31,30 +32,30 @@
 
   <main class="doc-shell">
     <article class="doc-content">
-<h1>AI Agent 与本体论</h1>
+<h1 id="ai-agent-与本体论">AI Agent 与本体论</h1>
 <p>本体论（Ontology）本是哲学概念，在数据/知识工程领域被借用为一种<strong>形式化的知识表示方法</strong>：定义一个领域里有哪些概念、概念之间有什么关系、遵循什么规则。2025-2026 年随着 Agentic AI 的爆发，&quot;本体论&quot;重新成为企业 AI 圈的高频词——原因很直接: Agent 大量失败的地方，恰恰是&quot;理解业务语义&quot;这一层。本文整理网上关于本体论与 AI Agent 结合的资料，聚焦概念、代表案例、标准和研究方向，方便后续深入。</p>
-<h2>1. 为什么本体论在 2026 年重新被重视</h2>
+<h2 id="1-为什么本体论在-2026-年重新被重视">1. 为什么本体论在 2026 年重新被重视</h2>
 <p>多篇文章的共识: 过去几年大家一直在堆 RAG、向量检索、多智能体编排等&quot;管道&quot;，却没有认真处理&quot;语义&quot;这一层，直到 Agent 大规模落地后，问题才暴露出来——Agent 经常在需要理解业务概念（比如&quot;什么算一个已完成的订单&quot;）的地方出错，而不是在语言生成上出错。Gartner 预测到 2026 年 40% 的企业应用会包含任务型 AI Agent（2025 年不到 5%），每一个这样的 Agent 都需要某种形式化的语义结构才能可靠工作。这构成了本体论回潮的直接背景。（<a href="https://www.ey.com/en_us/insights/consumer-products/ontologies-as-the-missing-layer-in-enterprise-ai" target="_blank" rel="noopener">EY</a>、<a href="https://atlan.com/know/what-is-ontology-in-ai/" target="_blank" rel="noopener">Atlan</a>）</p>
-<h2>2. 本体论在 Agent 架构里的位置</h2>
+<h2 id="2-本体论在-agent-架构里的位置">2. 本体论在 Agent 架构里的位置</h2>
 <p>概括各家资料的说法，本体论在 Agent 系统里通常扮演<strong>语义层 / schema 层</strong>的角色，而不是最终答案本身：</p>
 <ul><li><strong>给数据&quot;赋予含义&quot;</strong>: 知识图谱存的是实体和关系，本体则定义这些实体和关系&quot;意味着什么&quot;、遵循什么约束，让 Agent 能基于上下文推理，而不是只靠 prompt 或检索片段拼凑答案。（<a href="https://www.ovaledge.com/blog/ontology-in-ai" target="_blank" rel="noopener">OvalEdge</a>）</li><li><strong>支持自动推理</strong>: 比如定义&quot;汽车是交通工具的子类&quot;后，Agent 能自动推导出汽车具备交通工具的属性，而不需要每次都显式检索或硬编码规则。（<a href="https://zbrain.ai/knowledge-graphs-for-agentic-ai/" target="_blank" rel="noopener">ZBrain</a>）</li><li><strong>多 Agent 协作的公共契约</strong>: 当多个 Agent 需要协作时，本体给出明确的角色边界、领域边界和交互模式，让各 Agent 在同一套语义结构下推理，而不是各说各话。（<a href="https://zbrain.ai/knowledge-graphs-for-agentic-ai/" target="_blank" rel="noopener">ZBrain</a>）</li><li><strong>可解释性</strong>: 在&quot;LLM 做推理引擎、本体做结构约束&quot;的分层架构里，Agent 的推理路径可以沿着本体定义的规则和图结构回溯，比纯 LLM 黑盒输出更容易审计。（<a href="https://zbrain.ai/knowledge-graphs-for-agentic-ai/" target="_blank" rel="noopener">ZBrain</a>）</li></ul>
-<h2>3. 代表性实践案例</h2>
-<h3>3.1 Palantir Ontology / AIP</h3>
+<h2 id="3-代表性实践案例">3. 代表性实践案例</h2>
+<h3 id="31-palantir-ontology--aip">3.1 Palantir Ontology / AIP</h3>
 <p>Palantir 是目前把&quot;本体驱动 Agent&quot;做得最系统化的企业案例。其 Foundry/AIP 平台里的 Ontology 不只是数据模型，而是<strong>对企业决策的建模</strong>——把原始数据转成人和 AI 都能理解、推理的&quot;业务对象&quot;（比如 Invoice、Incident）。AIP 在此基础上提供 AIP Logic、AIP Chatbot Studio（原 AIP Agent Studio）、AIP Evals 等工具，让 Agent 的工作流建立在 Ontology 之上，同时 Ontology 层复用与数据、逻辑一致的访问控制，使人和 Agent 发起的操作可以被安全地暂存为&quot;场景&quot;、经过审批再写回企业系统。这是本体论从&quot;知识表示&quot;落到&quot;可治理的 Agent 决策系统&quot;的一个完整闭环案例。（<a href="https://www.palantir.com/docs/foundry/architecture-center/ontology-system" target="_blank" rel="noopener">Palantir Docs</a>、<a href="https://blog.palantir.com/connecting-agents-to-decisions-277dee8ddb40" target="_blank" rel="noopener">Palantir Blog</a>）</p>
-<h3>3.2 MCP：事实上的&quot;迷你本体&quot;标准化</h3>
+<h3 id="32-mcp事实上的迷你本体标准化">3.2 MCP：事实上的&quot;迷你本体&quot;标准化</h3>
 <p>Anthropic 在 2024 年 11 月提出的 Model Context Protocol（MCP），本意是解决 Agent 接入外部工具/数据的碎片化问题。到 2026 年，多篇资料把 MCP 描述为&quot;事实上把工具定义标准化成了迷你本体&quot;：每个 MCP Server 通过 <code>list_tools</code> 暴露工具目录，每个工具都带有规范的 JSON Schema（名称、描述、输入参数、输出格式），Client 端据此发现能力并发起调用。这种&quot;结构化消息格式 + 明确调用语义 + 上下文状态管理&quot;的设计，本质上是给 Agent 与工具之间的交互定义了一套共享语义契约——和本体论&quot;定义概念、关系、约束&quot;的思路是一致的。（<a href="https://arxiv.org/html/2504.21030v1" target="_blank" rel="noopener">arXiv 2504.21030</a>）</p>
-<h3>3.3 GraphRAG / Agent 长期记忆里的本体层</h3>
+<h3 id="33-graphrag--agent-长期记忆里的本体层">3.3 GraphRAG / Agent 长期记忆里的本体层</h3>
 <p>Agent 记忆是另一个本体论落地的重点方向。以 MemGraphRAG（KDD 2026）为例，其知识组织分三层: <strong>Schema 层</strong>（抽象本体三元组）、<strong>Fact 层</strong>（从语料中抽取的具体关系三元组）、<strong>Passage 层</strong>（原始文本片段），三层之间用双向链接连接。这种&quot;本体做骨架、事实做填充、原文做溯源&quot;的三层结构，是目前 Agent 长期记忆系统的一个代表性设计范式。生产环境的对比数据显示，结构化知识图谱记忆相比纯向量检索，在多跳任务上准确率提升 36%-46%，幻觉率降低 40% 以上。（<a href="https://arxiv.org/html/2606.00610v1" target="_blank" rel="noopener">arXiv 2606.00610</a>、<a href="https://atlan.com/know/ai-memory-vs-rag-vs-knowledge-graph/" target="_blank" rel="noopener">Atlan</a>）</p>
-<h3>3.4 Active Ontology（主动本体）</h3>
+<h3 id="34-active-ontology主动本体">3.4 Active Ontology（主动本体）</h3>
 <p>Atlan 提出的&quot;Active Ontology&quot;概念，指本体不再是静态画好就归档的图谱，而是持续绑定实时元数据、数据血缘（lineage）和治理信号的机器可读模型——本体本身会随数据变化自动更新，而不是人工定期维护的文档。这被认为是 2026 年企业 AI 语义层的默认形态。（<a href="https://atlan.com/know/what-is-active-ontology/" target="_blank" rel="noopener">Atlan</a>）</p>
-<h2>4. 学术研究方向</h2>
+<h2 id="4-学术研究方向">4. 学术研究方向</h2>
 <p>几篇值得关注的综述/论文（均为 2025-2026 arXiv 论文，标题为方向索引，具体结论建议后续精读原文再摘录）:</p>
 <div class="doc-table-wrap"><table><thead><tr><th>论文</th><th>方向</th></tr></thead><tbody><tr><td><a href="https://arxiv.org/pdf/2506.18019" target="_blank" rel="noopener">Graphs Meet AI Agents: Taxonomy, Progress, and Future Opportunities</a>（arXiv 2506.18019）</td><td>系统梳理图结构在 Agent 的规划、执行、记忆、多 Agent 协作中的角色，给出跨范式（RL-based 到 LLM-based）的分类体系</td></tr><tr><td><a href="https://arxiv.org/abs/2601.12560" target="_blank" rel="noopener">Agentic Artificial Intelligence (AI): Architectures, Taxonomies, and Evaluation of Large Language Model Agents</a>（arXiv 2601.12560）</td><td>提出统一分类法，把 Agent 拆成 Perception、Brain、Planning、Action、Tool Use、Collaboration 六个维度</td></tr><tr><td><a href="https://arxiv.org/html/2505.10468v1" target="_blank" rel="noopener">AI Agents vs. Agentic AI: A Conceptual Taxonomy, Applications and Challenges</a>（arXiv 2505.10468）</td><td>讨论多 Agent 系统里社会行动、结构、心智的本体论范畴划分</td></tr><tr><td><a href="https://arxiv.org/abs/2602.03439" target="_blank" rel="noopener">Ontology-to-tools compilation for executable semantic constraint enforcement in LLM agents</a>（arXiv 2602.03439）</td><td>研究把本体直接&quot;编译&quot;成可执行工具约束，用于约束 LLM Agent 的行为语义（标题明确，正文未能抓取，需后续精读）</td></tr><tr><td><a href="https://arxiv.org/pdf/2602.05665" target="_blank" rel="noopener">Graph-based Agent Memory: Taxonomy, Techniques, and Applications</a>（arXiv 2602.05665）</td><td>图结构 Agent 记忆的分类和技术综述</td></tr><tr><td><a href="https://arxiv.org/pdf/2404.11584" target="_blank" rel="noopener">The Landscape of Emerging AI Agent Architectures for Reasoning, Planning, and Tool Calling</a>（arXiv 2404.11584）</td><td>早期（2024）综述，定义 Agent 为&quot;brain + perception + action&quot;的最小架构</td></tr></tbody></table></div>
-<h2>5. 延伸阅读清单</h2>
+<h2 id="5-延伸阅读清单">5. 延伸阅读清单</h2>
 <ul><li><a href="https://www.ey.com/en_us/insights/consumer-products/ontologies-as-the-missing-layer-in-enterprise-ai" target="_blank" rel="noopener">EY: Ontologies as the missing layer in enterprise AI</a></li><li><a href="https://atlan.com/know/what-is-ontology-in-ai/" target="_blank" rel="noopener">Atlan: Ontology in AI: Components, Standards &amp; Agent Applications</a></li><li><a href="https://atlan.com/know/what-is-active-ontology/" target="_blank" rel="noopener">Atlan: Active Ontology: The 2026 Default for Enterprise AI</a></li><li><a href="https://atlan.com/know/ai-memory-vs-rag-vs-knowledge-graph/" target="_blank" rel="noopener">Atlan: AI Memory vs RAG vs Knowledge Graph</a></li><li><a href="https://www.progress.com/blogs/the-resurgence-of-ontologies--ontology-driven-ai" target="_blank" rel="noopener">Progress: Ontology-Driven AI and How Semantics Power AI Agents</a></li><li><a href="https://zbrain.ai/knowledge-graphs-for-agentic-ai/" target="_blank" rel="noopener">ZBrain: The role of knowledge graphs in building agentic AI systems</a></li><li><a href="https://www.hivemq.com/resources/building-ontology-driven-intelligence-for-industrial-ai-agents/" target="_blank" rel="noopener">HiveMQ: Building Ontology-Driven Intelligence for Industrial AI Agents</a></li><li><a href="https://www.palantir.com/docs/foundry/architecture-center/ontology-system" target="_blank" rel="noopener">Palantir Docs: The Ontology system</a></li><li><a href="https://blog.palantir.com/connecting-agents-to-decisions-277dee8ddb40" target="_blank" rel="noopener">Palantir Blog: Connecting Agents to Decisions</a></li><li><a href="https://zylos.ai/research/2026-05-09-knowledge-graph-world-models-ai-agents/" target="_blank" rel="noopener">Zylos Research: Knowledge Graphs as World Models for AI Agents</a></li><li><a href="https://kenhuangus.substack.com/p/why-ontology-matters-for-agentic" target="_blank" rel="noopener">Ken Huang: Why Ontology Matters for Agentic AI in 2026</a>（付费墙，仅导语可读）</li></ul>
-<h2>6. 后续可深入的问题</h2>
+<h2 id="6-后续可深入的问题">6. 后续可深入的问题</h2>
 <ul><li>Palantir Ontology 的具体建模方法（Object Type / Link Type / Action Type）值得单独精读一次官方文档。</li><li>MCP 的 JSON Schema 和传统 OWL/RDF 本体在表达能力上的差距在哪里？哪些场景 MCP 不够用、仍需要正式本体。</li><li>Ontology-to-tools compilation（arXiv 2602.03439）全文值得精读，理解本体如何被&quot;编译&quot;为可执行约束。</li><li>找一个小规模项目，实际用知识图谱 + schema 层给一个 Agent 搭一次&quot;语义骨架&quot;，对比有无本体层的效果差异。</li></ul>
-<h2>来源</h2>
+<h2 id="来源">来源</h2>
 <p>本文来源于 2026-07-11 的网络检索整理，原始搜索记录见本地 <code>_sources/ai/agent-ontology/raw-search-notes.md</code>（未纳入公开仓库）。内容为二次整理和翻译讲解，非逐句翻译，如需精确表述请点击链接查看原文。</p>
     </article>
   </main>

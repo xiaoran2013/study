@@ -18,6 +18,7 @@
       <a href="../../../ai.html" class="active">AI</a>
       <a href="../../../english.html">英语</a>
       <a href="../../../k12.html">学科</a>
+      <a href="../../../investment.html">投资</a>
     </nav>
   </header>
 
@@ -31,34 +32,34 @@
 
   <main class="doc-shell">
     <article class="doc-content">
-<h1>Agent identity in Claude Tag：面向自主化、团队级 AI 的新型访问模型</h1>
+<h1 id="agent-identity-in-claude-tag面向自主化团队级-ai-的新型访问模型">Agent identity in Claude Tag：面向自主化、团队级 AI 的新型访问模型</h1>
 <blockquote>原文: https://claude.com/blog/agent-identity-access-model</blockquote>
 <blockquote>日期: 2024-06-24</blockquote>
 <blockquote>分类: Claude Code</blockquote>
 <blockquote>产品: Claude Tag</blockquote>
 <p>---</p>
-<h2>文章在讲什么</h2>
+<h2 id="文章在讲什么">文章在讲什么</h2>
 <p>这篇文章介绍的是 Claude Tag 产品中一种全新的访问控制模型——<strong>agent identity（智能体身份）</strong>。作者解释了为什么传统的&quot;以用户身份操作&quot;模式无法适用于多人协作的 AI 环境，并详细阐述了 agent identity 模型如何将权限从&quot;按用户分配&quot;转变为&quot;按频道分配&quot;，从而让 AI 智能体在团队中安全、有效地工作。</p>
 <p>核心问题是：当 AI 不再只是个人助手，而是团队协作的一员时，它应该以谁的身份去访问工具和文档？文章给出的答案是——AI 应该拥有自己的独立身份，而不是借用任何一个团队成员的权限。</p>
 <p>---</p>
-<h2>原文结构地图</h2>
+<h2 id="原文结构地图">原文结构地图</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>主要章节</th><th>作用</th></tr></thead><tbody><tr><td>Why &quot;act as the user&quot; breaks down</td><td>提出问题：传统模式为什么不适用</td></tr><tr><td>Claude acts as itself</td><td>介绍解决方案：AI 拥有自己的身份</td></tr><tr><td>Inheriting permissions</td><td>讲解权限继承机制</td></tr><tr><td>How the agent identity model works</td><td>详细说明模型的工作原理</td></tr><tr><td>How identity boundaries work</td><td>解释边界隔离</td></tr><tr><td>Broad default access to tools and context</td><td>给出配置建议</td></tr><tr><td>Direct messages</td><td>说明 DMs 与共享频道的区别</td></tr><tr><td>Security and audit</td><td>强调安全性</td></tr><tr><td>What&#39;s next</td><td>展望未来发展方向</td></tr></tbody></table></div>
 <p>---</p>
-<h2>核心概念讲解</h2>
-<h3>从&quot;单玩家&quot;到&quot;多玩家&quot;AI</h3>
+<h2 id="核心概念讲解">核心概念讲解</h2>
+<h3 id="从单玩家到多玩家ai">从&quot;单玩家&quot;到&quot;多玩家&quot;AI</h3>
 <p>文章首先区分了两种 AI 使用模式：</p>
 <ul><li><strong>单玩家（Single Player）</strong>：一个人和一个 AI 助手对话，AI 借用这个人的账号权限去操作各种工具（如 Gmail、GitHub）。这是我们熟悉的个人助手模式。</li></ul>
 <ul><li><strong>多玩家（Multiplayer）</strong>：多个人和同一个 AI 同时在一个共享空间协作，就像 Claude Tag 将 Claude 放在 Slack 频道中，与多位工程师同时工作。这时，&quot;借用谁的权限&quot;就成了问题——没有任何一个用户的身份能始终代表所有人。</li></ul>
-<h3>Agent Identity 是什么</h3>
+<h3 id="agent-identity-是什么">Agent Identity 是什么</h3>
 <p>简单说，agent identity 就是给 AI 智能体创建独立的&quot;账号&quot;，让它以自己的身份去访问工具和系统：</p>
 <ul><li>在 Slack 中发帖，显示为 <strong>Claude app</strong> 而不是某个用户</li><li>在 GitHub 中操作，显示为 <strong>Claude GitHub App</strong></li><li>在数据仓库中查询，使用的是管理员创建的服务账号</li></ul>
 <p>这样设计的好处是：<strong>没有个人凭证混入共享频道</strong>，避免了通过共享频道窥探他人隐私的风险。</p>
-<h3>频道级权限与继承</h3>
+<h3 id="频道级权限与继承">频道级权限与继承</h3>
 <p>Agent identity 模型的核心结构是：</p>
 <ol><li><strong>Workspace 级别</strong>：管理员定义一套基础的身份配置（连接哪些工具、哪些仓库、加载哪些技能）</li><li><strong>Channel 级别继承</strong>：每个频道默认继承 workspace 的基础配置</li><li><strong>按需覆盖</strong>：管理员可以在特定频道调整权限，例如给工程频道开通 GitHub 和数据仓库权限，或将某个 CRM 连接限制在单一私有频道</li></ol>
 <p>---</p>
-<h2>文章主体讲解</h2>
-<h3>开篇：引入问题</h3>
+<h2 id="文章主体讲解">文章主体讲解</h2>
+<h3 id="开篇引入问题">开篇：引入问题</h3>
 <p><strong>这一节讲什么</strong></p>
 <p>文章开头直接指出：要让 AI 智能体在人类-智能体团队中发挥最佳表现，它需要拥有与人类相同的工具、文档和上下文访问权限。</p>
 <p><strong>为什么重要</strong></p>
@@ -66,7 +67,7 @@
 <p><strong>关键点</strong></p>
 <ul><li>单人使用场景下，让 AI&quot;扮演用户&quot;是可行的</li><li>多人协作场景下，这个模式行不通了</li></ul>
 <p>---</p>
-<h3>第一部分：为什么&quot;扮演用户&quot;失效了</h3>
+<h3 id="第一部分为什么扮演用户失效了">第一部分：为什么&quot;扮演用户&quot;失效了</h3>
 <p><strong>这一节讲什么</strong></p>
 <p>作者从两个角度解释传统模式无法适用的原因。</p>
 <p><strong>为什么重要</strong></p>
@@ -75,7 +76,7 @@
 <ol><li><strong>AI 自主性不断增强</strong>：AI 能独立完成的任务长度大约每四个月翻一倍。现在的 AI 能自主安排未来任务、响应长期事件，甚至在提问者离线后继续工作。这意味着 AI 不能依赖&quot;有人在场&quot;来获得授权。</li></ol>
 <ol><li><strong>多玩家团队场景</strong>：Claude Tag 把 Claude 放到团队已有的工作空间中（比如三位工程师和产品经理一起 debug 的频道）。当多人同时与 AI 交互时，&quot;该用谁的权限&quot;没有唯一正确答案。</li></ol>
 <p>---</p>
-<h3>第二部分：Claude 以自己的身份行动</h3>
+<h3 id="第二部分claude-以自己的身份行动">第二部分：Claude 以自己的身份行动</h3>
 <p><strong>这一节讲什么</strong></p>
 <p>介绍 agent identity 模型的核心概念——Claude 拥有自己的独立账号。</p>
 <p><strong>为什么重要</strong></p>
@@ -84,7 +85,7 @@
 <ul><li>Claude 在 Slack 中以 <strong>Claude app</strong> 身份发帖</li><li>在 GitHub 中以 <strong>Claude GitHub App</strong> 身份操作</li><li>在数据仓库中通过管理员配置的服务账号查询</li></ul>
 <p><strong>额外好处</strong>：没有个人凭证混入共享频道，共享频道永远不会成为窥探他人私人物品的&quot;侧门&quot;。</p>
 <p>---</p>
-<h3>第三部分：权限继承机制</h3>
+<h3 id="第三部分权限继承机制">第三部分：权限继承机制</h3>
 <p><strong>这一节讲什么</strong></p>
 <p>详细说明管理员如何在 workspace 和 channel 两个层级配置 AI 的能力。</p>
 <p><strong>为什么重要</strong></p>
@@ -94,7 +95,7 @@
 <div class="doc-table-wrap"><table><thead><tr><th>配置项</th><th>说明</th></tr></thead><tbody><tr><td><strong>Repository access</strong></td><td>Claude 可以读写哪些代码仓库</td></tr><tr><td><strong>Connectors</strong></td><td>Claude 用来工作的工具和 API 密钥</td></tr><tr><td><strong>Skills and plugins</strong></td><td>Claude 动态加载的指令、脚本和资源，用于提升专业任务表现</td></tr><tr><td><strong>Standing instructions</strong></td><td>每个频道的自定义指令和上下文</td></tr></tbody></table></div>
 <p><strong>管理的便利性</strong>：撤销一个身份，该身份在所有地方的使用权限立即终止，比审计几十个用户账号下的智能体行为要简单得多。</p>
 <p>---</p>
-<h3>第四部分：模型工作原理</h3>
+<h3 id="第四部分模型工作原理">第四部分：模型工作原理</h3>
 <p><strong>这一节讲什么</strong></p>
 <p>将 agent identity 模型与传统 ACL（Access Control Lists）进行对比，并详细说明边界机制。</p>
 <p><strong>为什么重要</strong></p>
@@ -103,7 +104,7 @@
 <p>模型将问题从&quot;这个用户能做什么？&quot;转变为&quot;这个智能体在这个隔离区能做什么？&quot;</p>
 <p>这意味着：<strong>没有直接访问仓库权限的频道成员，也可以让 Claude 去读取那个仓库——只要频道配置赋予了 Claude 该权限。</strong></p>
 <p>---</p>
-<h3>第五部分：身份边界如何工作</h3>
+<h3 id="第五部分身份边界如何工作">第五部分：身份边界如何工作</h3>
 <p><strong>这一节讲什么</strong></p>
 <p>解释频道之间的隔离机制。</p>
 <p><strong>为什么重要</strong></p>
@@ -112,7 +113,7 @@
 <ul><li>每个<strong>私有频道</strong>有自己独立身份</li><li><strong>公开频道</strong>共享 workspace 级别身份</li><li>法律频道的 Claude 身份无法触及未授权的代码</li><li>工程频道的 Claude 身份无法读取未授权的法律文档</li><li><strong>记忆和访问都遵守这些边界</strong>：私有频道中学到的东西永远不会出现在更广泛的工作空间中</li></ul>
 <p><strong>身份归属</strong>：身份属于频道，所以频道内任何人都可以默认 @Claude。管理员可以设置频道配置，仅覆盖权限最低的成员。在 Enterprise 计划中，RBAC 可以进一步限制谁能调用 Claude。</p>
 <p>---</p>
-<h3>第六部分：广泛的默认访问</h3>
+<h3 id="第六部分广泛的默认访问">第六部分：广泛的默认访问</h3>
 <p><strong>这一节讲什么</strong></p>
 <p>给出实际配置建议，说明应该给 Claude 什么样的初始权限。</p>
 <p><strong>为什么重要</strong></p>
@@ -123,7 +124,7 @@
 <ol><li>从一开始给 Claude <strong>慷慨的访问权限</strong></li><li>根据组织偏好逐步<strong>收紧</strong></li><li>从几个频道的基础配置开始</li><li>阅读审计日志</li><li>根据工作需求<strong>逐个谨慎地</strong>扩展权限</li></ol>
 <p>对于需要更细粒度控制的组织：可以在特定频道禁用 Claude Tag，也可以通过 RBAC 限制哪些用户可以使用。</p>
 <p>---</p>
-<h3>第七部分：私信（Direct Messages）</h3>
+<h3 id="第七部分私信direct-messages">第七部分：私信（Direct Messages）</h3>
 <p><strong>这一节讲什么</strong></p>
 <p>说明 DMs 与共享频道在权限模型上的根本区别。</p>
 <p><strong>为什么重要</strong></p>
@@ -131,7 +132,7 @@
 <p><strong>关键点</strong></p>
 <ul><li>DMs 运行在用户个人的 claude.ai 账号上</li><li>使用的是用户的连接器、凭证，结果以用户的名义呈现</li><li>DMs 适合处理<strong>不应该出现在频道中</strong>的任务，比如邮件草稿或仅自己有授权的软件</li></ul>
 <p>---</p>
-<h3>第八部分：安全性与审计</h3>
+<h3 id="第八部分安全性与审计">第八部分：安全性与审计</h3>
 <p><strong>这一节讲什么</strong></p>
 <p>介绍技术实现层面的安全保障。</p>
 <p><strong>为什么重要</strong></p>
@@ -139,7 +140,7 @@
 <p><strong>关键点</strong></p>
 <ul><li>凭证独立存储，映射到频道身份</li><li>在网络边界请求时注入凭证</li><li>未在白名单中的主机，流量直接被阻止</li><li>所有例程、记忆写入、网络调用都记录在案</li><li>Claude 使用自己的服务账号行动，这些行为也会出现在各连接系统的独立日志中</li></ul>
 <p>---</p>
-<h3>结尾：展望未来</h3>
+<h3 id="结尾展望未来">结尾：展望未来</h3>
 <p><strong>这一节讲什么</strong></p>
 <p>说明后续安全增强计划。</p>
 <p><strong>关键点</strong></p>
@@ -147,10 +148,10 @@
 <ol><li><strong>Just-in-time 凭证授权</strong>：用户可以在特定敏感操作时临时授权，而不是永久扩大智能体权限范围</li><li><strong>身份感知叠加层</strong>：在更复杂的权限结构组织中，在智能体范围之上叠加用户级别检查——只有频道配置和用户本人权限都允许时，Claude 才会行动</li></ol>
 <p><strong>收束全文</strong>：从单玩家到多玩家 AI 的转变，使长期、团队协作的工作成为可能。Agent identity 确保 Claude 的访问权限足够广泛以发挥作用，同时又足够受限以在企业规模下保持安全。</p>
 <p>---</p>
-<h2>关键对比表</h2>
+<h2 id="关键对比表">关键对比表</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>维度</th><th>传统&quot;扮演用户&quot;模式</th><th>Agent Identity 模式</th></tr></thead><tbody><tr><td><strong>权限归属</strong></td><td>借用单个用户身份</td><td>AI 拥有独立服务账号</td></tr><tr><td><strong>适用场景</strong></td><td>个人助手</td><td>团队协作</td></tr><tr><td><strong>权限来源</strong></td><td>用户的个人凭证</td><td>管理员配置的工作区/频道配置</td></tr><tr><td><strong>访问控制问题</strong></td><td>多用户时权限归属不明确</td><td>问题转变为&quot;智能体在隔离区能做什么&quot;</td></tr><tr><td><strong>安全管理</strong></td><td>需要审计多个用户账号</td><td>撤销身份即撤销所有相关权限</td></tr><tr><td><strong>隐私风险</strong></td><td>可能通过共享频道访问私人文档</td><td>无个人凭证混入，无法作为&quot;侧门&quot;</td></tr></tbody></table></div>
 <p>---</p>
-<h2>关键句短摘译</h2>
+<h2 id="关键句短摘译">关键句短摘译</h2>
 <ol><li><strong>&quot;For an AI agent to do its best work on a human-agent team, it needs access to the same tools, documents, and context humans have.&quot;</strong></li></ol>
 <ul><li>中文：AI 智能体要在人机团队中发挥最佳表现，需要拥有与人类相同的工具、文档和上下文访问权限。</li><li>重要性：开篇核心论点，确立全文讨论的前提。</li></ul>
 <ol><li><strong>&quot;There’s no single choice of person that’d be right all of the time.&quot;</strong></li></ol>
@@ -168,10 +169,10 @@
 <ol><li><strong>&quot;The shift from single player to multiplayer AI makes long-running, team-based work possible.&quot;</strong></li></ol>
 <ul><li>中文：从单玩家到多玩家 AI 的转变，使长期、团队协作的工作成为可能。</li><li>重要性：收束全文，呼应开篇的场景描述。</li></ul>
 <p>---</p>
-<h2>术语表</h2>
+<h2 id="术语表">术语表</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>英文术语</th><th>中文解释</th></tr></thead><tbody><tr><td><strong>Agent identity</strong></td><td>智能体身份。Agent identity 模型为 AI 智能体创建独立的账号和凭证，让它以自己的身份而非任何用户的身份去访问工具和系统。</td></tr><tr><td><strong>Single player</strong></td><td>单玩家模式。指一个人类用户与一个 AI 助手交互的简单场景，AI 通常&quot;扮演&quot;这个用户来获取权限。</td></tr><tr><td><strong>Multiplayer</strong></td><td>多玩家模式。指多个人类用户和 AI 智能体在共享空间（如 Slack 频道）中协作的场景。</td></tr><tr><td><strong>Claude Tag</strong></td><td>Anthropic 推出的产品，将 Claude 集成到 Slack 等团队协作工具中，让 AI 成为团队成员。</td></tr><tr><td><strong>Service account</strong></td><td>服务账号。由管理员创建的独立系统账号，用于程序化访问，不关联任何个人用户。</td></tr><tr><td><strong>Connectors</strong></td><td>连接器。Claude 用于连接外部工具（如 GitHub、Google Drive）的配置，包含 API 密钥等凭证信息。</td></tr><tr><td><strong>Skills and plugins</strong></td><td>技能和插件。包含指令、脚本和资源的文件夹，Claude 可以动态加载以提升特定任务的表现。</td></tr><tr><td><strong>Standing instructions</strong></td><td>固定指令。管理员为每个频道设置的自定义指令和上下文信息。</td></tr><tr><td><strong>Identity boundary</strong></td><td>身份边界。不同频道之间的隔离机制，确保 Claude 在一个频道中的访问和记忆不会泄露到其他频道。</td></tr><tr><td><strong>RBAC</strong></td><td>基于角色的访问控制（Role-Based Access Control）。一种权限管理机制，根据用户角色决定其访问权限。</td></tr><tr><td><strong>Just-in-time credential grant</strong></td><td>即时凭证授权。一种安全机制，允许用户对单一敏感操作临时授权，而不是永久扩大智能体权限范围。</td></tr><tr><td><strong>Audit trail</strong></td><td>审计日志。记录所有操作行为的日志，用于追踪和审查。</td></tr></tbody></table></div>
 <p>---</p>
-<h2>文章结尾怎么收束</h2>
+<h2 id="文章结尾怎么收束">文章结尾怎么收束</h2>
 <p>文章最后一段很好地闭合了全文逻辑：</p>
 <p><strong>首先</strong>，呼应开篇的单玩家/多玩家对比，强调从单玩家到多玩家 AI 的转变是根本性的，它使得&quot;长期、团队协作的工作&quot;成为可能——这是 Claude Tag 这类产品存在的意义。</p>
 <p><strong>其次</strong>，回应中间讲解的安全问题，结论是 agent identity 确保 Claude 的访问&quot;足够广泛以发挥作用，但足够受限以在企业规模下保持安全&quot;——这两者之间的平衡正是整篇文章试图解决的核心问题。</p>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>在 Claude Code 中选择模型与努力级别（Effort Level）</title>
+<style>
+:root{--bg:#fafaf8;--bg-elev:#fff;--bg-soft:#f4f3ee;--fg:#1a1a1a;--fg-soft:#555;--fg-mute:#888;--border:#e2e0d8;--accent:#285c4d;--accent-soft:#e8f2ee;--link:#0969da;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;}
+.page{max-width:860px;margin:0 auto;padding:40px 28px 96px;}
+.sitebar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--fg-mute);}
+.sitebar a{color:var(--accent);text-decoration:none;font-weight:600;}
+.sitebar a:hover{text-decoration:underline;}
+h1{font-size:30px;line-height:1.3;margin:0 0 10px;color:var(--fg);}
+.meta{font-size:13.5px;color:var(--fg-mute);margin-bottom:6px;}
+.meta a{color:var(--accent);}
+h2{font-size:22px;margin-top:38px;margin-bottom:12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px;}
+h3{font-size:18px;margin-top:26px;margin-bottom:8px;color:#1f2937;}
+p{margin:12px 0;}
+ul,ol{margin:12px 0;padding-left:24px;}
+li{margin:8px 0;}
+figure{margin:20px 0;text-align:center;}
+figcaption{font-size:13px;color:var(--fg-mute);margin-top:6px;}
+.callout{background:var(--accent-soft);border:1px solid var(--border);border-radius:8px;padding:16px 20px;margin:22px 0;}
+.callout h4{margin:0 0 8px;color:var(--accent);font-size:16px;}
+.footer-note{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--fg-mute);}
+code{background:var(--bg-soft);padding:2px 5px;border-radius:4px;font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;font-size:13.5px;}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sitebar">
+    <a href="index.html">← 返回 Claude Blog 中文全译目录</a>
+    <span>Claude Blog 全文翻译</span>
+  </div>
+  <article>
+    <h1>在 Claude Code 中选择模型与努力级别（Effort Level）</h1>
+    <p class="meta">
+      原文标题：Choosing a Claude model and effort level in Claude Code ｜
+      发布日期：2026 年 7 月 7 日 ｜ 分类：Claude Code ｜ 产品：Claude Code ｜ 阅读时长：约 5 分钟 ｜
+      <a href="https://claude.com/blog/claude-model-and-effort-level-in-claude-code" target="_blank">查看原文</a>
+    </p>
+
+    <div class="callout">
+      <h4>要点速览</h4>
+      <ul>
+        <li>选择 Claude 模型，本质上是选择一组固定的权重，也就是模型的整体能力范围。虽然模型可以被提供上下文、被引导，但它整体的知识库和能力是设定好的。</li>
+        <li>"努力（Effort）"的含义不止是"思考时间"。它控制的是 Claude 针对你的请求整体投入多少工作量，包括读取多少文件、使用多少工具，以及在回来找你确认之前要走多少步。</li>
+        <li>常规任务选用较小的模型，复杂或含糊不清的任务选用较大的模型。先从每个模型的默认努力级别开始，再根据你所做工作的类型作为一种总体偏好去调整，而不是逐个任务地去调。</li>
+        <li>如果 Claude 已经拥有全部相关上下文、也明显尝试过了，但结果依然错了，这就是该换一个能力更强的模型的信号。如果 Claude 出错的原因是跳过了某个文件、没有运行测试，或者在重构进行到一半时半途而废，那就应该选择更高的努力级别。</li>
+      </ul>
+    </div>
+
+    <h2>Claude Code 中的努力级别与模型选择</h2>
+
+    <p>Claude Code 给了你两个看起来都能"让答案变得更好"的设置：模型设置和努力级别。你可能会以为，像 Claude Fable 5 这样更大的模型，会比 Claude Sonnet 给出更聪明的输出，而更高的努力级别意味着 Claude 在回答之前会思考更久。</p>
+
+    <p>第一个假设是对的。按照业界标准的基准测试，我们最大的模型能力确实更强。</p>
+
+    <p>但"努力"的含义不只是"思考时间"。努力级别控制的是 Claude 针对你的请求整体投入多少工作量。这确实包括模型思考多久，但也包括：</p>
+
+    <ul>
+      <li>它会读取多少个文件；</li>
+      <li>它会做多少验证；以及</li>
+      <li>在回来找你确认之前，它会把一个多步骤任务推进到多远。</li>
+    </ul>
+
+    <p>在更高的努力级别下，Claude 在回来找你之前，会执行更多这类动作（比如读取文件、运行测试、反复核实）。而在更低的努力级别下，它更倾向于向你要更多上下文，而不是花费 token 自己去琢磨。</p>
+
+    <h2>模型选择的原理</h2>
+
+    <p>当你按下回车键，Claude Code 会把你的消息，连同系统提示词、工具定义、你的 CLAUDE.md、对话历史，以及上下文中的任何文件，一起组装起来。所有这些内容会作为一个请求发送给 API。</p>
+
+    <figure><figcaption>Claude Code 拥有的一切都会被打包进一个 API 请求。在服务器端，文本会先被分词（tokenize），然后才会送到模型那里。</figcaption></figure>
+
+    <p>不过，模型看到的从来都不是纯文本。服务器端首先发生的事情是"分词（tokenization）"：文本被切分成一个个片段，每个片段会被映射到模型训练时所使用的固定词表中的一个整数。比如 <code>const</code> 可能映射为 1978，<code>await</code> 可能映射为 4293。从这一步开始，你的提示词就变成了一个整数数组。</p>
+
+    <figure><figcaption>分词器把你的文本切分成若干片段，并把每个片段映射到固定词表中的一个整数。上排的每个片段都会变成对应的 token ID（下排）；图中所示 ID 仅为示意。</figcaption></figure>
+
+    <p>模型的工作，就是拿到这个整数数组，然后预测下一个 token 会是什么。它的做法是为词表中的每一个 token 计算一个"概率"，然后从概率最高的那些里挑选。比如在 <code>const x = await</code> 之后，一个训练良好的模型会把很高的概率分配给 <code>fetch</code>（非常可能），而给 <code>banana</code> 分配几乎为零的概率（完全不可能）。</p>
+
+    <figure><figcaption>模型的预测，是给词表中的每一个 token 都算出一个概率。排名第一的猜测和一个完全不相关词之间的概率差距，是巨大的。</figcaption></figure>
+
+    <p>把你输入的 token 转变成这些概率的，正是"权重"（也叫"参数"）。这些是数十亿个数字，被组织成一个个巨大的矩阵。为了预测下一个 token，模型会让你的输入经过这些矩阵——一长串矩阵乘法运算——然后在最后读出各个概率。模型"知道"的一切，都存在于这些权重之中。</p>
+
+    <p><strong>每个模型的权重都是在训练阶段确定的，等到你发送请求的那一刻，它们已经是只读的了。</strong>你的提示词、你的 CLAUDE.md，或者你提供的上下文，都不会改变这些权重。（如果你遇到过"推理（inference）"这个词，它指的正是这个：在训练完成之后使用模型，此时权重是固定不变的。）</p>
+
+    <figure><figcaption>你的提示词进去，概率出来。中间的权重不会发生变化。</figcaption></figure>
+
+    <p>Claude 对 TypeScript、各种流行框架、地道的 Go 语言写法，以及其他任何通用编程知识的了解，都是在训练阶段被编码进这些权重里的。</p>
+
+    <p>你的提示词和上下文依然可以"引导（steer）"预测结果（把你真实的代码摆在 Claude 面前就是一种引导，而且效果很好），但它们不会给权重本身增添任何东西。</p>
+
+    <p>如果某个库在模型训练时还不存在，它就不会出现在权重里。你可以把文档放进上下文，Claude 会使用它，但那是"引导"，不是"教学"。Claude 的回答只会在这次请求中受到影响；底层模型本身并不会保留这些信息。</p>
+
+    <p>所以当 Claude 信心满满地调用一个根本不存在的 API（也就是"幻觉"）时，这其实是权重根据训练时学到的模式，生成了一段"看起来说得通"的 token 序列，而不是一次查找失败。</p>
+
+    <p>那么，切换模型到底改变了什么？它换掉的是"由哪一组冻结的权重来处理你的请求"。</p>
+
+    <p>模型不会一次性生成整个答案。它每次预测一个 token，把它追加到序列末尾，然后重新跑一遍整个计算流程，去预测下一个 token。一个 200 个 token 的回答，意味着要经过 200 次独立的权重计算。这个循环，正是你大部分等待时间和输出成本的来源。</p>
+
+    <figure><figcaption>序列每一步都恰好增长一个 token。模型每次都要重新读取整个数组，才能预测接下来会出现什么。</figcaption></figure>
+
+    <p>所以，"模型"这项设置决定的是由哪组权重来处理你的请求，同时也决定了每个输出 token 的成本。</p>
+
+    <p>但它不决定的是会生成多少个 token。对同一个提示词而言，这个数字可以有很大差异，这取决于 Claude 决定投入多少工作量。</p>
+
+    <p>而这正是"努力级别"所控制的：Claude 在每一轮对话中，决定投入多少工作量。</p>
+
+    <h2>Claude Code 中努力级别的运作原理</h2>
+
+    <p>当 Claude Code 在处理一项任务时，它生成的 token 大致可以分为几类：</p>
+
+    <ul>
+      <li><strong>思考：</strong>你在各个操作之前、之间看到的、以流式方式呈现的推理过程。</li>
+      <li><strong>工具调用：</strong>指明某个工具（比如 Read 或 Edit）及其参数的结构化代码块，Claude Code 随后会解析并执行它。</li>
+      <li><strong>给你的文本：</strong>计划、进度更新，以及最后的总结。</li>
+    </ul>
+
+    <p>这些其实都是同一个循环里产生的普通输出 token，按同样的费率计费。举例来说，思考型 token 的生成方式和其他输出 token 完全一样，并且会在这一轮对话剩余的时间里始终留在上下文中。</p>
+
+    <p>当 Claude 接下来去写代码时，它先前的推理过程会成为输入的一部分，就像它读过的某个文件一样。</p>
+
+    <figure><figcaption>Claude 的所有输出都是 token。思考、工具调用，以及给你的文本，都是从同一个循环中生成出来的。</figcaption></figure>
+
+    <p>那么"努力"到底改变了什么？努力级别会作为请求的一部分被发送给模型，就在你的提示词旁边一起送过去。模型被训练成能够理解在每个努力级别下应该如何表现，这种学到的行为方式，已经被固化进了冻结的权重之中。</p>
+
+    <p>当你的请求到达时，努力级别就是模型要响应的又一项输入，就和它对你提示词文本的响应方式一样。它决定了 Claude 在认为任务完成之前，需要做到多彻底、多有把握。</p>
+
+    <p><strong>这个考量会在每一轮对话中都被纳入</strong>，其结果是需要更多的 token 才能给出更有把握的答案。</p>
+
+    <figure><figcaption>同样的提示词，两种努力级别。高努力级别的路径要多生成大约 7 倍的 token，才能得到一个更有把握的答案。</figcaption></figure>
+
+    <p>在更高的努力级别下，Claude 通常会先制定一个计划，努力级别的高低会影响这个计划的深度和广度。不过，这个计划并非一成不变。随着 Claude 陆续收到自己各项操作的结果，它会更新已经取得的进展，以及对累积结果的确信程度。</p>
+
+    <p>所以，如果一个包含三个假设的调试计划，在第一步就找到了 bug，那么"继续调查假设 2 和假设 3"可能就不再是必要的动作了。Claude 通常会明确说出这一点："第一项检查已经找到了问题，所以剩下的检查不需要了"，然后直接跳过。在 Claude Code 中，你会看到任务列表在运行过程中被临时修订，正是这种情况的体现。</p>
+
+    <p>在更高的努力级别下，Claude 会更倾向于对其他假设做双重检查，或者对正确性进行核实，但它通常不会为简单任务人为地虚增用量。事实上，我们的团队在模型训练时非常关注"过度思考"的问题，因为这会削弱效果。</p>
+
+    <h2>如何选择努力级别</h2>
+
+    <p>我们的建议是：<strong>大多数任务应该使用模型的默认努力级别。</strong> 默认级别是指 Claude 会根据大多数人愿意为这类任务投入多少而相应调整 token 用量的那个级别。</p>
+
+    <p>把"努力"想象成一个手动开关，用来调节 Claude 工作的强度和时长。当你基于自己的领域或工作类型，对"彻底程度"或"速度"有明确偏好时，可以有意识地去调整它。更应该把这当作一种总体偏好，而不是逐个任务去做的决定。</p>
+
+    <p>在 <a href="https://www.anthropic.com/news/claude-opus-4-8" target="_blank">Claude Opus 4.8 发布</a>之后，有一些实用的经验或许能帮你做判断：我们在测试中发现，在同样的 token 数量下，使用 Opus 4.8 的默认努力设置，比使用 Opus 4.7 的默认努力设置处理同一任务，能产出更好的结果。</p>
+
+    <p>你可以只为当前会话设置努力级别，也可以把它固化为默认值。对于单次会话，运行 <code>/effort</code> 可以打开一个滑块，运行 <code>/effort high</code> 可以直接设定某个级别，或者在启动时加上 <code>--effort</code> 参数。要让默认值在多次会话之间持续生效，可以在设置文件里配置 <code>effortLevel</code>，或者设置 <code>CLAUDE_CODE_EFFORT_LEVEL</code> 环境变量。如果同时设置了多个，环境变量的优先级最高，其次是设置文件中的值，最后才是模型自身的默认值。</p>
+
+    <p>有一点很容易让人踩坑：只有 <code>low</code>、<code>medium</code>、<code>high</code> 和 <code>xhigh</code> 可以被持久化保存。<code>max</code> 和 <code>ultracode</code> 只在当前会话中生效——每次想用的时候，都需要通过 <code>/effort</code> 或 <code>--effort</code> 单独设置。所以如果你把 <code>max</code> 写进了设置文件，却发现它似乎被忽略了或被悄悄降级了，原因就在这里。要确认当前实际生效的是哪个级别，可以查看加载动画（spinner）旁边显示的努力级别标签，或者打开 <code>/model</code>。</p>
+
+    <h2>当 Claude 出错时，应该调整什么</h2>
+
+    <p>当 Claude 出错的时候，你的第一反应不应该是去调某个旋钮，而应该是检查一下你提供的上下文。你的提示词是不是太模糊了？Claude 是否连接到了正确的工具？是否配备了合适的技能？</p>
+
+    <p>如果你在一个本不该需要更高努力级别的任务上不断调高努力，问题的根源往往在上游——出在你的上下文、你的 CLAUDE.md，或者任务的范围界定方式上。</p>
+
+    <p>但假设你已经提供了清晰的上下文，Claude 依然出了错，这时候该问自己的问题是：它是没有<em>足够努力去尝试</em>，还是<em>本身就不够懂</em>？</p>
+
+    <figure><figcaption>两个问题，一个兜底策略。把这个经验法则当作一个起点，而不是一条硬性规则。</figcaption></figure>
+
+    <h3>模型：问题本身太难</h3>
+
+    <p>当问题确实很难时，选用更大的模型。比如那些隐晦的 bug、不熟悉的领域，或者架构决策类的问题。当较小的模型无论你给它多少上下文都会自信地给出错误答案时，更大的模型会很有帮助。</p>
+
+    <p>更大的模型也更擅长处理模糊性，而具体、明确的执行指令，则更适合在较小的模型上取得成功。</p>
+
+    <p>当工作是常规性的，选用较小的模型。比如你能精确描述的修改、机械性的改动，或者关于已经在上下文中的代码的问题。没有理由为一项任务不需要的能力付费。</p>
+
+    <p>如果 Claude 已经拥有全部相关上下文、也明显尝试过了，但依然出错，这就是该选用更大模型的信号。如果你正在用更大的模型，而近期的工作一直都是常规性的，切换到更小的模型通常能提升速度、降低成本，同时不影响输出质量。</p>
+
+    <h3>努力：Claude 没有足够努力地尝试</h3>
+
+    <p>如果 Claude 出错是因为跳过了某个文件、没有运行测试，或者没有对自己的工作做双重核实，那就选用更高的努力级别。这一点在你选用的努力级别低于该模型默认水平时，尤其相关。</p>
+
+    <div class="callout">
+      <h4>Fable、Opus、Sonnet 的比喻：专才、专家与全才</h4>
+      <p>我喜欢这样理解这两个设置之间的关系：Fable 是一位见过几乎没人见过的问题的专才，Opus 是专家，而 Sonnet 是一位非常出色的全才。努力级别决定的是，这三者中的任何一个会在你的任务上花多少时间。</p>
+      <p><strong>低努力级别的 Opus</strong>，就像是找一位在你这类问题上经验深厚的专家，花五分钟跟你聊聊。他们带来的是那种在你的代码库里哪儿都找不到的知识：见过的各种模式、知道该留意的坑，这种东西只有解决过大量类似问题的人才具备。但只给他们五分钟，意味着他们只能快速扫一眼你的代码，而不是仔细研读。</p>
+      <p><strong>高努力级别的 Sonnet</strong>，就像是给一位非常出色的全才一整个下午的时间。他们会读遍所有内容，跑一遍流程，反复核实自己的工作，最终对<em>你这段具体的代码</em>形成透彻的理解。他们相对欠缺的，是那种"这个问题我以前正好见过"的直觉。</p>
+      <p><strong>即便是低努力级别的 Fable</strong>，也像是那位专才只是瞥了一眼所有人都卡住的问题，却依然能发现别人都没注意到的关键点。这种识别能力，正是你付出最多成本所换来的东西，所以更值得把它留给那些真正需要的任务。</p>
+      <p>这三者都不是绝对意义上"更好"，模型设置大致对应"能力有多强"，努力设置大致对应"做得有多彻底"。大多数实际任务，两者都需要一些。</p>
+    </div>
+
+    <h2>努力、模型与 token 消耗</h2>
+
+    <p>那么模型选择、努力级别和 token 消耗到底是如何相互作用的？这取决于具体任务。</p>
+
+    <p>对于常规工作，在相同的努力级别下，两种模型通常都能做对。更大的模型会因为额外的验证步骤而消耗更多 token，而且每个 token 的单价也更高。这就是为什么在常规性的工作阶段切换到更小的模型，能在不影响质量的前提下真正省钱。</p>
+
+    <figure><figcaption>图中曲线仅为示意，展示的是一个足够简单、两种模型都能快速完成的单一任务，并不代表真实的基准测试数据。</figcaption></figure>
+
+    <p>对于更难的多步骤工作，情况则不同。较小的模型必须一点点逼近自己能力的极限，消耗大量的迭代次数；而较大的模型则能用更少的步骤达到同样的质量标准。</p>
+
+    <p>你为更大的模型支付的单 token 价格更高，但在那些真正能把较小模型逼到极限的任务上，整个任务的总成本反而可能更低。更重要的是，更大的模型能完成一些较小模型无论调到多高努力级别都无法完成的任务。</p>
+
+    <p>这一点在 Fable 身上表现得最为明显。在长时间、多步骤的工作中，它遥遥领先。在我们的测试中，它完成了 Opus 和 Sonnet 在任何努力级别下都无法完成的工作。它的单 token 成本也最高，这也是为什么应该把它留给真正需要的工作。</p>
+
+    <figure><figcaption>图中曲线仅为示意，展示的是一个足够困难、能把两种模型都逼到极限的单一任务，并不代表真实的基准测试数据。</figcaption></figure>
+
+    <p>上面这些图表要传达的关键点是：努力级别决定的是 Claude <em>愿意</em>沿着这条曲线走多远，但这并不意味着 Claude <em>需要</em>走那么远才能完成任务。</p>
+
+    <p>还有一个细微之处：努力级别会影响 token 消耗，但并不会限制它。系统中唯一的硬性上限是 <code>max_tokens</code>，一旦触发，它会在响应流中途直接截断输出。这是一个相当粗暴的手段，主要与 API 开发者相关。相对更柔和的控制手段，比如任务预算（task budgets），或者在提示词中直接要求 Claude 保持简洁，是更有用的工具。它们更像是模型被训练去遵循的指导原则——当接近限制时，它会主动收尾——而不是一堵会直接撞上去的墙。</p>
+
+    <h2>从默认设置开始，再去调整旋钮</h2>
+
+    <p>大多数时候，你根本不需要去想这两个设置中的任何一个。当结果不如预期时，问问自己："是 Claude 不够懂，还是它没有足够努力地尝试？"然后据此进行调整。</p>
+
+    <p class="footer-note">本文作者为 Lydia Hallie，Claude Code 团队技术成员。本文由个人学习工作台整理翻译，仅供学习参考，如需引用请以<a href="https://claude.com/blog/claude-model-and-effort-level-in-claude-code" target="_blank">原文</a>为准。</p>
+  </article>
+</div>
+</body>
+</html>

@@ -18,6 +18,7 @@
       <a href="../../../ai.html">AI</a>
       <a href="../../../english.html">英语</a>
       <a href="../../../k12.html" class="active">学科</a>
+      <a href="../../../investment.html">投资</a>
     </nav>
   </header>
 
@@ -31,12 +32,12 @@
 
   <main class="doc-shell">
     <article class="doc-content">
-<h1>初中数学学习文档生成计划</h1>
-<h2>目标</h2>
+<h1 id="初中数学学习文档生成计划">初中数学学习文档生成计划</h1>
+<h2 id="目标">目标</h2>
 <p>把初中数学知识按“专题目录 → 具体学习文档”的方式长期沉淀。每个专题都要像“二次函数与抛物线”一样，不只是罗列知识点，而是包含图像、动画、题型方法、真实题目、解题步骤和复习入口。</p>
 <p>最终形成一个可持续扩展的初中数学知识库：</p>
 <ul><li>学科首页进入初中数学目录。</li><li>初中数学目录按专题分类。</li><li>每个专题是一篇独立 HTML 学习文档。</li><li>每篇文档都能直接用于预习、复习和错题回看。</li></ul>
-<h2>页面结构</h2>
+<h2 id="页面结构">页面结构</h2>
 <p>当前结构：</p>
 <pre><code>k12.html
 topics/k12/math/index.html
@@ -45,38 +46,38 @@ topics/k12/math/quadratic-parabola.html</code></pre>
 <pre><code>topics/k12/math/&lt;topic-slug&gt;.html</code></pre>
 <p>每新增一个专题，需要同步更新：</p>
 <ul><li><code>topics/k12/math/index.html</code>：在“已接入专题”里增加卡片。</li><li><code>topics/k12-roadmap.md</code>：在“已接入专题”表格里增加一行。</li></ul>
-<h2>单篇学习文档标准模板</h2>
+<h2 id="单篇学习文档标准模板">单篇学习文档标准模板</h2>
 <p>每个专题页都建议包含这些模块：</p>
 <div class="doc-table-wrap"><table><thead><tr><th>模块</th><th>目的</th><th>要求</th></tr></thead><tbody><tr><td>顶部导航</td><td>明确当前位置</td><td>返回数学目录，标明学段/专题</td></tr><tr><td>学习目标</td><td>说明学完会什么</td><td>3-5 条，面向学生语言</td></tr><tr><td>可交互动画</td><td>先建立直观理解</td><td>函数、几何、统计类都尽量有动态图或可调参数</td></tr><tr><td>知识框架</td><td>建立地图</td><td>用表格或卡片整理核心概念</td></tr><tr><td>推导过程</td><td>解释为什么</td><td>关键公式不能只给结论，要展示推导</td></tr><tr><td>题型速查</td><td>快速选方法</td><td>“看到什么条件 → 用什么方法”</td></tr><tr><td>例题精讲</td><td>学会标准步骤</td><td>每类题至少 1 道完整例题</td></tr><tr><td>常见坑点</td><td>降低错题率</td><td>汇总易错点和检查方法</td></tr><tr><td>综合题训练</td><td>贴近考试</td><td>至少 5 道真实风格题，带思路和步骤</td></tr><tr><td>总结口诀</td><td>方便复习</td><td>简洁，但不替代推理</td></tr></tbody></table></div>
-<h2>动画与互动规范</h2>
+<h2 id="动画与互动规范">动画与互动规范</h2>
 <p>不同专题采用不同互动方式：</p>
 <div class="doc-table-wrap"><table><thead><tr><th>专题类型</th><th>推荐互动</th></tr></thead><tbody><tr><td>函数</td><td>Canvas 坐标系、参数滑杆、交点/顶点动态变化</td></tr><tr><td>几何</td><td>SVG 动态标注、拖动点、角度/长度实时变化</td></tr><tr><td>方程与代数</td><td>配方步骤展开、因式分解动画、数轴区间高亮</td></tr><tr><td>概率统计</td><td>抽样模拟、频率变化动画、图表切换</td></tr><tr><td>综合题</td><td>条件逐步显现、辅助线开关、解题流程折叠卡</td></tr></tbody></table></div>
 <p>每个互动模块必须有：</p>
 <ul><li>默认状态，不操作也能看懂。</li><li>一句观察提示，比如“先看开口，再看顶点”。</li><li>移动端不溢出、不遮挡。</li><li>不依赖复杂构建工具，保持静态 HTML 可发布。</li></ul>
-<h2>初中数学专题清单</h2>
-<h3>第一批：优先生成</h3>
+<h2 id="初中数学专题清单">初中数学专题清单</h2>
+<h3 id="第一批优先生成">第一批：优先生成</h3>
 <p>这些专题最适合先做，因为它们高频、关联强、容易做成动画文档。</p>
 <div class="doc-table-wrap"><table><thead><tr><th>优先级</th><th>专题</th><th>文件名</th><th>核心内容</th><th>互动重点</th></tr></thead><tbody><tr><td>P0</td><td>二次函数与抛物线</td><td><code>quadratic-parabola.html</code></td><td>图像、顶点、判别式、最值、应用题</td><td>已完成参数动画</td></tr><tr><td>P0</td><td>一次函数</td><td><code>linear-function.html</code></td><td>斜率、截距、交点、实际方案</td><td>斜率滑杆、两直线交点</td></tr><tr><td>P0</td><td>一元二次方程</td><td><code>quadratic-equation.html</code></td><td>配方、公式法、判别式、根与系数</td><td>配方步骤动画、根的变化</td></tr><tr><td>P0</td><td>相似三角形</td><td><code>similar-triangles.html</code></td><td>判定、性质、比例、面积比</td><td>拖动相似图形、比例实时显示</td></tr><tr><td>P0</td><td>圆</td><td><code>circle.html</code></td><td>圆周角、切线、垂径、弦</td><td>动态圆、角度关系标注</td></tr></tbody></table></div>
-<h3>第二批：基础能力补齐</h3>
+<h3 id="第二批基础能力补齐">第二批：基础能力补齐</h3>
 <div class="doc-table-wrap"><table><thead><tr><th>优先级</th><th>专题</th><th>文件名</th><th>核心内容</th><th>互动重点</th></tr></thead><tbody><tr><td>P1</td><td>有理数与数轴</td><td><code>rational-numbers.html</code></td><td>正负数、绝对值、数轴、运算</td><td>数轴点移动</td></tr><tr><td>P1</td><td>整式与因式分解</td><td><code>polynomial-factorization.html</code></td><td>整式运算、公式、分解方法</td><td>面积模型、步骤展开</td></tr><tr><td>P1</td><td>分式</td><td><code>rational-expressions.html</code></td><td>约分、通分、分式方程</td><td>通分过程动画</td></tr><tr><td>P1</td><td>方程组与不等式</td><td><code>equations-inequalities.html</code></td><td>一元一次、二元一次、不等式组</td><td>数轴区间高亮</td></tr><tr><td>P1</td><td>平面直角坐标系</td><td><code>coordinate-plane.html</code></td><td>坐标、象限、距离、中点</td><td>点拖动与坐标显示</td></tr></tbody></table></div>
-<h3>第三批：几何体系</h3>
+<h3 id="第三批几何体系">第三批：几何体系</h3>
 <div class="doc-table-wrap"><table><thead><tr><th>优先级</th><th>专题</th><th>文件名</th><th>核心内容</th><th>互动重点</th></tr></thead><tbody><tr><td>P1</td><td>平行线与角</td><td><code>parallel-lines-angles.html</code></td><td>同位角、内错角、同旁内角</td><td>平行线截线角度联动</td></tr><tr><td>P1</td><td>三角形基础</td><td><code>triangles.html</code></td><td>三边关系、内角和、全等</td><td>拖动三角形、全等叠合</td></tr><tr><td>P1</td><td>全等三角形</td><td><code>congruent-triangles.html</code></td><td>SSS、SAS、ASA、AAS、HL</td><td>条件点亮与判定选择</td></tr><tr><td>P1</td><td>勾股定理</td><td><code>pythagorean-theorem.html</code></td><td>证明、计算、逆定理</td><td>正方形面积拼图</td></tr><tr><td>P2</td><td>四边形</td><td><code>quadrilaterals.html</code></td><td>平行四边形、矩形、菱形、正方形</td><td>边角性质切换</td></tr><tr><td>P2</td><td>轴对称与旋转</td><td><code>transformations.html</code></td><td>对称、平移、旋转、中心对称</td><td>图形变换动画</td></tr></tbody></table></div>
-<h3>第四批：统计概率与综合</h3>
+<h3 id="第四批统计概率与综合">第四批：统计概率与综合</h3>
 <div class="doc-table-wrap"><table><thead><tr><th>优先级</th><th>专题</th><th>文件名</th><th>核心内容</th><th>互动重点</th></tr></thead><tbody><tr><td>P2</td><td>数据统计</td><td><code>statistics.html</code></td><td>平均数、中位数、众数、方差</td><td>图表和数据实时变化</td></tr><tr><td>P2</td><td>概率初步</td><td><code>probability.html</code></td><td>树状图、列表法、频率估计概率</td><td>随机试验模拟</td></tr><tr><td>P2</td><td>函数几何综合</td><td><code>function-geometry.html</code></td><td>函数交点、面积、动点</td><td>图像与几何联动</td></tr><tr><td>P2</td><td>中考压轴题方法</td><td><code>exam-final-problems.html</code></td><td>分类讨论、动点、最值、存在性</td><td>条件分层展开</td></tr></tbody></table></div>
-<h2>生成顺序</h2>
-<h3>阶段 1：函数主线</h3>
+<h2 id="生成顺序">生成顺序</h2>
+<h3 id="阶段-1函数主线">阶段 1：函数主线</h3>
 <p>先完成函数相关专题，形成“坐标系 + 图像 + 参数 + 题型”的统一模板。</p>
 <ol><li>一次函数</li><li>一元二次方程</li><li>二次函数与抛物线复盘升级</li><li>函数几何综合</li></ol>
-<h3>阶段 2：几何主线</h3>
+<h3 id="阶段-2几何主线">阶段 2：几何主线</h3>
 <p>几何文档重点是图形动态标注和辅助线思路。</p>
 <ol><li>平行线与角</li><li>三角形基础</li><li>全等三角形</li><li>相似三角形</li><li>圆</li></ol>
-<h3>阶段 3：代数基础补齐</h3>
+<h3 id="阶段-3代数基础补齐">阶段 3：代数基础补齐</h3>
 <p>这些内容更适合用步骤展开、错因对比和题型卡来做。</p>
 <ol><li>有理数与数轴</li><li>整式与因式分解</li><li>分式</li><li>方程组与不等式</li></ol>
-<h3>阶段 4：统计概率与压轴</h3>
+<h3 id="阶段-4统计概率与压轴">阶段 4：统计概率与压轴</h3>
 <p>最后补综合题和考试策略。</p>
 <ol><li>数据统计</li><li>概率初步</li><li>中考压轴题方法</li></ol>
-<h2>每篇文档的题目配置</h2>
+<h2 id="每篇文档的题目配置">每篇文档的题目配置</h2>
 <p>每篇专题至少包含：</p>
 <ul><li>3 道基础例题：确认概念会用。</li><li>3 道方法题：训练核心题型。</li><li>3 道综合题：接近考试风格。</li><li>1 道实际应用题：利润、面积、行程、桥洞、概率实验等。</li><li>1 组易错辨析：选择题或判断题形式。</li></ul>
 <p>每道题都按这个格式写：</p>
@@ -86,12 +87,12 @@ topics/k12/math/quadratic-parabola.html</code></pre>
 步骤
 答案
 易错提醒</code></pre>
-<h2>质量验收标准</h2>
+<h2 id="质量验收标准">质量验收标准</h2>
 <p>生成后逐项检查：</p>
 <ul><li>页面能在本地静态服务器打开。</li><li>从数学目录能点进去。</li><li>页面内所有相对链接有效。</li><li>动画或 SVG 在桌面和手机宽度不溢出。</li><li>公式能正常渲染或至少可读。</li><li>题目步骤没有跳步。</li><li>每个专题都说明“什么时候用这个方法”。</li><li>至少包含一个真实生活或考试综合场景。</li><li>GitHub Pages 部署后线上地址返回 200。</li></ul>
-<h2>近期执行清单</h2>
+<h2 id="近期执行清单">近期执行清单</h2>
 <ol><li>生成 <code>linear-function.html</code>：一次函数专题。</li><li>生成 <code>quadratic-equation.html</code>：一元二次方程专题。</li><li>生成 <code>similar-triangles.html</code>：相似三角形专题。</li><li>生成 <code>circle.html</code>：圆专题。</li><li>为数学目录增加“学习顺序”区块，把已完成专题按推荐路线串起来。</li></ol>
-<h2>长期目标</h2>
+<h2 id="长期目标">长期目标</h2>
 <p>形成一个完整的初中数学学习系统：</p>
 <ul><li>学生可以按专题预习。</li><li>家长可以按目录查找知识点。</li><li>错题可以反向链接到专题。</li><li>每个知识点都有动画、例题和综合题。</li><li>后续可以继续扩展到小学数学和高中数学。</li></ul>
     </article>

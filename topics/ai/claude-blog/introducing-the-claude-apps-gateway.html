@@ -18,6 +18,7 @@
       <a href="../../../ai.html" class="active">AI</a>
       <a href="../../../english.html">英语</a>
       <a href="../../../k12.html">学科</a>
+      <a href="../../../investment.html">投资</a>
     </nav>
   </header>
 
@@ -31,78 +32,78 @@
 
   <main class="doc-shell">
     <article class="doc-content">
-<h1>Claude Apps Gateway 简介：为 Amazon Bedrock 和 Google Cloud 打造的企业级控制平面</h1>
+<h1 id="claude-apps-gateway-简介为-amazon-bedrock-和-google-cloud-打造的企业级控制平面">Claude Apps Gateway 简介：为 Amazon Bedrock 和 Google Cloud 打造的企业级控制平面</h1>
 <blockquote>原文: https://claude.com/blog/introducing-the-claude-apps-gateway</blockquote>
 <blockquote>日期: Jun 29, 2026</blockquote>
 <blockquote>分类: Product announcements</blockquote>
 <blockquote>产品: Claude Code</blockquote>
 <p>---</p>
-<h2>文章在讲什么</h2>
+<h2 id="文章在讲什么">文章在讲什么</h2>
 <p>这是一篇 <strong>Anthropic 的产品发布公告</strong>，宣布推出 <strong>Claude Apps Gateway</strong>——一个面向企业的自托管控制平面。</p>
 <p><strong>背景问题</strong>：在 Claude Apps Gateway 出现之前，如果企业想在自己的云基础设施（Amazon Bedrock 或 Google Cloud）上运行 Claude Code，通常面临以下困扰：</p>
 <ul><li>需要为每个开发者单独配置云凭证（credential）</li><li>每次政策调整都要手动推送到每台开发者的电脑</li><li>想看每个开发者的使用成本，需要额外搭建统计工具</li><li>登录方式难以与企业已有的身份系统集成</li></ul>
 <p><strong>作者想解决的核问题</strong>：把这些分散的、难以管理的配置工作，<strong>统一收拢到一个中心化的网关</strong>里。企业只需要维护这一个网关，所有开发者都通过它来使用 Claude Code。</p>
 <p>---</p>
-<h2>原文结构地图</h2>
+<h2 id="原文结构地图">原文结构地图</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>章节</th><th>作用</th></tr></thead><tbody><tr><td>开篇介绍</td><td>用一句话说明网关是什么 + 核心价值主张（SSO、策略管控、成本分摊等）</td></tr><tr><td>Deploying the gateway</td><td>介绍网关的部署方式和技术架构——单容器 + PostgreSQL</td></tr><tr><td>How the gateway works</td><td>详细拆解网关处理的五大功能模块</td></tr><tr><td>Getting started</td><td>给出实操步骤，帮助读者快速落地</td></tr><tr><td>（无正式结语）</td><td>公告类文章以&quot;立即可用&quot;收尾，逻辑闭合点是&quot;你现在就可以部署&quot;</td></tr></tbody></table></div>
 <p>---</p>
-<h2>核心概念讲解</h2>
-<h3>1. Gateway（网关）是什么？</h3>
+<h2 id="核心概念讲解">核心概念讲解</h2>
+<h3 id="1-gateway网关是什么">1. Gateway（网关）是什么？</h3>
 <p><strong>Gateway 在这里不是一个抽象概念</strong>，而是一个实实在在运行的软件。它是一个&quot;中间层&quot;，夹在开发者的 Claude Code 客户端和企业使用的 AI 推理服务（如 Claude API、亚马逊 Bedrock、谷歌 Cloud）之间。</p>
 <p>它的核心角色是：<strong>所有请求和认证先经过网关，网关再转发到后端服务。</strong></p>
 <p>这样的设计带来的直接好处是：企业只需要管好这一个&quot;门&quot;，就能控制所有人的访问。</p>
-<h3>2. 为什么叫&quot;stateless container&quot;（无状态容器）？</h3>
+<h3 id="2-为什么叫stateless-container无状态容器">2. 为什么叫&quot;stateless container&quot;（无状态容器）？</h3>
 <p>传统的企业软件需要复杂的安装和状态管理。这里的 gateway 被设计成 <strong>stateless</strong>（无状态），意思是：</p>
 <ul><li>网关本身<strong>不存储业务数据</strong>（会话信息、用户数据等）</li><li>它只负责处理请求的路由和转发</li><li>真正的数据（如用户会话、策略配置）存储在<strong>独立的 PostgreSQL 数据库</strong>里</li></ul>
 <p>这样设计的好处是：<strong>部署简单、扩展容易、故障恢复快</strong>——容器可以随时重启或水平扩展，不用担心状态丢失。</p>
-<h3>3. OIDC（OpenID Connect）是什么？</h3>
+<h3 id="3-oidcopenid-connect是什么">3. OIDC（OpenID Connect）是什么？</h3>
 <p><strong>OIDC 是一种身份认证协议</strong>。它的作用是让网关能够&quot;认得&quot;企业里已经存在的用户系统。</p>
 <p>常见的 OIDC 提供商包括：</p>
 <ul><li>Google Workspace</li><li>Microsoft Entra ID（原 Azure AD）</li><li>Okta</li></ul>
 <p><strong>工作原理简化理解</strong>：</p>
 <ol><li>开发者打开 Claude Code，尝试登录</li><li>网关把开发者重定向到企业的 IdP（身份提供商）</li><li>开发者用公司账号密码登录（SSO）</li><li>IdP 返回一个<strong>短期的令牌（short-lived token）</strong>给网关</li><li>网关验证令牌后，允许开发者使用 Claude Code</li></ol>
 <p><strong>关键点</strong>：开发者电脑上不再需要存储长期的密钥或凭证，只有这个临时的会话令牌。</p>
-<h3>4. Managed Settings（托管设置）</h3>
+<h3 id="4-managed-settings托管设置">4. Managed Settings（托管设置）</h3>
 <p>这是网关实现<strong>集中管控</strong>的核心机制。</p>
 <ul><li>管理员在网关服务器上<strong>统一配置策略</strong>（比如允许使用哪些模型、默认的参数设置等）</li><li>开发者每次登录 Claude Code 时，网关把策略<strong>下发</strong>给客户端</li><li>客户端在每次请求时，网关<strong>强制执行</strong>这些策略</li></ul>
 <p>这样，企业不需要手动去每台电脑上改配置，策略变更是即时、全局生效的。</p>
-<h3>5. Per-user Cost Attribution（按用户成本归属）</h3>
+<h3 id="5-per-user-cost-attribution按用户成本归属">5. Per-user Cost Attribution（按用户成本归属）</h3>
 <p>这是企业最关心的功能之一：如何知道<strong>谁用了多少资源、花了多少钱</strong>？</p>
 <ul><li>每次 Claude Code 发起请求时，客户端会给请求打上<strong>用户标识</strong></li><li>网关收集这些使用数据，通过 <strong>OTLP 协议</strong> 发送给企业自己运行的收集器</li><li>企业可以在自己的监控系统里，按用户、按团队查看和分析成本</li></ul>
 <p><strong>关键点</strong>：数据保存在企业自己的网络里，按照企业自己的数据保留策略存储。</p>
-<h3>6. Spend Caps（消费上限）</h3>
+<h3 id="6-spend-caps消费上限">6. Spend Caps（消费上限）</h3>
 <p>网关允许设置<strong>每日、每周、每月的费用上限</strong>，并且可以按组织、团队或个人级别来配置。</p>
 <p>这是一种<strong>预防性控制</strong>：避免某个用户或团队在某个周期内消耗超出预算的资源。</p>
 <p>---</p>
-<h2>文章主体讲解</h2>
-<h3>第一节：Deploying the gateway（网关的部署）</h3>
+<h2 id="文章主体讲解">文章主体讲解</h2>
+<h3 id="第一节deploying-the-gateway网关的部署">第一节：Deploying the gateway（网关的部署）</h3>
 <p><strong>这一节讲什么</strong>：介绍 Claude Apps Gateway 的技术架构和部署方式。</p>
 <p><strong>为什么重要</strong>：企业在采用一个新工具之前，必须了解它如何与现有基础设施集成。这一节回答了&quot;这东西装在哪里&quot;&quot;谁来维护&quot;的问题。</p>
 <p><strong>关键点</strong>：</p>
 <ol><li><strong>单容器部署</strong>：整个网关打包成一个 Docker 容器，运行在 Linux 系统上</li><li><strong>依赖外部 PostgreSQL</strong>：网关本身不管理数据，所有持久化数据存在 PostgreSQL 里</li><li><strong>开发者侧零额外安装</strong>：开发者电脑上安装的 <strong>claude binary</strong>（即 Claude Code CLI）本身就包含了网关客户端功能，不需要单独再装什么</li><li><strong>运维简单</strong>：加入新开发者 = 在 IdP 里添加用户；移除开发者 = 在 IdP 里删除用户</li></ol>
 <p>这节的逻辑是：<strong>降低企业的运维负担，让管理员只维护一个组件。</strong></p>
 <p>---</p>
-<h3>第二节：How the gateway works（网关的工作原理）</h3>
+<h3 id="第二节how-the-gateway-works网关的工作原理">第二节：How the gateway works（网关的工作原理）</h3>
 <p><strong>这一节讲什么</strong>：详细拆解网关处理的五个核心功能模块。</p>
 <p><strong>为什么重要</strong>：这一节是整篇文章的<strong>技术核心</strong>。作者需要让读者相信这个网关能真正满足企业需求，而不是一个简单的代理工具。</p>
 <p><strong>关键点（五个功能模块）</strong>：</p>
 <div class="doc-table-wrap"><table><thead><tr><th>功能</th><th>作用</th><th>技术细节</th></tr></thead><tbody><tr><td><strong>Identity（身份）</strong></td><td>让开发者用公司账号登录</td><td>作为 OIDC Relying Party，签发短期会话令牌，无长期密钥在开发者机器上</td></tr><tr><td><strong>Policy（策略）</strong></td><td>集中管控客户端行为</td><td>服务器端定义一次，客户端签入时接收，每次请求时网关强制执行</td></tr><tr><td><strong>Telemetry（遥测）</strong></td><td>收集使用数据</td><td>客户端给每次请求打标签，网关通过 OTLP 转发到企业自己的收集器</td></tr><tr><td><strong>Routing（路由）</strong></td><td>决定请求发往哪里</td><td>网关持有上游凭证，可路由到 Claude API、Bedrock 或 Google Cloud，支持故障转移</td></tr><tr><td><strong>Spend Caps（消费上限）</strong></td><td>控制成本</td><td>支持日/周/月三级上限，可按组织/组/用户粒度配置</td></tr></tbody></table></div>
 <p><strong>一个值得注意的细节</strong>：网关<strong>默认不向 Anthropic 发送任何推理流量或使用数据</strong>（除非你配置使用 Claude API）。这解决了企业最大的隐私顾虑——<strong>数据主权</strong>掌握在企业自己手里。</p>
 <p>---</p>
-<h3>第三节：Getting started（快速上手）</h3>
+<h3 id="第三节getting-started快速上手">第三节：Getting started（快速上手）</h3>
 <p><strong>这一节讲什么</strong>：给出两个实操步骤，帮助读者立即行动。</p>
 <p><strong>为什么重要</strong>：公告类文章的结尾通常要么是愿景，要么是行动号召。这里选择的是<strong>行动号召</strong>，因为产品已经可用。</p>
 <p><strong>关键点</strong>：</p>
 <ol><li><strong>部署网关</strong>：下载 CLI → 配置 gateway.yaml → 在 IdP 里注册一个 OIDC 应用</li><li><strong>推送到客户端</strong>：在客户端的 managed-settings.json 里配置 forceLoginMethod 和 forceLoginGatewayUrl</li></ol>
 <p>这节的逻辑是：给你一条<strong>最短路径</strong>，让你今天就能跑起来。</p>
 <p>---</p>
-<h2>关键对比表</h2>
+<h2 id="关键对比表">关键对比表</h2>
 <p>本文中没有系统性的对比表（这不是一篇评测文章），但有一个<strong>隐含的对比</strong>值得整理出来：</p>
-<h3>企业使用 Claude Code 的两种方式对比</h3>
+<h3 id="企业使用-claude-code-的两种方式对比">企业使用 Claude Code 的两种方式对比</h3>
 <div class="doc-table-wrap"><table><thead><tr><th>维度</th><th>无网关（传统方式）</th><th>有网关（Claude Apps Gateway）</th></tr></thead><tbody><tr><td>凭证管理</td><td>每个开发者一个云凭证</td><td>一个上游凭证存在网关</td></tr><tr><td>政策配置</td><td>手动推送到每台电脑</td><td>服务器端一次配置，即时生效</td></tr><tr><td>身份认证</td><td>各用各的账号</td><td>企业 SSO，统一身份管理</td></tr><tr><td>成本统计</td><td>需额外搭建工具</td><td>网关内置，按用户自动归属</td></tr><tr><td>数据隐私</td><td>流量可能经过多方</td><td>流量留在企业网络（除非用 Claude API）</td></tr><tr><td>运维复杂度</td><td>高（分散管理）</td><td>低（集中管理）</td></tr></tbody></table></div>
 <p>这个对比的隐含意思是：<strong>网关把所有分散的运维痛点一次性解决了。</strong></p>
 <p>---</p>
-<h2>关键句短摘译</h2>
+<h2 id="关键句短摘译">关键句短摘译</h2>
 <ol><li><strong>&quot;Previously, running Claude Code on these platforms has meant provisioning a cloud credential per developer...&quot;</strong></li></ol>
 <ul><li>原文意思：在过去，在这些平台上运行 Claude Code 意味着要为每个开发者单独配置云凭证……</li><li>重要性：这句话直接点出企业面临的<strong>核心痛点</strong>，是整篇文章的问题起点。</li></ul>
 <ol><li><strong>&quot;The gateway is a self-hosted control plane that gives you corporate SSO login, centrally enforced policy, role-based access, and per-user cost attribution.&quot;</strong></li></ol>
@@ -118,10 +119,10 @@
 <ol><li><strong>&quot;We&#39;re also publishing the protocol the gateway uses, so other gateway developers can implement the same features.&quot;</strong></li></ol>
 <ul><li>原文意思：我们会公开网关使用的协议，这样其他网关开发者也可以实现相同的功能。</li><li>重要性：这是一个<strong>生态友好的设计决策</strong>，让第三方可以基于这个协议开发兼容实现。</li></ul>
 <p>---</p>
-<h2>术语表</h2>
+<h2 id="术语表">术语表</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>英文术语</th><th>解释</th></tr></thead><tbody><tr><td><strong>Claude Apps Gateway</strong></td><td>企业自托管的控制平面，连接 Claude Code 与 Amazon Bedrock 或 Google Cloud，提供身份认证、策略管控、成本统计等功能</td></tr><tr><td><strong>Stateless Container</strong></td><td>无状态容器——容器本身不存储业务数据，处理完请求后不保留状态，便于扩展和恢复</td></tr><tr><td><strong>SSO (Single Sign-On)</strong></td><td>单点登录——用户用一组凭证登录后，可以访问多个系统，无需重复认证</td></tr><tr><td><strong>OIDC (OpenID Connect)</strong></td><td>基于 OAuth 2.0 的身份认证协议，允许一个服务验证用户的身份</td></tr><tr><td><strong>IdP (Identity Provider)</strong></td><td>身份提供商——负责管理用户账号和认证的服务（如 Okta、Microsoft Entra ID）</td></tr><tr><td><strong>Relying Party</strong></td><td>OIDC 中的依赖方，即使用 IdP 进行身份验证的应用（这里是网关）</td></tr><tr><td><strong>Managed Settings</strong></td><td>托管设置——由管理员在服务器端统一定义，推送给所有客户端的策略配置</td></tr><tr><td><strong>OTLP (OpenTelemetry Protocol)</strong></td><td>OpenTelemetry 的传输协议，用于将遥测数据（指标、日志、追踪）从客户端发送到收集器</td></tr><tr><td><strong>Per-user Cost Attribution</strong></td><td>按用户成本归属——将 AI 资源消耗的费用精确归属到具体的使用者</td></tr><tr><td><strong>Spend Caps</strong></td><td>消费上限——对每日/每周/每月的费用设置硬性限制</td></tr><tr><td><strong>Upstream Credential</strong></td><td>上游凭证——存储在网关中的，用于访问实际 AI 推理服务（Claude API、Bedrock 等）的密钥</td></tr><tr><td><strong>Failover</strong></td><td>故障转移——当主服务不可用时，自动切换到备用服务</td></tr></tbody></table></div>
 <p>---</p>
-<h2>文章结尾怎么收束</h2>
+<h2 id="文章结尾怎么收束">文章结尾怎么收束</h2>
 <p>这篇文章<strong>没有传统的结尾段落</strong>。作为一篇产品发布公告（Product announcements），它在&quot;Getting started&quot;一节给出了具体的部署步骤和文档链接后，就自然结束了。</p>
 <p>这种结尾方式在产品发布类文章中很常见——<strong>逻辑闭合点是&quot;现在就可以用&quot;</strong>。作者不试图在这里做升华或展望，而是把读者直接引导到行动层面：</p>
 <blockquote>&quot;The gateway is available now.&quot;</blockquote>

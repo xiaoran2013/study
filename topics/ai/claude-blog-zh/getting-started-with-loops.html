@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>循环入门：了解 Claude Code 团队定义的智能体循环</title>
+<style>
+:root{--bg:#fafaf8;--bg-elev:#fff;--bg-soft:#f4f3ee;--fg:#1a1a1a;--fg-soft:#555;--fg-mute:#888;--border:#e2e0d8;--accent:#285c4d;--accent-soft:#e8f2ee;--link:#0969da;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;}
+.page{max-width:860px;margin:0 auto;padding:40px 28px 96px;}
+.sitebar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--fg-mute);}
+.sitebar a{color:var(--accent);text-decoration:none;font-weight:600;}
+.sitebar a:hover{text-decoration:underline;}
+h1{font-size:30px;line-height:1.3;margin:0 0 10px;color:var(--fg);}
+.meta{font-size:13.5px;color:var(--fg-mute);margin-bottom:6px;}
+.meta a{color:var(--accent);}
+.lead{font-size:17px;color:var(--fg-soft);font-style:italic;border-left:3px solid var(--accent);padding-left:14px;margin:20px 0 28px;}
+h2{font-size:22px;margin-top:38px;margin-bottom:12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px;}
+p{margin:12px 0;}
+ul,ol{margin:12px 0;padding-left:24px;}
+li{margin:6px 0;}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:14.5px;}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+th{background:var(--bg-soft);}
+pre{background:var(--bg-soft);border:1px solid var(--border);border-radius:6px;padding:14px 16px;overflow-x:auto;font-size:13px;line-height:1.5;}
+code{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;}
+.footer-note{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--fg-mute);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sitebar">
+    <a href="index.html">← 返回 Claude Blog 中文全译目录</a>
+    <span>Claude Blog 全文翻译</span>
+  </div>
+  <article>
+    <h1>循环入门：了解 Claude Code 团队定义的智能体循环</h1>
+    <p class="meta">
+      原文标题：Getting started with loops ｜
+      发布日期：2026 年 6 月 30 日 ｜ 分类：Claude Code ｜ 产品：Claude Code ｜ 阅读时长：约 5 分钟 ｜
+      <a href="https://claude.com/blog/getting-started-with-loops" target="_blank">查看原文</a>
+    </p>
+    <p class="lead">了解 Claude Code 团队如何定义智能体循环，本文提供从基于轮次、基于目标、基于时间到主动式循环的实用进阶指南，并说明各类循环分别适合什么时候使用。</p>
+
+    <p>目前有很多人在讨论"设计循环"，而不是"给编程智能体写提示词"。如果你花点时间在 X（推特）上想搞清楚"循环"到底是什么，你会看到五花八门的答案。</p>
+
+    <p>在 Claude Code 团队内部，我们把<strong>循环</strong>定义为：<strong>智能体不断重复工作周期，直到满足某个停止条件为止</strong>。我们根据以下几点，把循环划分为几种不同类型：</p>
+
+    <ul>
+      <li>它们是如何被触发的</li>
+      <li>它们是如何被停止的</li>
+      <li>使用了哪种 Claude Code 原语（primitive）</li>
+      <li>每一种最适合哪类任务</li>
+    </ul>
+
+    <p>我们会介绍主要的循环类型、各自适用的时机，以及如何在控制 token 用量的同时保持代码质量。并不是所有任务都需要复杂的循环；从最简单的方案开始，有选择地使用这些模式。</p>
+
+    <h2>基于轮次的循环（Turn-based loops）</h2>
+
+    <ul>
+      <li><strong>触发方式：</strong> 用户发出的提示词。</li>
+      <li><strong>停止条件：</strong> Claude 判断自己已经完成任务，或者需要更多上下文。</li>
+      <li><strong>最适合：</strong> 不属于常规流程或日程安排的、较短的任务。</li>
+      <li><strong>用量管理方式：</strong> 写具体的提示词，并借助技能改进验证环节，以减少轮次数量。</li>
+    </ul>
+
+    <p>你发送的每一条提示词，都会启动一个由你手动主导每一轮的循环。Claude 收集上下文、采取行动、检查自己的工作，如有需要就重复这一过程，然后给出回应。我们把这称为"智能体循环"。</p>
+
+    <p>举例来说，让 Claude 创建一个点赞按钮。它会读取你的代码，做出修改，运行测试，然后把它<em>相信</em>可以工作的东西交还给你。接着你需要手动检查这份工作，再写下一条提示词。</p>
+
+    <p>你可以把自己手动执行的步骤编写成一份 SKILL.md，从而改进验证环节，让 Claude 能够端到端地检查更多自己的工作。这应该包含能让 Claude <em>看到</em>、<em>度量</em>或<em>操作</em>结果的工具或连接器。检查项越是可量化，Claude 就越容易做到自我验证。</p>
+
+    <p>举例来说，你可能会在 SKILL.md 文件里这样写：</p>
+
+    <pre><code>---
+name: verify-frontend-change
+description: Verify any UI change end-to-end before declaring it done.
+---
+
+# Verifying frontend changes
+Never report a UI change as complete based on a successful edit alone. Verify it the way a human reviewer would:
+
+1. Start the dev server and open the edited page in the browser.
+2. Interact with the change directly. For a new control (button, input, toggle): click it, confirm the expected state change, and screenshot before/after.
+3. Check the browser console: zero new errors or warnings.
+4. Use the Chrome Devtools MCP, run a performance trace and audit Core Web Vitals.
+
+If any step fails, fix the issue and rerun from step 1 — do not hand back partially verified work.</code></pre>
+
+    <h2>基于目标的循环（/goal）</h2>
+
+    <ul>
+      <li><strong>触发方式：</strong> 实时的手动提示词。</li>
+      <li><strong>停止条件：</strong> 达成目标，或者达到最大轮次数。</li>
+      <li><strong>最适合：</strong> 拥有可验证退出条件的任务。</li>
+      <li><strong>用量管理方式：</strong> 设定具体的完成标准和明确的轮次上限，比如"尝试 5 次后停止"。</li>
+    </ul>
+
+    <p>有时候，一轮是不够的，尤其是面对更复杂的任务时。智能体在可以迭代的情况下表现会更好。你可以通过 <code>/goal</code> 明确定义"完成"是什么样子，来延长 Claude 持续迭代的时长。</p>
+
+    <p>当你定义好成功标准后，Claude 就不必自己判断什么叫"足够好"、从而提前结束循环。每次 Claude 想要停下来时，一个评估模型都会检查你设定的条件，如果目标尚未达成，或者还没到达你设定的轮次上限，就会让它继续工作。</p>
+
+    <p>这正是为什么确定性的标准——比如通过测试的数量，或者达到某个分数门槛——会如此有效。</p>
+
+    <p>例如：</p>
+    <pre><code>/goal get the homepage Lighthouse score to 90 or above, stop after 5 tries.</code></pre>
+    <p><em>（把首页的 Lighthouse 分数提高到 90 分以上，尝试 5 次后停止。）</em></p>
+
+    <h2>基于时间的循环（/loop 与 /schedule）</h2>
+
+    <ul>
+      <li><strong>触发方式：</strong> 指定的时间间隔。</li>
+      <li><strong>停止条件：</strong> 你取消它，或者工作完成（PR 被合并、队列清空）。</li>
+      <li><strong>最适合：</strong> 周期性重复的工作，或者与外部环境/系统对接的工作。</li>
+      <li><strong>用量管理方式：</strong> 设置更长的时间间隔，或者根据事件而不是时间来做出反应。</li>
+    </ul>
+
+    <p>有些智能体工作是周期性重复的：任务本身不变，只有输入在变化。比如，每天早上总结一遍 Slack 消息。还有一些工作依赖外部系统，一种简单的对接方式，就是按固定间隔去检查它，并对变化做出反应。比如一个可能会收到代码评审或者 CI 失败的 PR。</p>
+
+    <p>对于这类情况，你可以用 <code>/loop</code> 来触发 Claude 的运行，它会按固定间隔重新运行同一条提示词。例如：</p>
+
+    <pre><code>/loop 5m check my PR, address review comments, and fix failing CI</code></pre>
+    <p><em>（每 5 分钟检查我的 PR，处理评审意见，并修复失败的 CI。）</em></p>
+
+    <p><code>/loop</code> 运行在你的电脑上，所以一旦你关掉电脑，它就会停止。你可以通过 <code>/schedule</code> 创建一个例行任务（routine），把循环迁移到云端运行。</p>
+
+    <h2>主动式循环（Proactive loops）</h2>
+
+    <ul>
+      <li><strong>触发方式：</strong> 事件或日程安排，实时过程中没有人工参与。</li>
+      <li><strong>停止条件：</strong> 每个任务在达成目标后退出。例行任务本身会一直运行，直到你把它关闭。</li>
+      <li><strong>最适合：</strong> 持续产生的、定义明确的重复性工作：bug 报告、问题分诊、迁移、依赖升级等等。</li>
+      <li><strong>用量管理方式：</strong> 把例行任务路由给更小、更快的模型，把能力最强的模型留给需要判断力的决策。</li>
+    </ul>
+
+    <p>上面这些原语，再加上 Claude Code 的其他功能，比如<strong>自动模式（auto mode）</strong>和<strong>动态工作流（dynamic workflows，研究预览版）</strong>，可以组合成一个用于长时间运行工作的循环。</p>
+
+    <p>举例来说，要处理不断涌入的反馈，你可以这样组合：</p>
+
+    <ol>
+      <li><strong>/schedule</strong>（研究预览版），运行一个检查新报告的例行任务</li>
+      <li><strong>/goal</strong> 定义"完成"是什么样子，用<strong>技能</strong>记录如何验证它</li>
+      <li><strong>动态工作流</strong>，用来编排负责分诊每份报告、修复问题并评审修复结果的多个智能体</li>
+      <li><strong>自动模式</strong>，让例行任务运行时不需要停下来请求许可</li>
+    </ol>
+
+    <p>把这些组合起来，一条提示词可能是这样的：</p>
+
+    <pre><code>/schedule every hour: check #project-feedback for bug reports. /goal: don't stop until every report found this run is triaged, actioned, and responded to. When fixing a bug, use a workflow to explore three solutions in parallel worktrees and have a judge adversarially review them.</code></pre>
+    <p><em>（/schedule 每小时：检查 #project-feedback 频道里的 bug 报告。/goal：在本次运行中发现的每一份报告都被分诊、处理并回复之前，不要停下。修复 bug 时，用一个工作流在三个并行的工作树中探索三种方案，并让一个裁判智能体对它们进行对抗式评审。）</em></p>
+
+    <h2>保持代码质量</h2>
+
+    <p>一个循环产出的质量，取决于围绕它构建的系统。在设计这套系统时：</p>
+
+    <ul>
+      <li><strong>保持代码库本身的整洁：</strong> Claude 会遵循你代码库里已经存在的模式和约定。</li>
+      <li><strong>给 Claude 一种验证自己工作的方式：</strong> 用技能把"好的标准"（对你和你的团队而言）编码下来。</li>
+      <li><strong>让文档触手可及：</strong> 框架和库的文档里有最新的最佳实践。</li>
+      <li><strong>用第二个智能体做代码评审：</strong> 一个带着全新上下文的评审者，偏见更少，也不会受主智能体推理过程的影响。你可以使用内置的 <code>/code-review</code> 技能，或者面向 GitHub 的 Code Review 功能。</li>
+    </ul>
+
+    <p>当某一次结果没有达到标准时，不要止步于修复这一个具体问题，而应该尝试把它编码进系统里，让所有后续的迭代都能从中受益。</p>
+
+    <h2>管理 token 用量</h2>
+
+    <p>为了管理 token 用量，循环应该有清晰的边界：</p>
+
+    <ul>
+      <li><strong>为任务选择合适的原语和模型：</strong> 较小的任务不需要多个智能体或循环。有些任务可以使用更便宜、更快的模型。</li>
+      <li><strong>定义清晰的成功与停止标准：</strong> 明确说明"完成"是什么样子，这样 Claude 就能更快（但不会过早）地得出解决方案。</li>
+      <li><strong>在大规模运行前先做试点：</strong> 动态工作流可能会生成上百个智能体。先在一小部分工作上评估用量。</li>
+      <li><strong>对确定性的工作使用脚本：</strong> 运行一个脚本比让模型逐步推理要便宜得多。比如，一个 PDF 技能可以自带一个填表脚本，让 Claude 每次直接运行它，而不是每次都重新推导代码。</li>
+      <li><strong>不要让例行任务运行得比实际需要的更频繁：</strong> 让检查间隔匹配你所监控对象实际的变化频率。</li>
+      <li><strong>审查用量：</strong> <code>/usage</code> 命令会按技能、子智能体和 MCP 细分最近的用量，不带参数的 <code>/goal</code> 会显示目前为止的轮次数和 token 用量，<code>/workflows</code> 会显示每个智能体的 token 用量，你可以随时停止任何一个智能体。</li>
+    </ul>
+
+    <h2>开始使用</h2>
+
+    <p>总结如下：</p>
+
+    <table>
+      <thead><tr><th>循环类型</th><th>你交出的部分</th><th>适用场景</th><th>使用工具</th></tr></thead>
+      <tbody>
+        <tr><td>基于轮次</td><td>检查权</td><td>你在探索或做决策</td><td>自定义验证技能</td></tr>
+        <tr><td>基于目标</td><td>停止条件</td><td>你清楚"完成"是什么样子</td><td><code>/goal</code></td></tr>
+        <tr><td>基于时间</td><td>触发时机</td><td>工作按日程在你的项目之外发生</td><td><code>/loop</code>、<code>/schedule</code></td></tr>
+        <tr><td>主动式</td><td>整个提示词</td><td>工作是重复性的且定义明确的</td><td>以上所有工具，再加上动态工作流</td></tr>
+      </tbody>
+    </table>
+
+    <p>要开始使用循环，先看看你目前正在做的工作。挑一个你自己是瓶颈的任务，问问自己可以交出去哪一部分：你能不能写出验证检查？目标是否足够清晰？工作是否会按日程到来？</p>
+
+    <p>一旦有了想法，就把循环跑起来，观察结果——比如它在哪里卡住、或者做得超出了范围——不要害怕对它进行迭代。</p>
+
+    <p>想了解更多信息，可以阅读 Claude Code 文档中关于并行运行智能体的内容，以及 loop、schedule、goal 和 dynamic workflows 相关页面。</p>
+
+    <p class="footer-note">本文作者为 Delba de Oliveira 与 Michael Segner。本文由个人学习工作台整理翻译，仅供学习参考，如需引用请以<a href="https://claude.com/blog/getting-started-with-loops" target="_blank">原文</a>为准。</p>
+  </article>
+</div>
+</body>
+</html>

@@ -18,6 +18,7 @@
       <a href="../../../ai.html" class="active">AI</a>
       <a href="../../../english.html">英语</a>
       <a href="../../../k12.html">学科</a>
+      <a href="../../../investment.html">投资</a>
     </nav>
   </header>
 
@@ -31,82 +32,82 @@
 
   <main class="doc-shell">
     <article class="doc-content">
-<h1>构建高效的人机协作团队</h1>
+<h1 id="构建高效的人机协作团队">构建高效的人机协作团队</h1>
 <blockquote>原文: https://claude.com/blog/building-effective-human-agent-teams</blockquote>
 <blockquote>日期: Jun 24, 2026</blockquote>
 <blockquote>分类: Enterprise AI</blockquote>
 <blockquote>产品: Claude Tag</blockquote>
-<h2>文章在讲什么</h2>
+<h2 id="文章在讲什么">文章在讲什么</h2>
 <p>这篇文章讨论的是 AI 工作方式的范式转变：从前一个人独自操作一个 AI 聊天窗口的“单人模式”，进化到人类与 AI 智能体（Agent）像多人游戏一样协同工作的“人机团队模式”。</p>
 <p>作者指出，随着 Claude Tag 这类工具的发布，人类和智能体可以在同一工作空间中并肩协作，共同追求团队目标。Anthropic 团队在过去几个月里测试了让这种人机团队成功运行所需的技术，并在文中分享了四点核心经验：信息透明公开、明确角色分工、设定北极星目标、以及逐步建立信任。这些经验看似是老生常谈的团队管理原则，但正是这些原则在 AI 时代变得更加重要——智能体让任何疏漏都无处遁形。</p>
-<h2>原文结构地图</h2>
+<h2 id="原文结构地图">原文结构地图</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>主要章节</th><th>作用</th></tr></thead><tbody><tr><td>开篇背景</td><td>说明 AI 工作方式从“单人”向“多人”的转变趋势，引出文章主题</td></tr><tr><td>What are multiplayer agents?</td><td>定义核心概念：什么是多人智能体，及其与普通智能体的区别</td></tr><tr><td>Lesson 1: Work in public</td><td>阐述第一个经验：信息透明、广泛上下文对智能体的重要性</td></tr><tr><td>Lesson 2: Defined roles</td><td>阐述第二个经验：清晰的角色分工和工具配置</td></tr><tr><td>Lesson 3: North star</td><td>阐述第三个经验：设定北极星目标让智能体更主动</td></tr><tr><td>Lesson 4: Build trust over time</td><td>阐述第四个经验：随时间推移、验证机制建立信任</td></tr><tr><td>Questions to ask</td><td>提供实践前的自查问题清单</td></tr><tr><td>Moving forward</td><td>总结收束，点明核心观点</td></tr></tbody></table></div>
-<h2>核心概念讲解</h2>
-<h3>多人智能体（Multiplayer Agents）</h3>
+<h2 id="核心概念讲解">核心概念讲解</h2>
+<h3 id="多人智能体multiplayer-agents">多人智能体（Multiplayer Agents）</h3>
 <p>这是本文的核心概念，指能够同时与多个不同人类协作的 AI 模型。与普通智能体相比，多人智能体有三个关键区别：</p>
 <ol><li><strong>拥有自己的凭证（Credentials）</strong>：不绑定到特定人类账户，可以安全地在预设边界内运行</li><li><strong>驻留在工作发生的地方</strong>：例如 Anthropic 内部的 Slack 频道</li><li><strong>拥有持久记忆和广泛信息访问权限</strong>：能记住团队目标，学习组织运作方式</li></ol>
-<h3>人机团队（Human-Agent Teams）</h3>
+<h3 id="人机团队human-agent-teams">人机团队（Human-Agent Teams）</h3>
 <p>指人类和智能体共享同一个工作空间、同一份文档、共同的目标和角色分工的协作单元。其核心理念是：人类设定战略，智能体执行工作。</p>
-<h3>北极星目标（North Star）</h3>
+<h3 id="北极星目标north-star">北极星目标（North Star）</h3>
 <p>这是一个雄心勃勃、覆盖广泛的目标，帮助团队判断哪些任务和工作流是正确的方向。它由人类设定，并基于公司使命和业务目标。</p>
-<h3>Doer-Verifier 模式</h3>
+<h3 id="doer-verifier-模式">Doer-Verifier 模式</h3>
 <p>指让一个智能体执行任务，另一个智能体验证其工作质量的模式，用于确保输出质量。</p>
-<h3>安全边界（Security Boundaries）</h3>
+<h3 id="安全边界security-boundaries">安全边界（Security Boundaries）</h3>
 <p>在团队工作空间中设置的权限边界，定义了哪些信息对智能体可见。边界应在工作区级别设置，而非逐项定义。</p>
 <p>---</p>
-<h2>文章主体讲解</h2>
-<h3>开篇：范式转变的背景</h3>
+<h2 id="文章主体讲解">文章主体讲解</h2>
+<h3 id="开篇范式转变的背景">开篇：范式转变的背景</h3>
 <p><strong>这一节讲什么</strong>：作者描述了 AI 工作方式的历史演变——从单人聊天窗口到如今的多人协同模式。</p>
 <p><strong>为什么重要</strong>：为全文奠定基调。读者需要理解这不是小修小补，而是工作方式的根本转变。</p>
 <p><strong>关键点</strong>：过去 AI 虽能处理复杂长时任务（如编程、研究、财务分析），但始终是“一人一智能体”的模式。Claude Tag 等工具的出现打破了这个限制，使得多人智能体可以在同一工作空间协作。</p>
 <p>---</p>
-<h3>什么是多人智能体</h3>
+<h3 id="什么是多人智能体">什么是多人智能体</h3>
 <p><strong>这一节讲什么</strong>：正式定义多人智能体概念，并说明其与传统智能体的区别。</p>
 <p><strong>为什么重要</strong>：这是整篇文章的基础概念，读者必须先理解多人智能体是什么，才能理解后续的经验教训。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>多人智能体拥有自己的凭证，存在于工作发生的地方（如 Slack）</li><li>要让智能体有效参与团队，需要三个核心能力：持久记忆、独立凭证、广泛信息访问</li><li>仅有技术基础还不够，团队还需要特定的工作方式和共享规范</li></ul>
 <p>---</p>
-<h3>经验一：公开工作，给智能体广泛上下文</h3>
+<h3 id="经验一公开工作给智能体广泛上下文">经验一：公开工作，给智能体广泛上下文</h3>
 <p><strong>这一节讲什么</strong>：智能体完全依赖团队产出的文字来构建理解，因此信息必须公开透明。</p>
 <p><strong>为什么重要</strong>：这是后续所有协作的基础。如果信息不可搜索、不透明，智能体就无法有效参与。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>智能体的理解完全来自可搜索的文字：Slack、代码、文档、会议记录</li><li>私聊、走廊对话、受限文档无法为智能体提供上下文——对智能体来说，不可见即不存在</li><li>建议在安全边界内默认公开信息，减少“这条信息该不该分享”的决策疲劳</li><li>透明有回报：能读会议决策的智能体不会推荐已被搁置的项目；能看到跨团队产品规范的智能体能推荐其他团队的成功经验</li><li>例外：敏感交互可用直接消息或专用工具（Claude.ai、Claude Cowork），通过个人 MCP 连接器保护隐私</li></ul>
 <p>---</p>
-<h3>经验二：每个成员都有明确角色和适当工具</h3>
+<h3 id="经验二每个成员都有明确角色和适当工具">经验二：每个成员都有明确角色和适当工具</h3>
 <p><strong>这一节讲什么</strong>：人机团队应像普通团队一样拥有共同的名单、工件和工作空间，成员（包括智能体）各有分工。</p>
 <p><strong>为什么重要</strong>：没有清晰的角色分工，人类会各自运行私人 AI，造成工作重复和上下文碎片化。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>智能体拥有独立凭证、技能和工具访问权限，不同智能体承担不同角色（如数据分析、代码审查、研究综合）</li><li>项目启动时，人类与智能体协商角色分配</li><li>智能体可能需要“召唤”其他智能体来执行特定任务，但需要确保被调度的智能体有合适的记忆和访问权限</li><li>Anthropic 工程团队的做法：创建团队名册（rosters）来明确角色，编写技能文件（skill files）定义智能体专长，新增智能体处理新领域（如发布管理）</li></ul>
 <p>---</p>
-<h3>经验三：设定北极星让智能体更主动</h3>
+<h3 id="经验三设定北极星让智能体更主动">经验三：设定北极星让智能体更主动</h3>
 <p><strong>这一节讲什么</strong>：除了给智能体丰富上下文和清晰角色，还需要一个“北极星”目标来激发智能体的主动性。</p>
 <p><strong>为什么重要</strong>：大多数智能体只是被动执行任务，但最重要的智能体应该主动建议新项目和工作流。这需要北极星的引导。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>北极星是雄心勃勃、覆盖广泛的目标，帮助团队判断哪些任务值得做</li><li>人类始终负责设定北极星，并明确告知哪些智能体被授权主动推荐新工作流</li><li>例子：内部工具团队设定“让产品入门体验更有帮助”的北极星后，智能体主动建议修改错误提示文案，显著提升了入门成功率</li><li>设定北极星后，人类高价值时间得到保护，会议聚焦于最重要的工作</li></ul>
 <p>---</p>
-<h3>经验四：随时间建立信任</h3>
+<h3 id="经验四随时间建立信任">经验四：随时间建立信任</h3>
 <p><strong>这一节讲什么</strong>：信任是逐步建立的，需要从少量任务开始，通过验证机制和反馈循环不断扩大智能体的自主权。</p>
 <p><strong>为什么重要</strong>：信任不是一蹴而就的。与新人加入团队需要磨合期一样，智能体也需要通过多次反馈循环来学习最佳工作方式。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>初始阶段需要手动审查智能体工作，验证质量并提供反馈</li><li>最佳做法是让智能体在人类查看前用多种方式自验：代码有测试，文档有检查清单和风格指南</li><li>可采用 Doer-Verifier 模式：一个智能体执行，另一个验证</li><li>模型更新后需要重新测试，因为提示词可能需要调整，原有帮助的护栏可能反而限制更聪明的模型</li><li>实际案例：一位工程负责人让智能体处理 backlog，先从简单任务开始，逐步增加复杂度，每周让智能体编写包含“经验与失误”的报告来持续改进</li><li>当智能体更独立后，训练它们把人类注意力视为稀缺资源：批量问题、重复关键上下文、限制单次呈现给人类的信息量</li></ul>
 <p>---</p>
-<h3>自查问题</h3>
+<h3 id="自查问题">自查问题</h3>
 <p><strong>这一节讲什么</strong>：作者提供了五个实践前的核心问题，帮助读者检验人机团队的基础是否到位。</p>
 <p><strong>为什么重要</strong>：这些问题直指前面四个经验的要害，读者可以用它们评估自己的准备情况。</p>
 <p><strong>关键点</strong>：</p>
 <ol><li>智能体和人类需要的信息与访问权限是否都公开且可搜索？</li><li>能否写下团队名册（人类和智能体）并说明各自负责什么？</li><li>每个成员是否都有合适的工具来完成任务？</li><li>是否有检查清单或测试来验证关键工作产出？</li><li>团队是否有清晰的北极星目标可供参照？</li></ol>
 <p>---</p>
-<h2>关键对比表</h2>
-<h3>普通智能体 vs 多人智能体</h3>
+<h2 id="关键对比表">关键对比表</h2>
+<h3 id="普通智能体-vs-多人智能体">普通智能体 vs 多人智能体</h3>
 <div class="doc-table-wrap"><table><thead><tr><th>维度</th><th>普通智能体</th><th>多人智能体</th></tr></thead><tbody><tr><td>凭证</td><td>绑定到特定人类</td><td>拥有独立凭证</td></tr><tr><td>存在位置</td><td>独立对话窗口</td><td>工作发生的地方（如 Slack）</td></tr><tr><td>记忆范围</td><td>单次会话或单用户</td><td>持久记忆，可跨会话跨用户</td></tr><tr><td>上下文来源</td><td>单一对话内容</td><td>团队所有可搜索文字</td></tr><tr><td>协作模式</td><td>单一人类交互</td><td>多人类与多智能体共享</td></tr></tbody></table></div>
 <p>---</p>
-<h2>关键句短摘译</h2>
+<h2 id="关键句短摘译">关键句短摘译</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>英文短摘</th><th>中文意思</th><th>为什么重要</th></tr></thead><tbody><tr><td>&quot;For an agent, if it&#39;s not written down and accessible, it doesn&#39;t exist.&quot;</td><td>对智能体来说，写不下来或无法访问的信息就不存在</td><td>点明了信息透明对智能体的根本意义</td></tr><tr><td>&quot;A small number of clear, workspace-level boundaries removes decision fatigue from day-to-day work.&quot;</td><td>少量清晰的工作区级边界能消除日常工作的决策疲劳</td><td>说明为什么应从整体层面设边界而非逐项管理</td></tr><tr><td>&quot;Without clear roles, people end up running fleets of personal AIs on the side, duplicating work and fracturing the team&#39;s context.&quot;</td><td>没有清晰角色分工，人们会各自运行私人 AI，造成工作重复和上下文碎片化</td><td>强调了角色定义的必要性</td></tr><tr><td>&quot;Agents just make it even more important not to skip them.&quot;</td><td>智能体让跳过这些原则变得更加不可接受</td><td>这是全文的核心观点</td></tr><tr><td>&quot;The teams getting the most from their agents are the ones who are most intentional about applying these fundamentals.&quot;</td><td>从智能体获益最多的团队，是最认真应用这些基本原则的团队</td><td>呼应全文，收束有力</td></tr><tr><td>&quot;Helping agents communicate well ensures that they remain helpful and effective.&quot;</td><td>帮助智能体好好沟通能确保它们持续有用且高效</td><td>说明沟通质量直接影响智能体价值</td></tr><tr><td>&quot;Treat human attention as the scarce resource it is.&quot;</td><td>把人类注意力当作稀缺资源来对待</td><td>指导智能体如何优化与人类的交互</td></tr><tr><td>&quot;None of these patterns are new—at least not for humans.&quot;</td><td>这些模式并不新鲜——至少对人类来说不新鲜</td><td>强调 AI 并没有创造新原则，只是放大了对它们的需要</td></tr></tbody></table></div>
 <p>---</p>
-<h2>术语表</h2>
+<h2 id="术语表">术语表</h2>
 <ul><li><strong>Agent（智能体）</strong>：能够自主执行任务的 AI 模型，可以拥有记忆、技能和工具访问能力</li><li><strong>Multiplayer Agents（多人智能体）</strong>：能与多个不同人类同时协作的智能体，拥有独立凭证，存在于团队工作空间中</li><li><strong>Human-Agent Team（人机团队）</strong>：人类和智能体共享目标、工作空间和角色分工的协作单元</li><li><strong>Context（上下文）</strong>：智能体用于理解任务和做出响应的背景信息，包括对话历史、文档、代码等</li><li><strong>North Star（北极星）</strong>：团队长期、覆盖广泛的目标，用于指导任务优先级和智能体主动性</li><li><strong>Skill Files（技能文件）</strong>：定义特定智能体角色和能力的配置文件，便于快速复制和扩展</li><li><strong>Roster（名册）</strong>：列出团队所有成员（人类和智能体）及各自职责的清单</li><li><strong>Security Boundaries（安全边界）</strong>：在工作区级别定义的权限边界，控制智能体能访问哪些信息</li><li><strong>Doer-Verifier（执行-验证）模式</strong>：一个智能体执行任务，另一个验证其正确性的协作模式</li><li><strong>MCP（Model Context Protocol）</strong>：模型上下文协议，用于连接 AI 与外部工具和数据源</li><li><strong>Guardrails（护栏）</strong>：为防止智能体行为偏差而设置的限制和规则</li></ul>
 <p>---</p>
-<h2>文章结尾怎么收束</h2>
+<h2 id="文章结尾怎么收束">文章结尾怎么收束</h2>
 <p>文章的结尾段落简短而有力，作者做了两件事：</p>
 <p><strong>第一，重申核心观点</strong>：这些模式对人类来说并不新鲜——强大的北极星、清晰的角色、完善的文档、统一的质量标准和容错空间，都是几十年来健康的团队习惯。智能体只是让跳过这些原则变得更加不可接受。</p>
 <p>这句话的回扣非常巧妙。作者在开头提出人机团队是新趋势，结尾则指出新瓶装旧酒——技术是新的，但成功的原则是旧的。这消除了读者对“是否需要全新方法”的疑虑，同时强调了执行这些原则的紧迫性。</p>

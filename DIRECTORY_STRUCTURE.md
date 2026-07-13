@@ -21,6 +21,7 @@
 ├── ai.html                    # AI 学习页
 ├── english.html                # 英语学习页
 ├── k12.html                   # 学科学习页
+├── investment.html            # 投资学习页
 ├── doc.html                   # Markdown/JSON 阅读器
 ├── README.md                  # 项目入口说明
 ├── PROJECT_BACKGROUND.md      # 项目总纲
@@ -29,6 +30,18 @@
 ├── ITERATION_LOG.md           # 迭代记录
 ├── _assets/                   # 前端资源
 ├── topics/                    # 主题学习路线和专题笔记
+│   ├── ai-roadmap.md/.html    # AI 学习路线
+│   ├── english-roadmap.md/.html    # 英语学习路线
+│   ├── k12-roadmap.md/.html   # 学科学习路线
+│   ├── investment-roadmap.md/.html # 投资学习路线
+│   ├── ai/                    # AI 专题笔记
+│   │   ├── claude-blog/       # Claude Blog 讲解式译读(md+html)
+│   │   ├── claude-blog-zh/    # Claude Blog 中文全文翻译(html)
+│   │   ├── agent-ontology.html     # 本体论与 AI Agent
+│   │   ├── ontology-101.html  # 本体开发 101
+│   │   └── harness-engineering-self-improvement.html
+│   ├── investment/            # 投资专题笔记(ETF 策略等)
+│   └── k12/                   # 学科专题笔记
 ├── scripts/                   # 自动化脚本
 ├── _sources/                  # AI 处理用的原始材料(本地, 不进 Git)
 ├── .github/workflows/         # GitHub Pages 发布工作流
@@ -45,9 +58,10 @@
 | `ai.html` | AI 页 | AI 学习主题入口 |
 | `english.html` | 英语页 | 英语学习主题入口 |
 | `k12.html` | 学科页 | 小学、初中和学科学习入口 |
+| `investment.html` | 投资页 | 投资学习主题入口 |
 | `doc.html` | 文档阅读器 | 读取公开 Markdown/JSON |
 | `_assets/*.css` | 样式 | 页面样式 |
-| `topics/` | 专题路线 | AI、英语、学科等主题, 用 `.md` 撰写, 用 `scripts/render-topic-docs.js` 生成同名 `.html` 供直接浏览 |
+| `topics/` | 专题路线 | AI、英语、学科、投资等主题, 用 `.md` 撰写, 用 `scripts/render-topic-docs.js` 生成同名 `.html` 供直接浏览 |
 
 ## 4. 本地自动化目录
 

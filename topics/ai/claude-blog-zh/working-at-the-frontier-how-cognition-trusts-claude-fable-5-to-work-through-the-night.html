@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>站在前沿：Cognition 为何信任 Claude Fable 5 能够通宵工作</title>
+<style>
+:root{--bg:#fafaf8;--bg-elev:#fff;--bg-soft:#f4f3ee;--fg:#1a1a1a;--fg-soft:#555;--fg-mute:#888;--border:#e2e0d8;--accent:#285c4d;--accent-soft:#e8f2ee;--link:#0969da;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;}
+.page{max-width:860px;margin:0 auto;padding:40px 28px 96px;}
+.sitebar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--fg-mute);}
+.sitebar a{color:var(--accent);text-decoration:none;font-weight:600;}
+.sitebar a:hover{text-decoration:underline;}
+h1{font-size:30px;line-height:1.3;margin:0 0 10px;color:var(--fg);}
+.meta{font-size:13.5px;color:var(--fg-mute);margin-bottom:6px;}
+.meta a{color:var(--accent);}
+.lead{font-size:17px;color:var(--fg-soft);font-style:italic;border-left:3px solid var(--accent);padding-left:14px;margin:20px 0 28px;}
+h2{font-size:22px;margin-top:38px;margin-bottom:12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px;}
+h3{font-size:18px;margin-top:26px;margin-bottom:8px;color:#1f2937;}
+p{margin:12px 0;}
+figure{margin:20px 0;text-align:center;}
+figcaption{font-size:13px;color:var(--fg-mute);margin-top:6px;}
+.footer-note{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--fg-mute);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sitebar">
+    <a href="index.html">← 返回 Claude Blog 中文全译目录</a>
+    <span>Claude Blog 全文翻译</span>
+  </div>
+  <article>
+    <h1>站在前沿：Cognition 为何信任 Claude Fable 5 能够通宵工作</h1>
+    <p class="meta">
+      原文标题：Working at the frontier: How Cognition trusts Claude Fable 5 to work through the night ｜
+      发布日期：2026 年 7 月 10 日 ｜ 分类：Enterprise AI ｜ 阅读时长：约 5 分钟 ｜
+      <a href="https://claude.com/blog/working-at-the-frontier-how-cognition-trusts-claude-fable-5-to-work-through-the-night" target="_blank">查看原文</a>
+    </p>
+    <p class="lead">Cognition 研究高级副总裁 Silas Alberti 几乎测试过每一代 Claude 模型在公司的 AI 软件工程师 Devin 中的表现。Claude Fable 5 是第一个他愿意放心让其整夜运行的模型。</p>
+
+    <p>Cognition 是一家年轻的公司，即便以硅谷的标准衡量也是如此。它在 2024 年初打造了自主 AI 软件工程师 Devin，那时候智能体（agent）的基本运作机制才刚刚勉强能够运转起来。</p>
+
+    <p>Devin 承接的是工程师们始终腾不出手去做的工作：代码库迁移、积压的 bug、总是被一拖再拖的功能开发。Cognition 的客户从高速增长的初创公司到财富 500 强企业都有，这意味着标准必须很高。Devin 写出的代码必须可靠、可以直接投入生产；一个悄悄引入的小 bug 就可能在下游造成真正的问题。</p>
+
+    <p>Alberti 的团队负责训练和测试驱动 Devin 的模型，从一开始就几乎跑过每一代 Claude 模型。他把真正意义上的第一次飞跃归功于 2024 年末的 Claude 3.6 Sonnet——那是第一个能够可靠地串联工具调用、并撑起多步骤任务的模型。当团队把它接入 Devin 后，内部使用量翻了三倍。</p>
+
+    <p>正是这样的经历让他很难被轻易打动。Cognition 见过太多模型在基准测试上表现出色，但工程师一上手用就立刻露馅的情况。"我们已经被这样坑过好多次了，"Alberti 说。因此团队更相信自己工程师的判断，而不是任何分数。他们让品味最挑剔的开发者用每个新模型完整地干一天真实的活儿，标准就是：这段代码是不是他们真的愿意留下来用的。</p>
+
+    <p>用 Alberti 的话说："我们不相信任何 eval（评测）。"</p>
+
+    <h2>早期模型的极限在哪里</h2>
+
+    <p>尽管取得了这些进展，有一道天花板始终存在：一个智能体在偏离任务之前，究竟能坚持运行多久？</p>
+
+    <p>"在 Fable 之前，你能放心委派给智能体的任务，大概只能让它专注几分钟，最多一个小时，"Alberti 说。超过这个时间，会话就会开始漂移。如果一次性给早期模型五个需要权衡的想法，它就会跟不上、变得混乱。在一次数据库迁移任务中，此前的 Opus 模型技术上完成了任务，但过程中引入了一系列不易察觉的 bug。</p>
+
+    <p>故障排查也呈现出同样的模式。早期模型往往只停留在日志表面，而不会深入挖掘到真正相关的那一行；而且它们被训练成无论如何都要给出一个答案——于是它们会"自信地咬定第一个看起来说得通的原因，然后就此停下"。工程师们渐渐学会了不去理会这些结论。</p>
+
+    <figure>
+      <figcaption>Cognition 用一系列基准测试（包括 Frontier Code）来评估前沿模型。</figcaption>
+    </figure>
+
+    <h2>Claude Fable 5 通过了 Cognition 自己设立的门槛</h2>
+
+    <p>Cognition 用自己搭建的 Frontier Code 基准来给模型打分，之所以自建这套基准，是因为现有的基准总是在奖励那些能通过测试、却撑不住真实代码库考验的代码。Alberti 把它称为一种"反糊弄（anti-slop）"标准。在其中最难的子集上，此前的 Opus 模型得分约为 10%，而 Claude Fable 5 的得分约为 30%。</p>
+
+    <p>团队最初的反应是怀疑："是不是哪里有 bug？这不可能是真的。"通常，一次基准分数的跃升会引来工程师们争论好几周，讨论这个模型在实际使用中是否真的更好。但这一次，实际上手测试的结果和数字对上了。"说实话，这多少有点让人震惊，"Alberti 说。</p>
+
+    <p>"我们注意到的最大变化，是它能够自主运行的时间跨度，"他说。"有些任务，我本来打算准备睡觉了，就跟它说'好了，请继续做这个，别停，直到我醒来。'然后我一觉醒来，发现它已经连续工作了八个小时，而且真的在取得实质性进展。这是我以前从没见过的。"</p>
+
+    <p>之所以能撑住这么长的自主运行时间，是因为 Claude Fable 5 在杂乱的上下文中依然保持清醒。它是第一个能够正确使用 Cognition 内部调试工具的模型，能在浏览器里翻查日志，并在噪声中得出结论。在一次曾让早期模型栽跟头的迁移任务中，它先声明了自己将会遵守的不变量（invariants），然后照此执行。在故障排查中，它准确定位了根本原因，并明确说出自己不知道的部分——Alberti 说，这正是真正重建信任的关键所在。</p>
+
+    <p>他把这次跃升归入极少数真正的"阶跃式变化"之列——这种变化大约每年才会出现一次。</p>
+
+    <figure>
+      <figcaption>Silas 和他的团队正在打造由 Claude 等模型驱动的 Devin，用来应对更复杂、运行时间更长的工作负载。</figcaption>
+    </figure>
+
+    <h2>接下来是什么</h2>
+
+    <p>Cognition 创立之初的核心押注，是智能体应该能够在云端一次性运行数个小时。在公司成立的第一年里，模型的能力还远远达不到这个要求。</p>
+
+    <p>Alberti 说，Claude Fable 5 让这个押注的完整版本变得可行，其中一部分已经落地到产品中。Devin 可以监视一个 Slack 频道，在没有被 @ 的情况下主动介入某个问题；也可以监控生产环境，自主排查突发状况。当它做对其中一次，他说，感觉"就像团队里一名真正的工程师"。</p>
+
+    <p>他预计这将成为工程团队的默认状态。他说，一两年之内，90% 的智能体会话都将是主动式的——自己发现问题、扫描代码库，然后带着修复方案给你发消息。</p>
+
+    <p>"我们公司一直想做的很多事情，现在都变得可行了，"Alberti 说。</p>
+
+    <p class="footer-note">延伸阅读：<a href="https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5" target="_blank">开始使用 Claude Fable 5</a>（原文链接）。本文由个人学习工作台整理翻译，仅供学习参考，如需引用请以原文为准。</p>
+  </article>
+</div>
+</body>
+</html>

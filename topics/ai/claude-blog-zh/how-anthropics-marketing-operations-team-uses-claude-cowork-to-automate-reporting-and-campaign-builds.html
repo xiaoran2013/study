@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anthropic 市场运营团队如何用 Claude Cowork 自动化报表与活动搭建</title>
+<style>
+:root{--bg:#fafaf8;--bg-elev:#fff;--bg-soft:#f4f3ee;--fg:#1a1a1a;--fg-soft:#555;--fg-mute:#888;--border:#e2e0d8;--accent:#285c4d;--accent-soft:#e8f2ee;--link:#0969da;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;}
+.page{max-width:860px;margin:0 auto;padding:40px 28px 96px;}
+.sitebar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--fg-mute);}
+.sitebar a{color:var(--accent);text-decoration:none;font-weight:600;}
+.sitebar a:hover{text-decoration:underline;}
+h1{font-size:30px;line-height:1.3;margin:0 0 10px;color:var(--fg);}
+.meta{font-size:13.5px;color:var(--fg-mute);margin-bottom:6px;}
+.meta a{color:var(--accent);}
+.lead{font-size:17px;color:var(--fg-soft);font-style:italic;border-left:3px solid var(--accent);padding-left:14px;margin:20px 0 28px;}
+h2{font-size:22px;margin-top:38px;margin-bottom:12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px;}
+h3{font-size:18px;margin-top:26px;margin-bottom:8px;color:#1f2937;}
+p{margin:12px 0;}
+ul{margin:12px 0;padding-left:24px;}
+li{margin:8px 0;}
+figure{margin:20px 0;text-align:center;}
+figcaption{font-size:13px;color:var(--fg-mute);margin-top:6px;}
+.footer-note{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--fg-mute);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sitebar">
+    <a href="index.html">← 返回 Claude Blog 中文全译目录</a>
+    <span>Claude Blog 全文翻译</span>
+  </div>
+  <article>
+    <h1>Anthropic 市场运营团队如何用 Claude Cowork 自动化报表与活动搭建</h1>
+    <p class="meta">
+      原文标题：How Anthropic's marketing operations team uses Claude Cowork to automate reporting and campaign builds ｜
+      发布日期：2026 年 7 月 8 日 ｜ 分类：Enterprise AI ｜ 产品：Claude Cowork ｜ 阅读时长：约 5 分钟 ｜
+      <a href="https://claude.com/blog/how-anthropics-marketing-operations-team-uses-claude-cowork-to-automate-reporting-and-campaign-builds" target="_blank">查看原文</a>
+    </p>
+    <p class="lead">Anthropic 市场运营团队的 Ian Chan 和 Annabel Custer，分享了他们如何把过去需要在多个平台上手动完成的工作实现自动化。</p>
+
+    <p>市场运营团队要把相当一部分时间，都花在让营销项目背后的系统与业务保持同步上。虽然自动化本该是他们的分内之事，但很多工作恰恰谈不上自动化：营销技术工具之间无法干净地互通，报表需要手动汇总，落地页也只能一个一个地搭建。</p>
+
+    <p>Anthropic 市场运营团队的 Ian Chan，过去每周要花一到两天时间，把每周营销指标回顾报告拼凑出来。专注于活动运营的 Annabel Custer，过去要依次点开 Salesforce、HubSpot、Swoogo 和邮件工具，来搭建每一场新活动。如今，两人都通过在 Claude Cowork 中搭建工作流，把原本需要数天的手动工作压缩到几个小时。</p>
+
+    <p>省下来的时间改变了他们工作的形态。Ian 和 Annabel 现在花更少的时间在各个系统里点来点去，而把更多时间投入到赋能（enablement）、验证，以及支撑营销团队运转的底层数据和流程上——毕竟公司里越来越多的人开始自己拉取数据、自己驱动项目。</p>
+
+    <h2>生成每周营销指标报告</h2>
+
+    <p>在理想情况下，Ian 为营销团队和管理层准备的每周报告里，每一项指标都应该已经躺在某个仪表盘里，他的工作只是把这些数字组织成一段叙述。但现实中，有些指标已经进了仪表盘，有些还没有从数据仓库同步过去，还有一些甚至压根没被接入仓库。新出现的指标，有时候只存在于某条 Slack 消息或某段通话记录里。</p>
+
+    <p>在 Anthropic，业务发展的速度比传统报表流水线能跟上的还要快，Ian 过去每周要花一到两天时间去追踪数据并核实。现在，这部分"数据搜寻"的工作，大部分都交给了 Claude Cowork。</p>
+
+    <p>一个定时任务每周日晚上运行，会让 Claude 读取上一周的回顾报告和最新的会议记录，查看销售团队在 Slack 上关注的重点，查询数据仓库，然后留下一个文件夹，里面是整理好的数字和几个建议的关注方向。</p>
+
+    <p>周一早上，Ian 打开 Claude Cowork，取出初版报告，里面包含指标表格和建议的标题或关注重点。</p>
+
+    <figure><figcaption>这里展示的每周业务回顾摘要使用的是演示数据，所有信息均已为发布做了匿名化或修改处理。</figcaption></figure>
+
+    <p>Ian 会审阅这些内容，一旦确认或决定好叙述的重点，就会让 Claude 用支持性细节和示例来展开。有些周团队关注的是销售端的优先事项，有些周则是产品发布。到了季度交替的时间点，Ian 会让 Claude 以季度计划为主线展开，并把季度回顾文档喂给它。</p>
+
+    <p>Claude 会基于同样的数据和叙述，生成给管理层看的幻灯片：发生了什么变化、为什么会变化，以及各团队正在采取什么行动。任何后续跟进事项都会变成 Asana 任务。</p>
+
+    <figure><figcaption>这里展示的每周指标报告使用的是演示数据，所有信息均已为发布做了匿名化或修改处理，其中包含关键指标和建议的关注方向。</figcaption></figure>
+
+    <p>当数字对不上的时候，Claude 不会去猜测，而是直接标出这处不一致。比如销售团队重组之后，营销方的报表数字一度和他们对不上，Claude 就标出了这个差异，并询问 Ian 该如何处理。</p>
+
+    <p>这套流程运行在连接到团队所使用的营销平台和工具的连接器上，再加上 Ian 持续构建和更新的三项技能（skills）：</p>
+
+    <ul>
+      <li><strong>一个"准备"技能，</strong>负责驱动报告的组装工作，包括确定重点、拟定标题，以及用支持性细节做展开。</li>
+      <li><strong>一个"校对"技能，</strong>会把草稿里的每一个数字都对照可信来源核实一遍。</li>
+      <li><strong>一个"行动项"技能，</strong>把后续跟进事项转化为 Asana 任务。</li>
+    </ul>
+
+    <p>每周流程结束时，Ian 都会让 Claude 总结一下这次出现了哪些应该被写回技能中的内容——比如新的销售重组结构、他做出的修正，或是他希望标题呈现的新方式。在 Ian 这里，整个过程从过去最多两天的工作量，压缩到了最多两个小时。</p>
+
+    <p>如今，Ian 相当一部分时间转向了帮助营销人员组织问题、打磨提示词，以及在他们自己从 Claude 拉取数据时帮助他们理解拿到的结果。他也有了更多精力深入数据层，确保 Claude 对数字、定义和区域结构的理解，和数据仓库保持一致。</p>
+
+    <p>人工核验已经成为这两条工作线中不可或缺的一部分——随着 Claude 不断把过去长期占用营销分析师大量时间的琐碎手动任务自动化，这种转变也在加速发生。</p>
+
+    <h2>自动化活动搭建与数据导入</h2>
+
+    <p>搭建营销活动背后的基础设施，历来是营销工作中最手动、最繁琐的环节之一。每一场活动、每一场网络研讨会、每一个整合营销活动，都需要在 CRM 里配置，在负责邮件序列及其自动化的营销自动化平台里配置，也要在承载报名页面和活动落地页的活动管理平台里配置。这几个环节通常分属不同的供应商，彼此之间的集成也很少是完整的。</p>
+
+    <p>在使用 Claude Cowork 之前，Annabel 要从一个专门的 Slack 频道里接下每一个请求，然后手动走完整个流程。现在，她的新工作方式几乎完全交给了 Claude。流程从一个接收表单开始，申请人在表单里说明自己需要哪种帮助：活动搭建、数据导入、申请参会，或审批支持。</p>
+
+    <p>每隔一小时，一个"调度员"技能就会读取这个频道，挑出最紧急的请求，给工单打上标记以避免重复处理，然后把它交给 Annabel 设置好的五个专项技能之一去完成所需的工作。这个调度员本身不做任何活动搭建的实际工作，它的职责只是决定接下来该运行什么；把它和执行部分分开，让 Annabel 可以单独打磨每一个专项技能，而不必牵动路由逻辑。</p>
+
+    <figure><figcaption>这个调度员技能（为发布已做编辑处理，展示演示数据和信息）会读取频道内容，并把请求交给五个专项技能之一去完成相应工作。</figcaption></figure>
+
+    <p>对于最复杂的请求类型——活动搭建——一个"活动搭建"技能会端到端地完成整个流程：CRM 活动创建、带有工作流和名单的营销自动化活动、活动平台设置、邮件起草、落地页生成，以及这一切之间的所有集成工作。</p>
+
+    <figure><figcaption>这个活动搭建技能（节选并为发布做了编辑）会自动发出两条 Slack 更新：一条是 Claude 接手请求时，另一条是落地页准备好、可供申请人审阅、审核流程接管之时。</figcaption></figure>
+
+    <p>搭建完成后，工作会移交给一个全新的智能体进行审核。这个"审核智能体"在没有任何先前上下文的情况下启动，会在实际上线的落地页上提交一次测试报名，在 Gmail 中打开确认邮件，如果一切正常就把 Asana 任务标记为完成。Annabel 会在每个结果上线前逐一审查。</p>
+
+    <p>这套工作流运行在连接到 Annabel 所使用的营销平台和工具的连接器上，再加上她根据不断发现的新边缘情况持续构建和更新的多个技能：</p>
+
+    <ul>
+      <li><strong>一个"调度员"技能，</strong>读取接收频道并把每个请求路由给下方合适的专项技能。</li>
+      <li><strong>一个"活动搭建"技能，</strong>驱动跨平台的端到端搭建流程。</li>
+      <li><strong>一个"网络研讨会落地页创建"技能，</strong>为网络研讨会快速搭建落地页。</li>
+      <li><strong>一个"审核"技能，</strong>由一个独立、全新启动的 Claude 实例运行，在任务被标记完成之前验证活动搭建技能的输出结果。</li>
+      <li><strong>一个"申请参会"技能，</strong>处理报名流程中的实时变更。</li>
+      <li><strong>一个"审批支持"技能，</strong>处理活动审批，并按预定节奏发送相应邮件。</li>
+      <li><strong>一个"数据导入"技能，</strong>清洗名单并处理参会者数据。</li>
+    </ul>
+
+    <p>她还会单独保留一个"管理者"智能体处于打开状态。当某次运行出错时，她会打开这个管理者，让它查看发生了什么，并提出应该做哪些调整。任何值得保留下来的改动，都会被写回相应的技能中。</p>
+
+    <p>尽管这些自动化工作流未来会为 Annabel 节省大量时间，但她最初搭建它们的主要动机其实是工作质量。随着营销团队规模扩大，营销人员随手照搬现成模板来复制活动页面，很容易产生 bug，比如确认邮件里出现错误的城市名，或者落地页损坏失效。有了 Claude Cowork，她可以在规模化搭建的同时，保持各项工作的一致性。</p>
+
+    <p>随着 Claude 接手活动运营中重复性的部分，Annabel 可以把精力集中在更具战略性的项目上，比如赋能工作，以及为了获得更好的洞察而优化流程和活动架构。</p>
+
+    <h2>给市场运营团队的建议：如何开始使用 Claude Cowork</h2>
+
+    <ul>
+      <li><strong>把反复出现的纠正意见变成技能。</strong> 当你发现自己在同一件事上不止一次纠正 Claude 时，这条反馈就该被写进一个技能里。你甚至不需要自己动手搭建技能：Claude 可以帮你完成这件事。</li>
+      <li><strong>先搭建一个校对技能。</strong> 这个校对技能会核查 Claude 放进报告里的每一个数字，确保它都能追溯到一个可信的来源。</li>
+      <li><strong>让 Claude 做复盘。</strong> Claude 理解指令的方式和人写指令的方式不一样，所以在一个新工作流跑完前几轮之后，可以问问它哪些指令理解起来比较困难。Annabel 会把发现的问题写回技能中，这也是她持续更新技能这一习惯的一部分。</li>
+      <li><strong>善用定时任务。</strong> 每周日晚上或每小时自动运行的工作，就是不需要任何人费心去记得去做的工作。</li>
+    </ul>
+
+    <p class="footer-note">本文由个人学习工作台整理翻译，仅供学习参考，如需引用请以<a href="https://claude.com/blog/how-anthropics-marketing-operations-team-uses-claude-cowork-to-automate-reporting-and-campaign-builds" target="_blank">原文</a>为准。</p>
+  </article>
+</div>
+</body>
+</html>

@@ -18,6 +18,7 @@
       <a href="../../../ai.html" class="active">AI</a>
       <a href="../../../english.html">英语</a>
       <a href="../../../k12.html">学科</a>
+      <a href="../../../investment.html">投资</a>
     </nav>
   </header>
 
@@ -31,36 +32,36 @@
 
   <main class="doc-shell">
     <article class="doc-content">
-<h1>Claude Managed Agents 新功能：自托管沙箱与 MCP 隧道</h1>
+<h1 id="claude-managed-agents-新功能自托管沙箱与-mcp-隧道">Claude Managed Agents 新功能：自托管沙箱与 MCP 隧道</h1>
 <blockquote>原文: https://claude.com/blog/claude-managed-agents-updates</blockquote>
 <blockquote>日期: May 19, 2026</blockquote>
 <blockquote>分类: Product announcements</blockquote>
 <blockquote>产品: Claude Platform</blockquote>
 <p>---</p>
-<h2>文章在讲什么</h2>
+<h2 id="文章在讲什么">文章在讲什么</h2>
 <p>这篇文章是 Anthropic 官方发布的产品公告，介绍了 Claude Managed Agents（托管代理）的两项新能力：<strong>自托管沙箱（self-hosted sandboxes）</strong> 和 <strong>MCP 隧道（MCP tunnels）</strong>。</p>
 <p>核心解决的问题是：<strong>如何让 AI 代理在保持强大能力的同时，完全运行在企业自己的基础设施和安全边界内？</strong></p>
 <p>在此之前，Claude Managed Agents 依赖 Anthropic 提供的默认执行环境。这次更新允许用户把代理的「工具执行」部分放到自己控制的沙箱中，同时通过 MCP 隧道访问内网中的私有服务，而无需把这些服务暴露到公网。</p>
 <p>---</p>
-<h2>原文结构地图</h2>
+<h2 id="原文结构地图">原文结构地图</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>部分</th><th>作用</th></tr></thead><tbody><tr><td>开篇概览</td><td>宣布两项新功能，点明核心价值：控制权 + 安全性</td></tr><tr><td>Keep agent execution within your perimeter</td><td>解释自托管沙箱的原理与优势</td></tr><tr><td>Choose your sandbox client</td><td>列举四家合作供应商，各自定位不同</td></tr><tr><td>Connect to services within your private network</td><td>讲解 MCP 隧道的机制与价值</td></tr><tr><td>用户案例引用</td><td>4 家企业负责人引言，佐证功能实用性</td></tr><tr><td>Getting started</td><td>给出上手指引和文档链接</td></tr></tbody></table></div>
 <p>---</p>
-<h2>核心概念讲解</h2>
-<h3>Claude Managed Agents 是什么？</h3>
+<h2 id="核心概念讲解">核心概念讲解</h2>
+<h3 id="claude-managed-agents-是什么">Claude Managed Agents 是什么？</h3>
 <p>Managed Agents 是 Anthropic 在 Claude Platform 上提供的云端代理服务。简单理解，它帮你在云端运行一个 AI 代理，能够自主执行多步骤任务（调用工具、读写文件、搜索信息等）。</p>
 <p>之前这套系统的「工具执行」环节在 Anthropic 的基础设施上运行。现在有了<strong>自托管沙箱</strong>，用户可以把执行环境搬到自己的地盘。</p>
-<h3>什么是沙箱（Sandbox）？</h3>
+<h3 id="什么是沙箱sandbox">什么是沙箱（Sandbox）？</h3>
 <p>沙箱是一种隔离执行环境——代理在沙箱里运行代码、操作文件、调用工具，但这些操作被限制在沙箱内部，不会直接影响你的生产系统。</p>
 <p><strong>关键点</strong>：Managed Agents 的架构分为两部分：</p>
 <ul><li><strong>Agent Loop（代理循环）</strong>：负责「思考→决策→调用工具」的编排逻辑，仍留在 Anthropic 端</li><li><strong>工具执行（Tool Execution）</strong>：实际运行代码、访问文件的环节，可以移到你控制的沙箱中</li></ul>
-<h3>什么是 MCP（Model Context Protocol）？</h3>
+<h3 id="什么是-mcpmodel-context-protocol">什么是 MCP（Model Context Protocol）？</h3>
 <p>MCP 是一个开放协议，定义了 AI 模型如何与外部工具、数据源交互。可以类比为「AI 世界的 USB 接口」——有了统一协议，不同的 AI 系统可以连接各种工具和服务，而不需要为每个组合单独开发。</p>
-<h3>什么是 MCP 隧道（MCP Tunnels）？</h3>
+<h3 id="什么是-mcp-隧道mcp-tunnels">什么是 MCP 隧道（MCP Tunnels）？</h3>
 <p>MCP 隧道的核心创新是：<strong>让内网中的 MCP 服务器被外网代理访问，但不需要在防火墙上开放端口。</strong></p>
 <p>实现方式是：你部署一个轻量网关（gateway），它建立<strong>从内网到云端的单向出站连接</strong>，代理通过这条隧道访问内网资源。流量全程加密，无需公网暴露。</p>
 <p>---</p>
-<h2>文章主体讲解</h2>
-<h3>开篇</h3>
+<h2 id="文章主体讲解">文章主体讲解</h2>
+<h3 id="开篇">开篇</h3>
 <p>这一节讲什么？</p>
 <p>开门见山宣布两项新功能：自托管沙箱和 MCP 隧道。强调共同的核心价值——<strong>代理运行在你控制的安全边界内</strong>。</p>
 <p>为什么重要？</p>
@@ -68,7 +69,7 @@
 <p>关键点：</p>
 <ul><li>沙箱可以跑在自己的服务器上，也可以用第三方托管服务商</li><li>两个功能的状态不同：自托管沙箱是公开 beta，MCP 隧道是研究预览（需申请访问）</li></ul>
 <p>---</p>
-<h3>自托管沙箱的价值</h3>
+<h3 id="自托管沙箱的价值">自托管沙箱的价值</h3>
 <p>这一节讲什么？</p>
 <p>解释为什么需要自托管沙箱，以及它解决了哪些具体问题。</p>
 <p>为什么重要？</p>
@@ -76,7 +77,7 @@
 <p>关键点：</p>
 <ul><li><strong>文件不离开你的环境</strong>：代码仓库、敏感文件都在你的边界内</li><li><strong>网络策略和审计已就位</strong>：不需要重新搭建安全体系</li><li><strong>计算资源可定制</strong>：可以按任务需求分配 CPU、内存，支持长时间构建或图像生成等重计算任务</li><li><strong>安全边界清晰</strong>：Anthropic 负责「大脑」（编排逻辑），你负责「四肢」（工具执行）</li></ul>
 <p>---</p>
-<h3>四家沙箱供应商对比</h3>
+<h3 id="四家沙箱供应商对比">四家沙箱供应商对比</h3>
 <p>这一节讲什么？</p>
 <p>列出四个支持自托管沙箱的合作供应商，解释每家的技术特点和使用场景。</p>
 <p>为什么重要？</p>
@@ -86,7 +87,7 @@
 <p>文中还有用户案例：</p>
 <ul><li><strong>Amplitude</strong> 用 Cloudflare + Managed Agents 做设计代理（Design Agent）</li><li><strong>Clay</strong> 用 Daytona 做 GTM 工程代理 Sculptor</li><li><strong>Rogo</strong>（金融 AI 平台）用 Vercel 处理专有数据</li><li><strong>Modal</strong> 自己的客户两天就上线了可用版本</li></ul>
 <p>---</p>
-<h3>MCP 隧道的机制</h3>
+<h3 id="mcp-隧道的机制">MCP 隧道的机制</h3>
 <p>这一节讲什么？</p>
 <p>解释 MCP 隧道如何实现「访问内网服务但不暴露公网」。</p>
 <p>为什么重要？</p>
@@ -95,14 +96,14 @@
 <ul><li><strong>单向出站连接</strong>：网关从内网主动连接云端，不需要防火墙开放入站端口</li><li><strong>无需公网端点</strong>：私有服务完全在内网</li><li><strong>端到端加密</strong>：传输过程安全</li><li><strong>统一入口</strong>：通过一个轻量网关连接多个内部 MCP 服务器</li></ul>
 <p>管理方式：通过 Claude Console 的工作区设置，由组织管理员配置。</p>
 <p>---</p>
-<h3>用户案例（引用）</h3>
+<h3 id="用户案例引用">用户案例（引用）</h3>
 <p>这一节讲什么？</p>
 <p>四位企业负责人（Ryan Chang、Sai Yandapalli、Will Newton、Andy Fang）讲述实际使用体验。</p>
 <p>为什么重要？</p>
 <p>真实用户的反馈比功能列表更有说服力。几个值得注意的共同点：</p>
 <ul><li>上手快（两天、一周内出成果）</li><li>控制感强（文件系统、凭证、运行时都可配置）</li><li>不用自己造轮子（避免 hand-rolling extra complexity）</li></ul>
 <p>---</p>
-<h3>Getting Started</h3>
+<h3 id="getting-started">Getting Started</h3>
 <p>这一节讲什么？</p>
 <p>给出上手路径：文档、cookbook（配置指南）、Claude Console。</p>
 <p>为什么重要？</p>
@@ -110,10 +111,10 @@
 <p>关键点：</p>
 <ul><li>自托管沙箱 → 公开 beta，直接可用</li><li>MCP 隧道 → 研究预览，需申请访问</li></ul>
 <p>---</p>
-<h2>关键对比表</h2>
+<h2 id="关键对比表">关键对比表</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>维度</th><th>默认 Managed Agents</th><th>自托管沙箱</th></tr></thead><tbody><tr><td>执行环境</td><td>Anthropic 基础设施</td><td>你选择的基础设施（自有或托管商）</td></tr><tr><td>文件位置</td><td>可能离开你的边界</td><td>不离开你的边界</td></tr><tr><td>网络控制</td><td>受限于平台策略</td><td>完全在你控制下</td></tr><tr><td>资源定制</td><td>固定配置</td><td>按需配置 CPU/内存/GPU</td></tr><tr><td>安全审计</td><td>依赖平台日志</td><td>可复用现有审计体系</td></tr></tbody></table></div>
 <p>---</p>
-<h2>关键句短摘译</h2>
+<h2 id="关键句短摘译">关键句短摘译</h2>
 <ol><li><strong>&quot;Both the sandbox where an agent executes tools and the services it reaches run within the established boundaries of your enterprise.&quot;</strong></li></ol>
 <p>*代理执行工具的沙箱和它访问的服务都运行在你企业的既定边界内。*</p>
 <p>为什么重要？这是整篇文章的核心承诺——安全边界不突破。</p>
@@ -133,10 +134,10 @@
 <p>*这让我们能够利用最佳基础设施，同时专注于金融 AI 平台真正有复利效应的事情。*</p>
 <p>为什么重要？点出企业选择这类方案的战略考量——把基础设施交给专业方，自己聚焦核心产品。</p>
 <p>---</p>
-<h2>术语表</h2>
+<h2 id="术语表">术语表</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>英文术语</th><th>中文解释</th></tr></thead><tbody><tr><td>Managed Agents</td><td>Anthropic 提供的云端 AI 代理托管服务</td></tr><tr><td>Sandbox</td><td>隔离执行环境，限制代码/工具操作的影响范围</td></tr><tr><td>Self-hosted sandboxes</td><td>用户自行配置或选择的沙箱环境，非平台默认</td></tr><tr><td>MCP (Model Context Protocol)</td><td>连接 AI 模型与外部工具/数据源的开放协议</td></tr><tr><td>MCP tunnels</td><td>通过单向加密隧道让外网代理访问内网 MCP 服务器的技术</td></tr><tr><td>Agent Loop</td><td>代理的「思考→决策→执行」循环，负责编排和上下文管理</td></tr><tr><td>Tool Execution</td><td>代理实际执行代码、调用 API 等工具操作的环节</td></tr><tr><td>VPC peering</td><td>虚拟私有云对等连接，让不同云账户的网络互通</td></tr><tr><td>Isolates</td><td>轻量级隔离技术，比完整虚拟机启动更快、资源占用更少</td></tr></tbody></table></div>
 <p>---</p>
-<h2>文章结尾怎么收束</h2>
+<h2 id="文章结尾怎么收束">文章结尾怎么收束</h2>
 <p>文章在结尾处从「功能介绍」回到了「行动指引」，形成了一个完整的闭合：</p>
 <ul><li><strong>起点</strong>：企业需要 AI 代理能力，但无法接受数据离开自己的边界</li><li><strong>承接</strong>：Managed Agents 提供了「分而治之」的架构——编排留在云端，执行放在你的地盘</li><li><strong>落点</strong>：自托管沙箱和 MCP 隧道已经可用/可申请，详细文档和配置指南已就绪</li></ul>
 <p>作者没有在这里展开技术细节或未来路线图，而是用一句务实的收尾告诉读者：<strong>你现在就可以开始</strong>。这种「问题→方案→行动」的线性结构，是产品公告类文章的标准范式，逻辑自洽，信息密度适中。</p>

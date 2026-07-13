@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>本体开发 101：创建你的第一个本体指南</title>
+<style>
+  :root {
+    --text: #1d1d1f;
+    --muted: #6e6e73;
+    --accent: #7a2e2e;
+    --bg: #fdfcfb;
+    --rule: #e3ddd6;
+    --box: #f6f1ea;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Songti SC", "SimSun", "Noto Serif SC", Georgia, serif;
+    line-height: 1.9;
+    font-size: 17px;
+  }
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 56px 32px 100px;
+  }
+  header.title-block {
+    text-align: center;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+  }
+  header.title-block h1 {
+    font-size: 26px;
+    margin: 0 0 8px;
+    line-height: 1.5;
+  }
+  header.title-block .en-title {
+    font-size: 14px;
+    color: var(--muted);
+    font-family: Georgia, serif;
+    margin-bottom: 18px;
+  }
+  header.title-block .authors {
+    font-size: 15px;
+    margin: 4px 0;
+  }
+  header.title-block .affil {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .note {
+    background: var(--box);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-size: 13.5px;
+    color: var(--muted);
+    margin-bottom: 36px;
+  }
+  h2 {
+    font-size: 20px;
+    margin-top: 48px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--accent);
+  }
+  h3 {
+    font-size: 17px;
+    margin-top: 32px;
+    color: var(--accent);
+  }
+  .step-title {
+    font-weight: bold;
+    margin-top: 26px;
+    margin-bottom: 6px;
+  }
+  p { margin: 14px 0; text-align: justify; }
+  ul, ol { margin: 12px 0; padding-left: 28px; }
+  li { margin: 6px 0; }
+  .rule-box {
+    background: var(--box);
+    border-left: 3px solid var(--accent);
+    padding: 10px 16px;
+    margin: 16px 0;
+    font-weight: 600;
+  }
+  .fig-caption {
+    font-size: 13.5px;
+    color: var(--muted);
+    text-align: center;
+    background: var(--box);
+    border: 1px dashed var(--rule);
+    padding: 10px 14px;
+    margin: 18px 0;
+    border-radius: 4px;
+  }
+  .footnote {
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid var(--rule);
+    margin-top: 20px;
+    padding-top: 8px;
+  }
+  .term {
+    font-family: "Courier New", monospace;
+    font-size: 0.95em;
+  }
+  section#acknowledgments p, section#references p { font-size: 15px; }
+  #references ul { list-style: none; padding-left: 0; }
+  #references li {
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #333;
+    font-family: Georgia, serif;
+    line-height: 1.6;
+  }
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-size: 12.5px;
+    color: var(--muted);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="title-block">
+  <h1>本体开发 101：创建你的第一个本体指南</h1>
+  <div class="en-title">Ontology Development 101: A Guide to Creating Your First Ontology</div>
+  <div class="authors">Natalya F. Noy &nbsp;/&nbsp; Deborah L. McGuinness</div>
+  <div class="affil">斯坦福大学，斯坦福，加利福尼亚州 94305<br>noy@smi.stanford.edu &nbsp;·&nbsp; dlm@ksl.stanford.edu</div>
+</header>
+
+<div class="note">
+译者说明：本文译自 Natalya F. Noy 与 Deborah L. McGuinness 发表于斯坦福大学的经典教程《Ontology Development 101: A Guide to Creating Your First Ontology》（原文 PDF：<a href="https://protege.stanford.edu/publications/ontology_development/ontology101.pdf" target="_blank">protege.stanford.edu</a>）。为保持术语准确，译文中 class（类）、slot（槽/属性）、facet（限面）、instance（实例）等本体工程核心术语首次出现时中英对照标注。原文插图（Figure 1–9）未随文字一并提供，此处以文字说明代替图注位置；参考文献部分保留英文原始格式。
+</div>
+
+<section id="s1">
+<h2>1. 为什么要开发本体？</h2>
+
+<p>近年来，本体（ontology）——即对某个领域中各类术语及其相互关系的显式形式化说明（Gruber 1993）——的开发已经从人工智能实验室走向了领域专家的桌面。本体在万维网上已经变得十分常见。网络上的本体范围很广，从对网站进行分类的大型分类体系（例如 Yahoo! 上的分类），到对待售商品及其特性进行分类的体系（例如 Amazon.com 上的分类）。万维网联盟（W3C）正在开发资源描述框架（RDF，Brickley and Guha 1999），这是一种在网页上编码知识的语言，目的是让在网上搜索信息的电子代理能够理解这些知识。美国国防高级研究计划局（DARPA）与 W3C 合作，通过为 RDF 扩展更具表达力的结构，开发了 DARPA 代理标记语言（DAML），旨在促进网络上代理之间的交互（Hendler and McGuinness 2000）。如今，许多学科都在开发标准化的本体，供领域专家用来共享和标注本领域的信息。例如，医学领域已经产生了大型、标准化、结构化的词表，如 SNOMED（Price and Spackman 2000）以及统一医学语言系统（UMLS）的语义网络（Humphreys and Lindberg 1993）。广泛的通用本体也在不断涌现。例如，联合国开发计划署与邓白氏公司（Dun &amp; Bradstreet）联手开发了 UNSPSC 本体，为产品和服务提供统一术语（www.unspsc.org）。</p>
+
+<p>本体为需要在某一领域内共享信息的研究者定义了一套共同的词汇表。它包含该领域基本概念的机器可解释定义，以及这些概念之间的关系。</p>
+
+<p>为什么有人会想要开发一个本体？原因大致有以下几点：</p>
+<ul>
+  <li>在人或软件代理之间共享对信息结构的共同理解</li>
+  <li>使领域知识得以复用</li>
+  <li>使领域假设显式化</li>
+  <li>将领域知识与操作性知识分离</li>
+  <li>对领域知识进行分析</li>
+</ul>
+
+<p>在人或软件代理之间共享对信息结构的共同理解，是开发本体最常见的目标之一（Musen 1992；Gruber 1993）。例如，假设有若干不同的网站提供医疗信息或医疗电子商务服务。如果这些网站共享并发布相同的底层术语本体，那么计算机代理就可以从这些不同网站中提取并汇总信息，并利用汇总后的信息来回答用户查询，或作为其他应用程序的输入数据。</p>
+
+<p>使领域知识得以复用，是近年来本体研究兴起的驱动力之一。例如，许多不同领域的模型都需要表示"时间"这一概念，包括时间区间、时间点、相对时间度量等等。如果一组研究者已经详细开发出这样一个本体，其他人便可以直接将其复用于自己的领域。此外，如果我们需要构建一个大型本体，我们可以整合若干个描述该大领域各个部分的已有本体；我们也可以复用一个通用本体（例如 UNSPSC 本体），并对其加以扩展，以描述我们感兴趣的具体领域。</p>
+
+<p>使隐含在实现之下的领域假设显式化，可以让我们在对领域的理解发生变化时更容易地修改这些假设。将有关世界的假设硬编码到程序语言代码中，不仅使这些假设难以被发现和理解，也使其难以修改——对于没有编程经验的人来说尤其如此。此外，对领域知识的显式说明，对于必须学习该领域术语含义的新用户也十分有用。</p>
+
+<p>将领域知识与操作性知识分离，是本体的另一个常见用途。我们可以描述一个"根据所需规格，从零部件配置产品"的任务，并实现一个独立于具体产品和零部件的配置程序（McGuinness and Wright 1998）。之后，我们可以开发一个关于个人电脑零部件及其特性的本体，并应用该算法来配置定制电脑；如果向该算法"输入"一个电梯零部件本体，我们同样可以用它来配置电梯（Rothenfluh et al. 1996）。</p>
+
+<p>一旦某个领域术语的声明式说明可用，就可以对领域知识进行分析。在尝试复用已有本体及对其进行扩展时，对术语的形式化分析都极具价值（McGuinness et al. 2000）。</p>
+
+<p>通常，开发某领域的本体本身并非最终目的。开发本体类似于为其他程序定义一套数据及其结构。问题求解方法、领域无关的应用程序以及软件代理，都会把本体以及基于本体构建的知识库当作数据来使用。例如，在本文中，我们将开发一个关于葡萄酒与食物、以及葡萄酒与餐食恰当搭配方式的本体。这个本体随后可以作为餐厅管理工具套件中若干应用的基础：一个应用可以为当日菜单生成葡萄酒建议，或回答服务员和顾客的问询；另一个应用则可以分析酒窖的库存清单，建议应当补充哪些种类的葡萄酒，或为即将推出的菜单和食谱采购哪些具体的酒款。</p>
+
+<h3>关于本指南</h3>
+<p>我们借鉴了使用 Protégé-2000（Protege 2000）、Ontolingua（Ontolingua 1997）和 Chimaera（Chimaera 2000）作为本体编辑环境的经验。在本指南中，我们的示例使用 Protégé-2000。</p>
+
+<p>本指南通篇使用的葡萄酒与食物示例，大致基于一篇描述 CLASSIC——一种基于描述逻辑方法的知识表示系统——的论文中所给出的知识库示例（Brachman et al. 1991）。CLASSIC 教程（McGuinness et al. 1994）对这个示例做了进一步的发展。Protégé-2000 以及其他基于框架（frame-based）的系统以声明式方式描述本体，明确说明类层次结构是怎样的，以及各个体分别属于哪些类。</p>
+
+<p>本指南中的一些本体设计思路，源自面向对象设计（object-oriented design）的相关文献（Rumbaugh et al. 1991；Booch et al. 1997）。然而，本体开发与面向对象编程中类和关系的设计是不同的。面向对象编程主要围绕类上的方法（methods）展开——程序员基于一个类的操作性属性来做设计决策，而本体设计者则基于类的结构性属性来做决策。因此，本体中类的结构以及类之间的关系，与面向对象程序中针对相似领域所构建的结构是不同的。</p>
+
+<p>要涵盖本体开发者可能需要面对的所有问题是不可能的，我们也无意在本指南中一一处理。相反，我们试图提供一个起点——一份能帮助新手本体设计者入门的初步指南。在文末，我们会给出一些参考去处，供读者在需要处理更复杂的结构和设计机制时查阅。</p>
+
+<p>最后需要说明的是：不存在唯一"正确"的本体设计方法论，我们也无意去定义这样一种方法论。本文所呈现的思路，是我们自己在本体开发实践中发现行之有效的方法。在文末，我们列出了一些替代方法论的参考文献。</p>
+</section>
+
+<section id="s2">
+<h2>2. 本体中包含什么？</h2>
+
+<p>人工智能文献中对"本体"存在许多定义，其中不少互相矛盾。就本指南而言，本体是对某一论域（domain of discourse）中概念的一种形式化的、显式的描述，具体包括：概念的类（class，有时也称为 concept）、描述每个概念各种特征和属性的属性（slot，有时也称为 role 或 property），以及对属性取值的限制（facet，有时也称为 role restriction）。本体连同一组类的具体个体实例，共同构成一个知识库（knowledge base）。实际上，本体的边界和知识库的边界之间往往并没有一条清晰的分界线。</p>
+
+<p>类是大多数本体的核心。类描述该领域中的概念。例如，"葡萄酒类"（class of wines）表示所有葡萄酒；具体的某款葡萄酒则是该类的一个实例（instance）。你此刻手边酒杯中的波尔多葡萄酒，就是"波尔多葡萄酒"这一类的一个实例。一个类可以拥有子类（subclass），用以表示比其父类（superclass）更具体的概念。例如，我们可以把"所有葡萄酒"这一类划分为红葡萄酒、白葡萄酒和桃红葡萄酒；或者，也可以把所有葡萄酒划分为起泡酒和非起泡酒。</p>
+
+<p>属性（slot）描述类和实例的特性：Château Lafite Rothschild 的 Pauillac 葡萄酒是酒体饱满的，它由 Château Lafite Rothschild 酒庄酿造。在这个例子中我们用到了两个属性：body（酒体），取值为 full（饱满）；maker（酿造者），取值为 Château Lafite Rothschild winery。在类的层面上，我们可以说，Wine 类的实例会拥有描述其风味（flavor）、酒体（body）、含糖量（sugar level）、酿造者（maker）等特征的属性。</p>
+
+<p>Wine 类及其子类 Pauillac 的所有实例，都拥有一个 maker 属性，其取值是 Winery 类的一个实例（见图1）。Winery 类的所有实例，都拥有一个 produces 属性，指向该酒庄所生产的所有葡萄酒（即 Wine 类及其子类的实例）。</p>
+
+<div class="fig-caption">图 1（原文插图，此处从略）：葡萄酒领域中的部分类、实例及其关系示意图。原图中类以黑色标出、实例以红色标出；直接连线表示属性关系，instance-of（实例—类）与 subclass-of（子类—父类）以内部连线表示。</div>
+
+<p>从实践角度看，开发本体的工作包括：</p>
+<ul>
+  <li>在本体中定义各个类</li>
+  <li>将这些类组织成一个分类学式的（子类—父类）层次结构</li>
+  <li>定义属性（slot），并说明这些属性所允许的取值</li>
+  <li>为各个实例填入相应属性的取值</li>
+</ul>
+<p>随后我们就可以定义各个类的具体实例，填入具体的属性值信息和其他属性限制，从而创建一个知识库。</p>
+
+<p class="footnote">注1：本文中，类名首字母大写，属性名以小写字母开头；同时，示例本体中出现的所有术语均以等宽字体排版。</p>
+</section>
+
+<section id="s3">
+<h2>3. 一种简单的知识工程方法论</h2>
+
+<p>如前所述，本体开发并不存在唯一"正确"的方式或方法论。这里我们讨论一些需要考虑的一般性问题，并提出一种可行的本体开发流程。我们所描述的是一种迭代式（iterative）的本体开发方法：先从对本体做出一个粗略的初步刻画开始，随后不断修订、完善这个逐步演化的本体，并填充细节。在这个过程中，我们会讨论设计者需要做出的建模决策，以及不同方案各自的优劣与影响。</p>
+
+<p>首先，我们想强调几条本体设计的基本原则，后文会多次提及。这些原则看起来可能有些教条，但它们在很多情况下有助于我们做出设计决策。</p>
+
+<ol>
+  <li>对一个领域进行建模，没有唯一正确的方式——总是存在可行的替代方案。最佳方案几乎总是取决于你所构想的应用场景以及你所预期的扩展方向。</li>
+  <li>本体开发本质上是一个迭代过程。</li>
+  <li>本体中的概念应当尽量贴近你所关注领域中的对象（无论是物理对象还是逻辑对象）及其关系。这些概念很可能就是描述该领域的句子中的名词（对应对象）或动词（对应关系）。</li>
+</ol>
+
+<p>也就是说，先确定我们打算将本体用于什么目的，以及这个本体需要多详细或多宽泛，将会指导后续许多建模决策。在若干可行方案之间，我们需要判断哪一种更适合预期任务、更直观、更具扩展性、也更易于维护。我们还需要记住：本体是对现实世界的一种模型，本体中的概念必须反映这种现实。在定义出本体的初始版本之后，我们可以通过在应用程序或问题求解方法中使用它，或者与该领域的专家讨论，来对其进行评估和调试。因此，我们几乎肯定需要对最初的本体进行修订。这种迭代式设计的过程很可能会贯穿本体的整个生命周期。</p>
+
+<div class="step-title">步骤 1：确定本体的领域与范围</div>
+<p>我们建议从界定本体的领域和范围开始本体开发工作。也就是说，先回答几个基本问题：</p>
+<ul>
+  <li>本体将要覆盖的领域是什么？</li>
+  <li>我们打算将本体用于什么用途？</li>
+  <li>本体中的信息应当能够回答哪些类型的问题？</li>
+  <li>谁将使用和维护这个本体？</li>
+</ul>
+<p>这些问题的答案在本体设计过程中可能会发生变化，但在任何一个给定的时刻，它们都有助于限定模型的范围。</p>
+
+<p>以我们前面提到的葡萄酒与食物本体为例：食物与葡萄酒的表示就是该本体的领域；我们计划将这个本体用于为葡萄酒与食物提供良好搭配建议的应用。可想而知，描述不同类型葡萄酒、主要食物类型、"良好搭配"与"糟糕搭配"这两个概念的术语，都会被纳入我们的本体；与此同时，即便酒庄库存管理或餐厅员工管理这类概念与葡萄酒和食物的概念多少有些关联，本体也不太可能包含它们。</p>
+
+<p>如果我们设计的本体将用于辅助葡萄酒杂志文章的自然语言处理，那么为本体中的概念纳入同义词和词性信息可能就很重要。如果本体将用于帮助餐厅顾客决定点哪款酒，我们就需要纳入零售定价信息。如果本体是给酒窖采购人员使用的，批发价格和供货情况可能是必需的。如果维护本体的人所使用的领域描述语言与本体使用者的语言不同，我们可能还需要提供两种语言之间的映射。</p>
+
+<h3>能力问题（Competency Questions）</h3>
+<p>确定本体范围的方法之一，是列出一份问题清单——列出基于该本体构建的知识库应当能够回答的一系列问题，即"能力问题"（Gruninger and Fox 1995）。这些问题之后将作为一种试金石：本体中包含的信息是否足以回答这些类型的问题？回答是否需要特定层级的细节或对某个特定领域的表示？这些能力问题只是一个粗略的草稿，不需要穷尽所有情况。</p>
+
+<p>在葡萄酒与食物这个领域中，可能的能力问题包括：</p>
+<ul>
+  <li>选择葡萄酒时应当考虑哪些酒的特性？</li>
+  <li>波尔多是红葡萄酒还是白葡萄酒？</li>
+  <li>赤霞珠（Cabernet Sauvignon）适合搭配海鲜吗？</li>
+  <li>搭配烤肉的最佳葡萄酒是什么？</li>
+  <li>葡萄酒的哪些特性会影响它与某道菜搭配的合适程度？</li>
+  <li>某款特定葡萄酒的香气或酒体会随年份不同而变化吗？</li>
+  <li>纳帕（Napa）仙粉黛（Zinfandel）哪些年份比较好？</li>
+</ul>
+<p>从这份问题清单可以判断，本体将需要包含关于各种葡萄酒特性和品种的信息、年份的好坏、与选酒相关的食物分类，以及推荐的酒食搭配组合。</p>
+
+<div class="step-title">步骤 2：考虑复用现有本体</div>
+<p>几乎总是值得先看看别人已经做过什么，检查我们能否在已有资源的基础上加以完善和扩展，以适应我们特定的领域和任务。如果我们的系统需要与已经采用了特定本体或受控词表的其他应用程序进行交互，复用已有本体可能就是一项必要要求。许多本体已经以电子形式提供，可以导入到你正在使用的本体开发环境中。本体所使用的具体形式化语言通常并不重要，因为许多知识表示系统都能够导入和导出本体；即便某个知识表示系统不能直接处理某种特定的形式化语言，把本体从一种形式化语言转换为另一种通常也不是难事。</p>
+
+<p>网络上和文献中都有一些可复用本体的库。例如，我们可以使用 Ontolingua 本体库（http://www.ksl.stanford.edu/software/ontolingua/），或 DAML 本体库（http://www.daml.org/ontologies/）。此外还有一些公开可用的商业本体（例如 UNSPSC（www.unspsc.org）、RosettaNet（www.rosettanet.org）、DMOZ（www.dmoz.org））。</p>
+
+<p>举例来说，可能已经存在一个关于法国葡萄酒的知识库。如果我们能够导入这个知识库及其所基于的本体，我们不仅能获得法国葡萄酒的分类，还能获得区分和描述各种葡萄酒特性所用到的初步分类框架。诸如 www.wines.com 这样的商业网站上，可能也已经提供了顾客购酒时会参考的葡萄酒属性清单。不过，本指南将假设不存在任何相关的现成本体，从零开始进行本体开发。</p>
+
+<div class="step-title">步骤 3：列举本体中的重要术语</div>
+<p>写下一份清单，列出我们想要对其进行陈述或向用户解释的所有术语，是很有用的做法。我们想谈论哪些术语？这些术语具有哪些属性？我们想就这些术语说些什么？例如，与葡萄酒相关的重要术语会包括：wine（葡萄酒）、grape（葡萄）、winery（酒庄）、location（产地）、葡萄酒的 color（颜色）、body（酒体）、flavor（风味）和 sugar content（含糖量）；不同的食物类型，比如 fish（鱼）和 red meat（红肉）；以及葡萄酒的子类型，比如 white wine（白葡萄酒），等等。在最初阶段，重要的是列出一份全面的术语清单，而不必担心这些术语所代表的概念之间是否存在重叠、术语之间的关系，或这些概念可能具有哪些属性，也不必担心这些概念究竟是类还是属性。</p>
+
+<p>接下来的两个步骤——构建类层次结构和定义概念的属性（slot）——是紧密交织在一起的：很难先完成其中一个再去做另一个。通常，我们会先在层次结构中创建一些概念的定义，然后继续描述这些概念的属性，如此往复。这两个步骤也是本体设计过程中最重要的两个步骤。我们会在这里做简要描述，随后在接下来的两节中花更多篇幅讨论需要考虑的更复杂问题、常见陷阱和需要做出的决策等等。</p>
+
+<div class="step-title">步骤 4：定义类以及类层次结构</div>
+<p>开发类层次结构有几种可能的方法（Uschold and Gruninger 1996）：</p>
+<ul>
+  <li><strong>自顶向下（top-down）</strong>的开发流程：从定义该领域中最一般的概念开始，随后逐步细化这些概念。例如，我们可以先创建表示一般概念 Wine 和 Food 的类，然后将 Wine 类细化，创建它的一些子类：White wine、Red wine、Rosé wine。我们可以进一步细分 Red wine 类，比如分出 Syrah、Red Burgundy、Cabernet Sauvignon 等。</li>
+  <li><strong>自底向上（bottom-up）</strong>的开发流程：从定义最具体的类——也就是层次结构的叶子节点——开始，随后再将这些类归并为更一般的概念。例如，我们先定义 Pauillac 和 Margaux 这两种葡萄酒的类，再为这两个类创建一个共同的父类——Medoc，而 Medoc 本身又是 Bordeaux 的子类。</li>
+  <li><strong>混合式（combination）</strong>开发流程：结合自顶向下和自底向上两种方法——先定义比较突出的概念，再对其进行泛化和细化。我们可能先从若干顶层概念（例如 Wine）和若干具体概念（例如 Margaux）入手，再将它们与一个中间层概念（例如 Medoc）关联起来；随后，我们可能想要为来自法国的所有地区性葡萄酒类别生成完整的分类，这样便会产生一系列中间层概念。</li>
+</ul>
+
+<div class="fig-caption">图 2（原文插图，从略）：葡萄酒分类体系的不同层级——Wine 是最一般的概念；Red wine、White wine 和 Rosé wine 是较为一般的顶层概念；Pauillac 和 Margaux 是层次结构中最具体的类（即底层概念）。</div>
+
+<p>这三种方法之间并无内在的优劣之分。采用哪种方式，很大程度上取决于开发者对该领域的个人理解方式。如果开发者对该领域有系统化的自顶向下的视角，那么采用自顶向下的方法可能会更容易。对许多本体开发者来说，混合式方法往往是最简单的，因为"中间层"的概念往往是该领域中描述性最强的概念（Rosch 1978）。如果你倾向于先区分最一般的分类再逐步细化，那么自顶向下的方法可能更适合你；如果你更愿意先从具体的例子入手，自底向上的方法可能更合适。</p>
+
+<p>无论采用哪种方法，我们通常都从定义类开始。从步骤3所创建的清单中，我们挑选出那些描述"具有独立存在性的对象"（而非描述这些对象的术语）的词语。这些词语将成为本体中的类，并成为类层次结构中的锚点。<sup>2</sup> 我们通过追问以下问题，将各个类组织成一个层次化的分类体系：一个对象作为某个类的实例，是否必然（即根据定义）也是另一个类的实例？</p>
+
+<div class="rule-box">如果类 A 是类 B 的父类，那么 B 的每一个实例也必然是 A 的实例。</div>
+<p>换句话说，类 B 所代表的概念是 A 的"一种"（a kind of）。例如，每一款黑皮诺（Pinot Noir）葡萄酒必然都是红葡萄酒，因此 Pinot Noir 类是 Red Wine 类的子类。</p>
+
+<p>图2展示了 Wine 本体类层次结构的一部分。第4节将详细讨论定义类层次结构时需要注意的问题。</p>
+
+<div class="fig-caption">图 3（原文插图，从略）：Wine 类的各个属性（slot）及其限面（facet）。maker 属性旁边的"I"图标表示该属性拥有一个反向属性（见第5.1节）。</div>
+
+<div class="step-title">步骤 5：定义类的属性——slot</div>
+<p>仅凭类本身，并不足以回答步骤1中提出的能力问题。在定义了一部分类之后，我们必须描述这些概念的内部结构。</p>
+
+<p>我们已经从步骤3所创建的术语清单中挑选出了一部分作为类。剩下的大部分术语很可能是这些类的属性。这些术语包括，例如，葡萄酒的 color（颜色）、body（酒体）、flavor（风味）、sugar content（含糖量），以及酒庄的 location（产地）。</p>
+
+<p>对于清单中的每一个属性，我们都必须确定它描述的是哪个类。这些属性就成为附加在类上的 slot。于是，Wine 类将拥有以下 slot：color、body、flavor、sugar；而 Winery 类则会拥有一个 location slot。</p>
+
+<p>总体而言，本体中可以成为 slot 的对象属性大致有以下几种类型：</p>
+<ul>
+  <li>"内在（intrinsic）"属性，例如葡萄酒的风味；</li>
+  <li>"外在（extrinsic）"属性，例如葡萄酒的名称、产地；</li>
+  <li>部分（parts），如果该对象是结构化的——这些部分既可以是物理性的，也可以是抽象的（例如一顿正餐中的几道菜）；</li>
+  <li>与其他个体之间的关系——即该类的具体成员与其他事物之间的关系（例如某款葡萄酒的酿造者，表示葡萄酒与酒庄之间的关系，以及该酒所使用的葡萄品种）。</li>
+</ul>
+
+<p>因此，除了我们之前已经识别出的属性外，还需要为 Wine 类添加以下 slot：name、area、maker、grape。图3展示了 Wine 类的这些 slot。</p>
+
+<p>一个类的所有子类都会继承该类的 slot。例如，Wine 类的所有 slot 都会被继承到 Wine 的所有子类，包括 Red Wine 和 White Wine。我们会为 Red Wine 类额外添加一个 tannin level（单宁含量：低、中、高）slot。这个 tannin level slot 会被所有表示红葡萄酒的类（例如 Bordeaux 和 Beaujolais）继承。</p>
+
+<p>一个 slot 应当附加在能够拥有该属性的最一般的类上。例如，body 和 color 应当附加在 Wine 类上，因为 Wine 是其实例都会拥有 body 和 color 的最一般的类。</p>
+
+<div class="step-title">步骤 6：定义 slot 的限面（facet）</div>
+<p>slot 可以具有不同的 facet，用来描述取值类型、允许的取值、取值的数量（即基数，cardinality），以及该 slot 所能取值的其他特征。例如，name slot（如"某款葡萄酒的名称"）的取值是一个字符串，也就是说，name 是一个取值类型为 String 的 slot。produces slot（如"某酒庄生产这些葡萄酒"）可以拥有多个取值，且这些取值都是 Wine 类的实例，也就是说，produces 是一个取值类型为 Instance、且允许的类为 Wine 的 slot。</p>
+
+<p>下面我们将描述几种常见的 facet。</p>
+
+<h3>Slot 基数（Slot Cardinality）</h3>
+<p>slot 基数定义了一个 slot 可以拥有多少个取值。有些系统只区分单一基数（single cardinality，最多允许一个取值）和多重基数（multiple cardinality，允许任意数量的取值）。葡萄酒的 body 是一个单一基数的 slot（一款酒只能有一种酒体）；而某个特定酒庄所生产的葡萄酒，则填充了 Winery 类的多重基数 slot produces。</p>
+
+<p>有些系统允许指定最小基数和最大基数，以更精确地描述 slot 取值的数量。最小基数为 N，表示某个 slot 必须至少有 N 个取值。例如，Wine 的 grape slot 的最小基数为 1：每一款酒至少由一种葡萄品种酿造。最大基数为 M，表示某个 slot 最多可以有 M 个取值。对于单一品种酿造的葡萄酒，其 grape slot 的最大基数为 1：这些酒只由一种葡萄品种酿造。有时，将最大基数设为 0 也可能有用——这表示对于某个特定的子类，该 slot 不能拥有任何取值。</p>
+
+<h3>Slot 取值类型（Slot-value Type）</h3>
+<p>取值类型（value-type）这一 facet 描述了可以填入该 slot 的取值种类。以下是一些常见取值类型：</p>
+<ul>
+  <li><strong>String</strong>：最简单的取值类型，用于诸如 name 这样的 slot，取值是一个简单的字符串；</li>
+  <li><strong>Number</strong>（有时会更具体地区分为 Float 和 Integer 两种取值类型）：用于描述具有数值的 slot，例如葡萄酒价格的取值类型可以是 Float；</li>
+  <li><strong>Boolean</strong> slot：简单的"是/否"标志。例如，如果我们选择不把起泡酒表示为一个单独的类，那么某款酒是否起泡就可以用一个 Boolean slot 的取值来表示：取值为 "true"（"是"）表示该酒起泡，取值为 "false"（"否"）表示该酒不起泡；</li>
+  <li><strong>枚举（Enumerated）</strong> slot：为该 slot 指定一份具体允许取值的清单。例如，我们可以规定 flavor slot 只能取三种可能取值之一：strong（浓郁）、moderate（适中）、delicate（清淡）。在 Protégé-2000 中，枚举型 slot 的取值类型为 Symbol；</li>
+  <li><strong>实例型（Instance-type）</strong> slot：用于定义各个体之间的关系。取值类型为 Instance 的 slot，还必须定义一份该实例可以来自哪些允许类的清单。例如，Winery 类的 produces slot，其取值可以是 Wine 类的实例。<sup>3</sup></li>
+</ul>
+
+<div class="fig-caption">图 4（原文插图，从略）：描述某酒庄所生产葡萄酒的 produces slot 的定义。该 slot 的基数为 multiple（多重），取值类型为 Instance，允许的类为 Wine。</div>
+
+<h3>Slot 的定义域与值域（Domain and Range）</h3>
+<p>对于取值类型为 Instance 的 slot，其允许的类通常被称为该 slot 的值域（range）。在图4的例子中，Wine 类就是 produces slot 的值域。一些系统允许在 slot 被附加到某个特定类时，对该 slot 的值域加以限制。</p>
+
+<p>某个 slot 所附加的类，或者说某个 slot 所描述其属性的那些类，被称为该 slot 的定义域（domain）。Winery 类就是 produces slot 的定义域。在那些"将 slot 附加到类"这一操作本身就等同于"把该类加入 slot 定义域"的系统中，slot 所附加的类通常就构成了该 slot 的定义域，无需单独再指定定义域。</p>
+
+<p>确定 slot 定义域和值域的基本原则是类似的：</p>
+<div class="rule-box">在为某个 slot 定义定义域或值域时，应找到能够分别作为该 slot 定义域或值域的最一般的类（或若干个类）。</div>
+<p>另一方面，也不要将定义域和值域定义得过于宽泛：定义域中的所有类都应当真正由该 slot 描述，而值域中所有类的实例，都应当是该 slot 潜在的合理取值。不要为值域选择过于宽泛的类（比如不应把值域设为 THING 这种最泛化的类），而应选择一个能够涵盖所有可能取值、但又不至于过度宽泛的类。</p>
+
+<p>与其为 produces slot 的值域列出 Wine 类的所有可能子类，不如直接列出 Wine 即可。同时，我们也不希望把这个 slot 的值域指定为 THING——即本体中最一般的类。</p>
+
+<p>更具体地说：</p>
+<div class="rule-box">如果定义某个 slot 的定义域或值域的类清单中，同时包含某个类及其子类，应移除该子类。</div>
+<p>如果某个 slot 的值域中同时包含 Wine 类和 Red Wine 类，我们可以将 Red Wine 从值域中移除，因为它并未增加任何新信息：Red Wine 是 Wine 的子类，因此该 slot 的值域已经隐含地包括了它，以及 Wine 的所有其他子类。</p>
+
+<div class="rule-box">如果定义某个 slot 的定义域或值域的类清单中，包含了类 A 的所有子类（但不包含 A 本身），应移除这些子类，值域中只保留类 A 本身，而不是它的各个子类。</div>
+<p>与其将该 slot 的值域定义为包括 Red Wine、White Wine 和 Rose Wine（即枚举 Wine 的所有直接子类），我们可以将值域限定为 Wine 类本身。</p>
+
+<div class="rule-box">如果定义某个 slot 的定义域或值域的类清单，包含了类 A 的绝大多数子类（但缺少少数几个），应考虑用类 A 本身来定义值域是否更为合适。</div>
+
+<p>在那些"将 slot 附加到某个类"等同于"把该类加入该 slot 定义域"的系统中，同样的规则也适用于 slot 的附加：一方面，我们应尽量使其一般化；另一方面，我们必须确保我们所附加 slot 的每一个类，都确实能够拥有该 slot 所代表的这种属性。我们可以把 tannin level slot 附加到每一个表示红葡萄酒的具体类上（例如 Bordeaux、Merlot、Beaujolais 等）；但由于所有红葡萄酒都具有单宁含量这一属性，我们应当改为将该 slot 附加到更一般的 Red Wine 类上。若进一步将 tannin level slot 的定义域泛化（比如改为附加到 Wine 类上），则是不正确的，因为我们并不用单宁含量来描述白葡萄酒。</p>
+
+<div class="step-title">步骤 7：创建实例</div>
+<p>最后一步是创建层次结构中各个类的具体个体实例。定义一个类的具体实例，需要：(1) 选择一个类；(2) 创建该类的一个具体实例；(3) 填入各个 slot 的取值。例如，我们可以创建一个具体实例 Chateau-Morgon-Beaujolais，用来表示某一种特定的 Beaujolais 葡萄酒。</p>
+
+<p>Chateau-Morgon-Beaujolais 是 Beaujolais 类（代表所有 Beaujolais 葡萄酒）的一个实例。该实例定义了以下 slot 取值（见图5）：</p>
+<ul>
+  <li>Body：Light（轻盈）</li>
+  <li>Color：Red（红色）</li>
+  <li>Flavor：Delicate（清淡）</li>
+  <li>Tannin level：Low（低）</li>
+  <li>Grape：Gamay（Wine grape 类的实例）</li>
+  <li>Maker：Chateau-Morgon（Winery 类的实例）</li>
+  <li>Region：Beaujolais（Wine-Region 类的实例）</li>
+  <li>Sugar：Dry（干型）</li>
+</ul>
+
+<div class="fig-caption">图 5（原文插图，从略）：Beaujolais 类的一个实例定义。该实例是产自 Beaujolais 地区、由 Gamay 葡萄酿造、Chateau Morgon 酒庄出品的 Chateaux Morgon Beaujolais 葡萄酒——酒体轻盈、风味清淡、颜色为红色、单宁含量低，是一款干型葡萄酒。</div>
+</section>
+
+<section id="s4">
+<h2>4. 定义类与类层次结构</h2>
+
+<p>本节讨论在定义类和类层次结构（第3节中的步骤4）时需要留意的问题以及容易犯的错误。如前所述，对任何给定领域而言，都不存在唯一"正确"的类层次结构。层次结构的具体样貌取决于本体的潜在用途、应用所需的细节层级、个人偏好，有时也取决于与其他模型兼容的要求。不过，我们在此讨论几条在构建类层次结构时需要牢记的指导原则。在定义了相当数量的新类之后，退一步检查正在形成的层次结构是否符合这些原则，会很有帮助。</p>
+
+<h3>4.1 确保类层次结构的正确性</h3>
+
+<p><strong>"is-a" 关系</strong><br>
+类层次结构所表示的是一种 "is-a" 关系：如果类 A 的每一个实例同时也是类 B 的实例，那么类 A 就是类 B 的子类。例如，Chardonnay 是 White wine 的子类。另一种理解这种分类关系的方式，是将其视为一种 "kind-of"（"是一种"）关系：Chardonnay 是一种 White wine；喷气式客机是一种飞机；肉是一种食物。</p>
+<div class="rule-box">一个类的子类，代表的是该父类所代表概念的"一种"（kind of）。</div>
+
+<p><strong>单数的某一款酒，不是"所有酒"的子类</strong><br>
+一个常见的建模错误，是在层次结构中同时包含某个概念的单数和复数形式，并把前者作为后者的子类。例如，定义一个类 Wines，再定义一个类 Wine 作为 Wines 的子类，就是错误的。一旦我们把层次结构理解为表示"kind-of"关系，这个建模错误就一目了然了：单个的 Wine 并不是一种 Wines。避免这种错误的最好方法，就是在给类命名时始终统一使用单数或复数（关于概念命名的讨论见第6节）。</p>
+
+<p><strong>层次关系的传递性</strong><br>
+子类关系具有传递性：</p>
+<div class="rule-box">如果 B 是 A 的子类，且 C 是 B 的子类，那么 C 也是 A 的子类。</div>
+<p>例如，我们可以定义一个类 Wine，再定义一个类 White wine 作为 Wine 的子类，然后定义一个类 Chardonnay 作为 White wine 的子类。根据子类关系的传递性，Chardonnay 类也是 Wine 的子类。有时我们会区分直接子类与间接子类：直接子类是某个类"最近"的子类——在层次结构中，该类与其直接子类之间不存在其他中间类，也就是说，该类与其直接父类之间也不存在其他中间类。在我们的例子中，Chardonnay 是 White wine 的直接子类，而不是 Wine 的直接子类。</p>
+
+<p><strong>类层次结构的演变</strong><br>
+随着领域的发展，维护一个一致的类层次结构可能会变得具有挑战性。例如，多年来所有的仙粉黛（Zinfandel）葡萄酒都是红葡萄酒，因此我们把 Zinfandel 类定义为 Red wine 类的子类。然而，后来酿酒师开始在压榨葡萄后立即去除果皮的着色成分，从而改变了成酒的颜色，于是就出现了颜色呈桃红色的"白仙粉黛"（white zinfandel）。这时，我们就需要把 Zinfandel 类拆分为两个类——White zinfandel 和 Red zinfandel，并将它们分别归类为 Rose wine 和 Red wine 的子类。</p>
+
+<p><strong>类及其名称</strong><br>
+区分一个类与它的名称是很重要的：</p>
+<div class="rule-box">类代表的是领域中的概念，而不是表示这些概念的词语。</div>
+<p>如果我们选用了不同的术语，一个类的名称可能会随之改变，但这个术语所代表的客观现实本身是不变的。例如，我们可能创建了一个类 Shrimps，后来将其重命名为 Prawns——该类所代表的概念仍然是同一个。原本涉及 shrimp 菜肴的适宜葡萄酒搭配建议，现在应改为涉及 prawn 菜肴。在更实际的层面上，应始终遵循以下规则：</p>
+<div class="rule-box">同一个概念的不同同义词，不应表示为不同的类。</div>
+<p>同义词只是同一个概念或术语的不同名称。因此，我们不应该同时拥有一个叫 Shrimp 的类和一个叫 Prawn 的类，甚至再加一个叫 Crevette 的类；而应该只有一个类，命名为 Shrimp 或 Prawn 二者之一。许多系统允许为一个类关联一份同义词、译名或展示名称的清单；如果系统不支持这种关联，同义词也可以始终记录在该类的文档说明中。</p>
+
+<p><strong>避免类的循环</strong><br>
+我们应当避免类层次结构中出现循环。当某个类 A 拥有一个子类 B，同时 B 又是 A 的父类时，我们就说层次结构中出现了循环。在层次结构中制造这样一个循环，等同于声明类 A 和类 B 是等价的：A 的所有实例都是 B 的实例，B 的所有实例也都是 A 的实例。事实上，既然 B 是 A 的子类，B 的所有实例就必然都是类 A 的实例；而既然 A 是 B 的子类，A 的所有实例也必然都是类 B 的实例。</p>
+
+<h3>4.2 分析类层次结构中的同级类（Siblings）</h3>
+<p>层次结构中的同级类（siblings）是指属于同一个父类的各个直接子类（见第4.1节）。</p>
+<div class="rule-box">层次结构中的所有同级类（位于根节点的除外）都必须处于相同的一般性层级。</div>
+<p>例如，White wine 和 Chardonnay 不应当是同一个类（比如 Wine）的同级子类，因为 White wine 是一个比 Chardonnay 更一般的概念。同级类所代表的概念应当"处于同一条线上"，就像一本书中同一层级的各个小节应当处于相同的详略程度一样。从这个意义上说，对类层次结构的要求，与对一份书籍大纲的要求是类似的。</p>
+<p>不过，位于层次结构根部的那些概念（通常表示为某个非常一般的类，例如 Thing，的直接子类）代表的是该领域的几大主要划分，它们不需要彼此是相似的概念。</p>
+
+<p><strong>多少算多，多少算少？</strong><br>
+对于一个类应当拥有多少个直接子类，并没有硬性规定。不过，许多结构良好的本体，其每个类通常拥有二到十几个直接子类。因此，我们提出以下两条指导原则：</p>
+<div class="rule-box">如果一个类只有一个直接子类，那么可能存在建模问题，或者说明本体尚不完整。</div>
+<div class="rule-box">如果某个类的直接子类超过一打（约十二个），那么可能需要引入额外的中间类别。</div>
+
+<p>第一条规则类似于一条排版规则：项目符号列表不应该只有一个项目符号。举例来说，大多数勃艮第红葡萄酒都是 Côtes d'Or 葡萄酒。假设我们只想表示这种占主导地位的勃艮第葡萄酒类型，我们可以创建一个类 Red Burgundy，再创建它唯一的一个子类 Cotes d'Or（图6a）。但是，如果在我们的表示中红勃艮第和 Côtes d'Or 葡萄酒本质上是等价的（所有红勃艮第葡萄酒都是 Côtes d'Or 葡萄酒，反之亦然），那么创建 Cotes d'Or 这个类并没有必要，也不会给表示增添任何新信息。如果我们还要纳入 Côtes Chalonnaise 葡萄酒——一种产自 Côtes d'Or 以南地区、价格更低的勃艮第葡萄酒——那么我们就会为 Burgundy 类创建两个子类：Cotes d'Or 和 Cotes Chalonnaise（图6b）。</p>
+
+<div class="fig-caption">图 6（原文插图，从略）：Red Burgundy 类的子类。只有一个子类，通常预示着建模上存在问题。</div>
+
+<p>再假设，我们把所有类型的葡萄酒都列为 Wine 类的直接子类，这份清单就会同时包含 Beaujolais 和 Bordeaux 这样比较一般的葡萄酒类型，也会包含 Paulliac 和 Margaux 这样更具体的类型（图6a）。此时 Wine 类拥有的直接子类过多；确实，为了让本体以更有条理的方式反映不同类型的葡萄酒，Medoc 应当是 Bordeaux 的子类，Cotes d'Or 应当是 Burgundy 的子类。同时，引入 Red wine 和 White wine 这样的中间类别，也能更好地反映许多人对葡萄酒领域所抱持的概念模型（图6b）。</p>
+
+<p>然而，如果在一长串同级类中并不存在自然而然的分组类别，那就没有必要人为地创造这样的类——保持这些类原本的样子即可。毕竟，本体是对现实世界的反映；如果现实世界中并不存在某种分类，那么本体也应当如实反映这一点。</p>
+
+<div class="fig-caption">图 7（原文插图，从略）：葡萄酒的分类——列出所有葡萄酒及其类型，与设置多个分类层级两种做法的对比。</div>
+
+<h3>4.3 多重继承</h3>
+<p>大多数知识表示系统都允许类层次结构中存在多重继承：一个类可以同时是多个类的子类。假设我们想创建一个单独的甜酒类 Dessert wine。波特酒（Port wine）既是一种红葡萄酒，又是一种甜酒。<sup>4</sup> 因此，我们将类 Port 定义为拥有两个父类：Red wine 和 Dessert wine。Port 类的所有实例都将同时是 Red wine 类和 Dessert wine 类的实例。Port 类将从这两个父类中分别继承各自的 slot 及其 facet：因此，它会从 Dessert wine 类继承 Sugar slot 取值为 SWEET（甜），并从 Red wine 类继承 tannin level slot 及其颜色 slot 的取值。</p>
+
+<h3>4.4 何时（不）引入新类</h3>
+<p>建模过程中最难做出的决策之一，就是何时应该引入一个新类，何时应该通过不同的属性取值来表示某种区别。要在"层次结构嵌套过深、充斥大量多余类"和"层次结构过于扁平、把过多信息编码进 slot 中"这两种极端之间找到恰当的平衡，并不容易。</p>
+<p>以下几条经验法则有助于判断何时应在层次结构中引入新类：</p>
+<div class="rule-box">子类通常 (1) 拥有父类所不具备的额外属性，或 (2) 拥有与父类不同的限制条件，或 (3) 参与了与父类不同的关系。</div>
+<p>红葡萄酒可以有不同程度的单宁含量，而这个属性并不用于描述葡萄酒这个大类；Dessert wine 的 sugar slot 取值为 SWEET，而这一点对其父类并不成立；黑皮诺（Pinot Noir）葡萄酒可能很适合搭配海鲜，而其他红葡萄酒则未必如此。换句话说，通常只有当我们能就某个类说出一些无法对其父类说出的内容时，我们才会在层次结构中引入一个新的类。</p>
+<p>在实际操作层面，每一个子类要么应当被添加新的 slot，要么应当被赋予新的 slot 取值，要么应当覆盖某些继承 slot 的 facet。</p>
+<p>不过，有时即便不会引入任何新属性，创建新类也可能是有用的：</p>
+<div class="rule-box">术语层级（terminological hierarchies）中的类，不一定需要引入新属性。</div>
+<p>例如，某些本体包含该领域常用术语的大型参考层次结构。比如，某个支撑电子病历系统的本体，可能会包含对各种疾病的分类。这种分类可能仅仅是一份术语层次结构，本身并不带有属性（或者所有术语共享同一套属性）。在这种情况下，将这些术语组织为一个层次结构而非一份扁平清单仍然是有用的，因为这样做：(1) 能便于更轻松地浏览和检索；(2) 能让医生方便地为具体情境选择合适的概念一般性层级。</p>
+<p>引入不带任何新属性的新类，还有另一个理由：用来对领域专家通常会加以区分的概念进行建模，即便我们已经决定不对这种区别本身建模。由于我们使用本体来促进领域专家之间、以及领域专家与知识系统之间的沟通，我们希望本体能够反映专家对该领域的理解方式。</p>
+<p>最后，我们不应当为每一个额外的限制条件都创建一个新的子类。例如，我们引入了 Red wine、White wine 和 Rose wine 这几个类，是因为这种区分在葡萄酒的世界里是自然存在的；但我们并没有为清淡型葡萄酒、适中型葡萄酒等再单独引入类。在定义类层次结构时，我们的目标是在"创建有助于分类组织的新类"与"创建过多的类"之间取得平衡。</p>
+
+<h3>4.5 引入新类，还是使用属性取值？</h3>
+<p>在对某个领域建模时，我们经常需要决定：是将某种具体的区分（比如白、红或桃红葡萄酒）建模为一个属性取值，还是建模为一组类；这一决定同样取决于领域的范围以及当前手头的任务。</p>
+<p>我们究竟应该创建一个 White wine 类，还是干脆创建一个 Wine 类，用 color slot 的不同取值来区分？答案通常取决于我们为本体所设定的范围：White wine 这个概念在我们的领域中有多重要？如果葡萄酒在该领域中只是无关紧要的一个方面，酒是否为白葡萄酒对其与其他对象的关系没有任何特别的影响，那么我们就不应该为白葡萄酒单独设立一个类。对于一个生产葡萄酒标签的工厂所用的领域模型而言，各种颜色葡萄酒标签的制作规则都是相同的，这一区分并不十分重要。反过来，对于表示葡萄酒、食物及二者恰当搭配这一任务而言，红葡萄酒与白葡萄酒差异很大：它们搭配的食物不同、具有的属性也不同，等等。同样，葡萄酒的颜色，对于我们可能用来确定品酒顺序的知识库而言也很重要。因此，我们为 White wine 单独创建一个类。</p>
+<div class="rule-box">如果不同取值所对应的概念，会成为其他类中不同 slot 的限制条件，那么我们应当为这一区分创建新的类；否则，就将这种区分表示为一个 slot 取值。</div>
+<p>同样地，我们的葡萄酒本体中设有 Red Merlot 和 White Merlot 这样的类，而不是为所有 Merlot 葡萄酒设一个单一的类：红美乐和白美乐虽然由同一种葡萄酿制，但确实是不同的酒；如果我们正在开发一个详细的葡萄酒本体，这种区分就很重要。</p>
+<div class="rule-box">如果某种区分在该领域中很重要，并且我们把具有不同取值的对象视为不同种类的对象，那么我们就应当为这种区分创建一个新的类。</div>
+
+<p>考虑某个类可能拥有的具体实例，也有助于我们判断是否应该引入新类。</p>
+<div class="rule-box">一个具体实例所属的类，不应当频繁变化。</div>
+<p>通常，当我们用外在（extrinsic）属性而非内在（intrinsic）属性来区分不同的类时，这些类的实例就不得不频繁地从一个类"迁移"到另一个类。例如，在描述餐厅葡萄酒瓶的本体中，Chilled wine（冰镇葡萄酒）不应当是一个类；chilled（冰镇）这个属性应该只是酒瓶中葡萄酒的一个属性，因为一个 Chilled wine 的实例很容易不再是这个类的实例，随后又重新变成这个类的实例。</p>
+<p>通常，数字、颜色、地点这类信息是 slot 的取值，不会引发新类的创建；但葡萄酒是一个值得注意的例外，因为酒的颜色对于描述葡萄酒而言实在是太重要了。</p>
+<p>再举一个例子，考虑人体解剖学本体。在表示肋骨时，我们是为"第1左肋"、"第2左肋"等分别创建一个类吗？还是设立一个带有序号和左右侧位置 slot 的 Rib 类？<sup>5</sup> 如果我们在本体中要表示的每一根肋骨的信息都存在显著差异，那么我们确实应当为每一根肋骨都创建一个类——也就是说，如果我们想要表示每根肋骨各不相同的详细邻接和位置信息，以及每根肋骨各自发挥的具体功能和所保护的器官，我们就需要这些类。如果我们建模解剖结构时的精细程度略低一些，而且就我们潜在的应用而言，所有肋骨都非常相似（我们只是在谈论 X 光片上哪根肋骨断了，而不涉及对身体其他部位的影响），那么我们或许应该简化层次结构，只设一个 Rib 类，并带有两个 slot：lateral position（左右侧位置）、order（序号）。</p>
+
+<h3>4.6 是实例，还是类？</h3>
+<p>判断本体中的某个特定概念应该是一个类还是一个具体实例，取决于该本体的潜在应用是什么。判断类的边界在哪里结束、具体实例从哪里开始，首先要确定表示中的最低粒度层级是什么，而粒度层级又是由该本体的潜在应用所决定的。换句话说，知识库中将要表示的最具体的项目是什么？回到我们在第3节步骤1中确定的能力问题，那些构成这些问题答案的最具体的概念，就是知识库中"个体"的很好候选。</p>
+<div class="rule-box">具体实例，是知识库中所能表示的最具体的概念。</div>
+<p>例如，如果我们只打算讨论葡萄酒与食物的搭配，我们就不会关心某一瓶具体的葡萄酒实物。因此，诸如 Sterling Vineyards Merlot 这样的术语很可能就是我们所使用的最具体的术语。换句话说，Wine 类所构成的集合，其成员并不是一瓶瓶具体的酒瓶，而是各个具体酒庄所生产的具体酒款。因此，Sterling Vineyards Merlot 就会是知识库中的一个具体实例。</p>
+<p>另一方面，如果我们除了葡萄酒与食物搭配的知识库之外，还想维护餐厅中葡萄酒的库存清单，那么每一瓶具体的葡萄酒可能就会成为知识库中一个个具体的实例。</p>
+<p>同样地，如果我们想为 Sterling Vineyards Merlot 的每一个具体年份分别记录不同的属性，那么该酒的具体某个年份就会是知识库中的一个具体实例，而 Sterling Vineyards Merlot 本身就会是一个包含其所有年份实例的类。</p>
+<p>还有一条规则，可以把某些具体实例"移动"进类的集合中：</p>
+<div class="rule-box">如果若干概念构成了一种自然的层次结构，那么我们就应当把它们表示为类。</div>
+<p>考虑葡萄酒产区。最初，我们可能会把法国、美国、德国等主要葡萄酒产区定义为类，而把这些大产区内部具体的葡萄酒产区定义为实例。例如，Bourgogne 产区就是 French region 类的一个实例。然而，我们可能还想说 Cotes d'Or 产区是一个 Bourgogne 产区，因此 Bourgogne region 就必须是一个类（这样它才能拥有子类或实例）。可是，把 Bourgogne region 设为一个类，而把 Cotes d'Or region 设为 Bourgogne region 的一个实例，似乎又显得有些武断——很难清晰区分哪些产区应当是类、哪些应当是实例。因此，我们索性把所有葡萄酒产区都定义为类。Protégé-2000 允许用户将某些类指定为 Abstract（抽象），表示该类不能拥有任何直接实例。在我们的例子中，所有产区类都是抽象类（图8）。</p>
+
+<div class="fig-caption">图 8（原文插图，从略）：葡萄酒产区的层次结构。类名旁边的"A"图标表示该类为抽象类，不能拥有任何直接实例。</div>
+
+<p>如果我们在类名中省略"region"这个词，同样的类层次结构就会变得不正确。我们不能说类 Alsace 是类 France 的子类：Alsace 本身并不是"一种" France，但 Alsace region（阿尔萨斯产区）却是"一种" French region（法国产区）。</p>
+<p>只有类才能被组织进层次结构中——知识表示系统并没有"子实例"这样的概念。因此，如果术语之间存在自然的层次关系（比如第4.2节中所讨论的术语层次结构），我们就应当将这些术语定义为类，即便它们本身可能并不拥有任何实例。</p>
+
+<h3>4.7 限定范围</h3>
+<p>作为定义类层次结构的最后一点说明，以下这组原则在判断本体定义何时算完成时始终很有帮助：</p>
+<div class="rule-box">本体不需要包含关于该领域的所有可能信息：你不需要泛化或细化超出你应用所需的程度（每个方向最多再多留一个层级）。</div>
+<p>对于我们的葡萄酒与食物示例而言，我们不需要知道酒标用的是什么纸张，也不需要知道虾类菜肴该怎么烹饪。</p>
+<p>类似地：</p>
+<div class="rule-box">本体不需要包含层次结构中类的所有可能属性和区分。</div>
+<p>在我们的本体中，我们当然没有纳入一款葡萄酒或一道食物可能具有的所有属性。我们只表示了本体中各类事物最突出的属性。即便葡萄酒相关书籍会告诉我们葡萄的大小，我们也没有纳入这类知识。同样，我们也没有添加我们本体中所有术语之间可以想象到的所有关系。例如，我们并没有为了让本体中各术语之间的联系表示得更完整，就特意加入"最喜爱的葡萄酒"和"最喜爱的食物"这样的关系。</p>
+<p>最后一条原则，同样适用于在本体中已经纳入的概念之间建立关系。设想一个描述生物学实验的本体。该本体很可能会包含 Biological organism（生物有机体）这一概念，也会包含 Experimenter（实验者，即执行实验的人，带有姓名、所属机构等信息）这一概念。诚然，实验者作为一个人，本身恰好也是一种生物有机体。然而，我们可能不应该在本体中体现这层关系：就这个表示的目的而言，实验者不是一种生物有机体，而且我们大概永远不会对实验者本身进行实验。如果我们试图表示关于本体中各个类的一切可以陈述的事实，Experimenter 就会成为 Biological Organism 的一个子类。但对于可预见的应用而言，我们并不需要纳入这一知识。事实上，纳入这种针对已有类的额外分类，实际上反而有害：现在，Experimenter 的实例就会带有体重、年龄、物种等 slot，而这些信息在描述实验的语境下完全是不相关的。不过，我们仍应当在文档中记录下这种设计决策，以便那些日后查看该本体、但可能并不了解我们原本应用场景的用户能够理解。否则，那些打算将该本体复用于其他应用的人，可能会在不了解原始建模并未包含这一事实的情况下，尝试把 Experimenter 当作 Person 的子类来使用。</p>
+
+<h3>4.8 互斥子类（Disjoint Subclasses）</h3>
+<p>许多系统允许我们显式指定若干个类是互斥的（disjoint）。如果若干个类不能拥有任何共同的实例，它们就是互斥的。例如，我们本体中的 Dessert wine 类和 White wine 类并不互斥：存在许多酒同时是这两个类的实例，比如 Sweet Riesling 类的实例 Rothermel Trochenbierenauslese Riesling 就是这样一个例子。与此同时，Red wine 类和 White wine 类是互斥的：没有一款酒能同时是红葡萄酒又是白葡萄酒。指定类之间互斥，能让系统更好地校验本体的正确性。如果我们声明 Red wine 类和 White wine 类互斥，之后又创建了一个同时是 Riesling（White wine 的子类）和 Port（Red wine 的子类）子类的类，系统就可以指出这是一个建模错误。</p>
+</section>
+
+<section id="s5">
+<h2>5. 定义属性——更多细节</h2>
+<p>本节讨论在本体中定义 slot 时（第3节的步骤5和步骤6）需要牢记的更多细节，主要涉及反向 slot（inverse slots）和 slot 的默认值。</p>
+
+<h3>5.1 反向 slot</h3>
+<p>一个 slot 的取值，有时会依赖于另一个 slot 的取值。例如，如果某款酒是由某酒庄酿造的，那么这家酒庄就生产这款酒。这两个关系——maker 和 produces——被称为反向关系（inverse relations）。"双向"存储这些信息其实是冗余的：当我们知道某款酒是由某酒庄酿造时，使用该知识库的应用程序总是可以推断出反向关系的取值，即该酒庄生产这款酒。然而，从知识获取（knowledge-acquisition）的角度来看，让这两方面的信息都显式可用是很方便的。这种做法允许用户在一种情况下先填入葡萄酒信息，在另一种情况下先填入酒庄信息；知识获取系统随后可以自动为反向关系填入相应取值，从而保证知识库的一致性。</p>
+<p>在我们的示例中，就有一对反向 slot：Wine 类的 maker slot 与 Winery 类的 produces slot。当用户创建一个 Wine 类的实例并为其 maker slot 填入取值时，系统会自动将这个新创建的实例添加到相应 Winery 实例的 produces slot 中。例如，当我们说 Sterling Merlot 是由 Sterling Vineyard 酒庄酿造时，系统会自动将 Sterling Merlot 添加到 Sterling Vineyard 酒庄所生产葡萄酒的清单中（图9）。</p>
+
+<div class="fig-caption">图 9（原文插图，从略）：带有反向 slot 的实例。Winery 类的 produces slot 是 Wine 类 maker slot 的反向 slot；填入其中一个 slot 的取值，会自动触发对另一个 slot 的更新。</div>
+
+<h3>5.2 默认值</h3>
+<p>许多基于框架的系统都允许为 slot 指定默认值。如果某个 slot 的取值对于某个类的大多数实例而言都是相同的，我们就可以将这个取值定义为该 slot 的默认值。这样，每当创建一个包含该 slot 的类的新实例时，系统就会自动填入这个默认值；之后我们仍然可以将其改为限面所允许的任何其他取值。也就是说，默认值的存在纯粹是为了方便：它们不会给模型增加任何新的限制，也不会以任何方式改变模型本身。</p>
+<p>例如，如果我们讨论的大多数葡萄酒都是酒体饱满的酒，我们就可以把"full"（饱满）设为葡萄酒 body 的默认值。这样一来，除非我们特别说明，我们所定义的所有葡萄酒的酒体都会是饱满的。</p>
+<p>需要注意的是，这与 slot 取值本身不同：slot 取值是不能被更改的。例如，我们可以说 Dessert wine 类的 sugar slot 取值为 SWEET；那么 Dessert wine 类的所有子类和实例，其 sugar slot 的取值都会是 SWEET，并且这个取值在该类的任何子类或实例中都不能被更改。</p>
+</section>
+
+<section id="s6">
+<h2>6. 命名的学问</h2>
+<p>为本体中的概念定义命名约定，并严格遵循这些约定，不仅能让本体更易于理解，还有助于避免一些常见的建模错误。概念命名有许多可行的方案，通常并没有特别的理由必须选择其中某一种。但无论如何，我们都需要：</p>
+<div class="rule-box">为类和 slot 定义一套命名约定，并始终遵循它。</div>
+<p>以下这些知识表示系统的特性，会影响命名约定的选择：</p>
+<ul>
+  <li>该系统是否为类、slot 和实例共用同一个命名空间？也就是说，系统是否允许一个类和一个 slot 拥有相同的名字（比如一个类 winery 和一个 slot winery）？</li>
+  <li>该系统是否区分大小写？也就是说，系统是否会把仅大小写不同的名字（比如 Winery 和 winery）视为不同的名字？</li>
+  <li>系统在名称中允许使用哪些分隔符？也就是说，名称中能否包含空格、逗号、星号等？</li>
+</ul>
+<p>例如，Protégé-2000 为其所有的框架（frame）维护单一的命名空间，且区分大小写。因此，我们不能同时拥有一个类 winery 和一个 slot winery，但可以拥有一个类 Winery（注意首字母大写）和一个 slot winery。而 CLASSIC 则不区分大小写，并为类、slot 和个体分别维护不同的命名空间；因此从系统的角度看，同时用 Winery 命名一个类和一个 slot 并不会有问题。</p>
+
+<h3>6.1 大小写与分隔符</h3>
+<p>首先，如果我们为概念名称使用一致的大小写规则，就能大大提高本体的可读性。例如，通常的做法是类名首字母大写、slot 名使用小写（前提是系统区分大小写）。</p>
+<p>当一个概念名称包含多个单词时（比如 Meal course），我们需要对这些单词加以分隔。以下是几种可能的选择：</p>
+<ul>
+  <li>使用空格：Meal course（许多系统，包括 Protégé，都允许概念名称中包含空格）；</li>
+  <li>将各单词连写并把每个新单词首字母大写：MealCourse；</li>
+  <li>在名称中使用下划线、连字符或其他分隔符：Meal_Course、Meal_course、Meal-Course、Meal-course（如果使用分隔符，你还需要决定每个新单词是否要大写）。</li>
+</ul>
+<p>如果知识表示系统允许名称中包含空格，那么使用空格可能是许多本体开发者最直观的方案。不过，考虑到你的系统可能需要与其他系统交互，如果那些系统不支持空格，或者你所使用的展示媒介对空格处理不佳，采用其他方式可能会更有用。</p>
+
+<h3>6.2 单数还是复数</h3>
+<p>类名代表的是一组对象的集合。例如，类 Wine 实际上代表的是所有葡萄酒。因此，某些设计者可能会觉得把这个类命名为 Wines 而非 Wine 更自然。这两种选择并无孰优孰劣（尽管在实践中类名用单数的情况更常见）。但无论选择哪一种，都应当在整个本体中保持一致。有些系统甚至要求用户提前声明是使用单数还是复数来命名概念，并且不允许中途改变这一选择。</p>
+<p>始终使用同一种形式，也能避免出现诸如"先创建一个类 Wines，再创建一个类 Wine 作为它的子类"（见第4.1节）这样的建模错误。</p>
+
+<h3>6.3 前缀与后缀约定</h3>
+<p>一些知识库方法论建议在名称中使用前缀和后缀约定，以区分类与 slot。两种常见的做法是为 slot 名添加前缀 has- 或后缀 -of。这样，我们的 slot 就会变成 has-maker 和 has-winery（如果采用 has- 约定），或者 maker-of 和 winery-of（如果采用 -of 约定）。这种方式使得任何人一看到某个术语就能立刻判断出它究竟是一个类还是一个 slot。不过，术语名称也会因此变得稍长一些。</p>
+
+<h3>6.4 其他命名注意事项</h3>
+<p>以下是在制定命名约定时还需考虑的几点：</p>
+<ul>
+  <li>不要在概念名称中添加"class"、"property"、"slot"等字样。从上下文中通常就能清楚地判断出某个概念究竟是类还是 slot；此外，如果你为类和 slot 分别采用不同的命名约定（比如分别用大写和不用大写），名称本身就已经能够表明这个概念是什么了。</li>
+  <li>通常最好避免在概念名称中使用缩写（也就是说，应该用 Cabernet Sauvignon 而不是 Cab）。</li>
+  <li>一个类的各个直接子类的名称，应当要么都包含父类的名称，要么都不包含。例如，如果我们要为 Wine 类创建两个子类，分别表示红葡萄酒和白葡萄酒，那么这两个子类的名字应当要么是 Red Wine 和 White Wine，要么是 Red 和 White，而不应该是 Red Wine 和 White 这样不一致的组合。</li>
+</ul>
+</section>
+
+<section id="s7">
+<h2>7. 其他资源</h2>
+<p>在我们的示例中，我们使用 Protégé-2000 作为本体开发环境。Duineveld 及其同事（Duineveld et al. 2000）对若干其他本体开发环境进行了描述和比较。</p>
+<p>我们在本指南中尝试涵盖本体开发最基本的内容，并没有讨论本体开发中许多更高级的主题或其他替代方法论。Gómez-Pérez（Gómez-Pérez 1998）和 Uschold（Uschold and Gruninger 1996）提出了其他本体开发方法论。Ontolingua 教程（Farquhar 1997）讨论了知识建模中的一些形式化方面的内容。</p>
+<p>目前，研究者们不仅关注本体开发本身，也越来越重视本体分析。随着越来越多的本体被创建和复用，也会有越来越多的工具用于分析本体。例如，Chimaera（McGuinness et al. 2000）提供了用于分析本体的诊断工具。Chimaera 所执行的分析既包括对本体逻辑正确性的检查，也包括对常见本体设计错误的诊断。本体设计者可能希望对不断演化中的本体运行 Chimaera 诊断，以判断其是否符合常见的本体建模实践。</p>
+</section>
+
+<section id="s8">
+<h2>8. 结论</h2>
+<p>在本指南中，我们描述了一种针对声明式、基于框架的系统的本体开发方法论。我们列出了本体开发过程中的各个步骤，并讨论了定义类层次结构、以及类和实例属性时所涉及的复杂问题。然而，在遵循了所有这些规则和建议之后，最重要的一点是要记住：对于任何一个领域，都不存在唯一正确的本体。本体设计是一个创造性的过程，不同的人设计出的两个本体不会是完全相同的。本体的潜在应用场景，以及设计者对该领域的理解与视角，无疑都会影响本体设计中的各种选择。"布丁好不好，吃了才知道"——我们只有通过在最初设计它所针对的那些应用中实际使用这个本体，才能评估它的质量。</p>
+</section>
+
+<section id="acknowledgments">
+<h2>致谢</h2>
+<p>Protégé-2000（http://protege.stanford.edu）由斯坦福医学信息学系 Mark Musen 的研究小组开发。文中部分插图是使用 Protégé-2000 的 OntoViz 插件生成的。我们从 Ontolingua 本体库（http://www.ksl.stanford.edu/software/ontolingua/）中导入了葡萄酒本体的初始版本，该版本又源自 Brachman 及其同事（Brachman et al. 1991）发表的、随 CLASSIC 知识表示系统一同发布的一个版本。随后我们对该本体进行了修改，用以呈现声明式、基于框架的本体所涉及的概念建模原则。Ray Fergerson 和 Mor Peleg 对本文早期草稿提出的大量意见，极大地改进了本文的质量。</p>
+</section>
+
+<section id="references">
+<h2>参考文献</h2>
+<p style="font-size:13.5px;color:var(--muted);">（参考文献沿用学术引用惯例，保留英文原文格式，不作翻译。）</p>
+<ul>
+<li>Booch, G., Rumbaugh, J. and Jacobson, I. (1997). <em>The Unified Modeling Language user guide</em>. Addison-Wesley.</li>
+<li>Brachman, R.J., McGuinness, D.L., Patel-Schneider, P.F., Resnick, L.A. and Borgida, A. (1991). Living with CLASSIC: When and how to use KL-ONE-like language. <em>Principles of Semantic Networks</em>. J. F. Sowa, editor, Morgan Kaufmann: 401-456.</li>
+<li>Brickley, D. and Guha, R.V. (1999). Resource Description Framework (RDF) Schema Specification. Proposed Recommendation, World Wide Web Consortium: http://www.w3.org/TR/PR-rdf-schema.</li>
+<li>Chimaera (2000). Chimaera Ontology Environment. www.ksl.stanford.edu/software/chimaera</li>
+<li>Duineveld, A.J., Stoter, R., Weiden, M.R., Kenepa, B. and Benjamins, V.R. (2000). WonderTools? A comparative study of ontological engineering tools. <em>International Journal of Human-Computer Studies</em> 52(6): 1111-1133.</li>
+<li>Farquhar, A. (1997). Ontolingua tutorial. http://ksl-web.stanford.edu/people/axf/tutorial.pdf</li>
+<li>Gómez-Pérez, A. (1998). Knowledge sharing and reuse. <em>Handbook of Applied Expert Systems</em>. Liebowitz, editor, CRC Press.</li>
+<li>Gruber, T.R. (1993). A Translation Approach to Portable Ontology Specification. <em>Knowledge Acquisition</em> 5: 199-220.</li>
+<li>Gruninger, M. and Fox, M.S. (1995). Methodology for the Design and Evaluation of Ontologies. In: <em>Proceedings of the Workshop on Basic Ontological Issues in Knowledge Sharing</em>, IJCAI-95, Montreal.</li>
+<li>Hendler, J. and McGuinness, D.L. (2000). The DARPA Agent Markup Language. <em>IEEE Intelligent Systems</em> 16(6): 67-73.</li>
+<li>Humphreys, B.L. and Lindberg, D.A.B. (1993). The UMLS project: making the conceptual connection between users and the information they need. <em>Bulletin of the Medical Library Association</em> 81(2): 170.</li>
+<li>McGuinness, D.L., Abrahams, M.K., Resnick, L.A., Patel-Schneider, P.F., Thomason, R.H., Cavalli-Sforza, V. and Conati, C. (1994). Classic Knowledge Representation System Tutorial. http://www.bell-labs.com/project/classic/papers/ClassTut/ClassTut.html</li>
+<li>McGuinness, D.L., Fikes, R., Rice, J. and Wilder, S. (2000). An Environment for Merging and Testing Large Ontologies. <em>Principles of Knowledge Representation and Reasoning: Proceedings of the Seventh International Conference (KR2000)</em>. A. G. Cohn, F. Giunchiglia and B. Selman, editors. San Francisco, CA, Morgan Kaufmann Publishers.</li>
+<li>McGuinness, D.L. and Wright, J. (1998). Conceptual Modeling for Configuration: A Description Logic-based Approach. <em>Artificial Intelligence for Engineering Design, Analysis, and Manufacturing</em> — special issue on Configuration.</li>
+<li>Musen, M.A. (1992). Dimensions of knowledge sharing and reuse. <em>Computers and Biomedical Research</em> 25: 435-467.</li>
+<li>Ontolingua (1997). Ontolingua System Reference Manual. http://www-ksl-svc.stanford.edu:5915/doc/frame-editor/index.html</li>
+<li>Price, C. and Spackman, K. (2000). SNOMED clinical terms. <em>BJHC&amp;IM-British Journal of Healthcare Computing &amp; Information Management</em> 17(3): 27-31.</li>
+<li>Protege (2000). The Protege Project. http://protege.stanford.edu</li>
+<li>Rosch, E. (1978). Principles of Categorization. <em>Cognition and Categorization</em>. R. E. and B. B. Lloyd, editors. Hillside, NJ, Lawrence Erlbaum Publishers: 27-48.</li>
+<li>Rothenfluh, T.R., Gennari, J.H., Eriksson, H., Puerta, A.R., Tu, S.W. and Musen, M.A. (1996). Reusable ontologies, knowledge-acquisition tools, and performance systems: PROTÉGÉ-II solutions to Sisyphus-2. <em>International Journal of Human-Computer Studies</em> 44: 303-332.</li>
+<li>Rumbaugh, J., Blaha, M., Premerlani, W., Eddy, F. and Lorensen, W. (1991). <em>Object-oriented modeling and design</em>. Englewood Cliffs, New Jersey: Prentice Hall.</li>
+<li>Uschold, M. and Gruninger, M. (1996). Ontologies: Principles, Methods and Applications. <em>Knowledge Engineering Review</em> 11(2).</li>
+</ul>
+</section>
+
+<footer>
+中文翻译整理 · 原文版权归原作者及斯坦福大学所有 · 原文出处：protege.stanford.edu/publications/ontology_development/ontology101.pdf
+</footer>
+
+</div>
+</body>
+</html>

@@ -18,6 +18,7 @@
       <a href="../../../ai.html" class="active">AI</a>
       <a href="../../../english.html">英语</a>
       <a href="../../../k12.html">学科</a>
+      <a href="../../../investment.html">投资</a>
     </nav>
   </header>
 
@@ -31,51 +32,51 @@
 
   <main class="doc-shell">
     <article class="doc-content">
-<h1>站在前沿：汤森路透如何为高风险专业工作构建 AI</h1>
+<h1 id="站在前沿汤森路透如何为高风险专业工作构建-ai">站在前沿：汤森路透如何为高风险专业工作构建 AI</h1>
 <blockquote>原文: https://claude.com/blog/working-at-the-frontier-how-thomson-reuters-builds-ai-for-high--stakes-professional-work</blockquote>
 <blockquote>日期: 2026 年 7 月 8 日</blockquote>
 <blockquote>分类: Enterprise AI</blockquote>
 <blockquote>产品: Claude Platform</blockquote>
 <p>---</p>
-<h2>文章在讲什么</h2>
+<h2 id="文章在讲什么">文章在讲什么</h2>
 <p>这篇文章是汤森路透（Thomson Reuters）首席技术官 Joel Hron 的访谈与分享，讲述了该公司如何将生成式 AI 融入法律、税务、会计、合规等专业领域的高风险工作流程。</p>
 <p>汤森路透是一家拥有 175 年历史的全球内容与技术公司，其核心产品包括 Westlaw（法律研究）、Practical Law（法律实务指南）等。这些工具是专业人士做出重大决策时依赖的参考系统。Hron 指出，AI 已经重塑了软件开发的意义，而选择正确的技术合作伙伴比以往任何时候都更重要。</p>
 <p>文章的核心议题是：<strong>在专业领域，AI 的容错率几乎为零——&quot;几乎正确&quot;是不够的</strong>。作者通过解释汤森路透的评估标准、产品构建理念以及与 Anthropic 的合作逻辑，阐述了一种不同于通用 AI 的专业级 AI 范式——Fiduciary-Grade AI™。</p>
 <p>---</p>
-<h2>原文结构地图</h2>
+<h2 id="原文结构地图">原文结构地图</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>部分</th><th>标题</th><th>作用</th></tr></thead><tbody><tr><td>1</td><td>引言</td><td>介绍汤森路透的背景与使命，建立&quot;高风险专业工作&quot;的语境</td></tr><tr><td>2</td><td>Evaluating models for legal work</td><td>提出评估 AI 模型的核心标准：律师是否愿意为此署名</td></tr><tr><td>3</td><td>Building an agent-first product</td><td>解释从聊天机器人到 Agent 的产品设计转变</td></tr><tr><td>4</td><td>What knowledge work demands of a model</td><td>列出汤森路透信任一个模型的四个必要条件</td></tr><tr><td>5</td><td>The ROI of AI</td><td>提出反直觉的 AI 投资回报观点：先转变思维，再优化成本</td></tr><tr><td>6</td><td>What&#39;s next</td><td>展望 Claude 5 的发展方向与个人使用体验</td></tr></tbody></table></div>
 <p>---</p>
-<h2>核心概念讲解</h2>
-<h3>Fiduciary-Grade AI™</h3>
+<h2 id="核心概念讲解">核心概念讲解</h2>
+<h3 id="fiduciary-grade-ai">Fiduciary-Grade AI™</h3>
 <p>这是汤森路透提出的专业级 AI 理念，核心理念是：AI 必须扎根于权威内容、由领域专家塑造、直接嵌入专业工作流程，使输出透明、可验证、在高风险场景下可辩护。</p>
 <p>这个概念的本质是<strong>责任归属</strong>。在法律工作中，最终对工作成果负责的仍然是专业人士本人，而不是 AI 系统。因此，系统必须帮助专业人士验证和决策，而不是取代他们的判断。</p>
-<h3>三个核心优势</h3>
+<h3 id="三个核心优势">三个核心优势</h3>
 <p>汤森路透认为，专业 AI 与通用 AI 系统相比，有三个难以复制的优势：</p>
 <ol><li><strong>权威内容（Authoritative Content）</strong>：175 年积累的精选案例法等权威数据</li><li><strong>深度领域专业知识（Deep Domain Expertise）</strong>：全球 2,700 余名领域专家每日注解和增强内容</li><li><strong>工作流程整合（Workflow Integration）</strong>：AI 直接嵌入专业人员的日常工具和工作流</li></ol>
-<h3>Agent-First 产品设计</h3>
+<h3 id="agent-first-产品设计">Agent-First 产品设计</h3>
 <p>这指的是一种从&quot;独立功能&quot;到&quot;统一 Agent&quot;的产品架构转变。传统上，汤森路透提供的是独立软件工具；现在，他们训练一个 Agent 来同时调用数百种工具，让专业人员定义目标结果，而不是手动指挥每一步操作。</p>
 <p>---</p>
-<h2>文章主体讲解</h2>
-<h3>第一部分：引言——为什么这篇文章重要</h3>
+<h2 id="文章主体讲解">文章主体讲解</h2>
+<h3 id="第一部分引言为什么这篇文章重要">第一部分：引言——为什么这篇文章重要</h3>
 <p>这一节作者介绍了汤森路透的历史地位和当代使命。</p>
 <p><strong>作者在讲什么</strong>：汤森路透不是一家普通的科技公司。它的存在意义是为法律、税务、会计等专业人员提供做出关键决策所需的工具。175 年的积累不是为了炫耀历史，而是构成了专业级 AI 不可替代的内容基础。</p>
 <p><strong>为什么重要</strong>：如果读者不了解&quot;高风险专业工作&quot;的含义，这一段给出了直接答案——这些领域的错误代价极高，AI 系统必须达到可以被专业人士信赖并署名的水准。</p>
 <p><strong>关键点</strong>：&quot;We&#39;re a technology company focused on professions that demand accuracy and precision.&quot; 这句话是全文的基调。AI 在这里的价值不在于炫技，而在于满足专业领域的精确性要求。</p>
 <p>---</p>
-<h3>第二部分：评估法律工作用的模型</h3>
+<h3 id="第二部分评估法律工作用的模型">第二部分：评估法律工作用的模型</h3>
 <p><strong>这一节讲什么</strong>：Hron 提出了汤森路透评估 AI 模型的核心问题：<strong>这个模型产出的工作，是否能经受住律师在实际使用前的专业审查？</strong></p>
 <p><strong>为什么重要</strong>：通用 AI 的评估标准往往是流畅性和准确性，而专业 AI 的标准是<strong>可辩护性（defensibility）</strong>——系统产出的结论必须能够被专业人士验证、引用并在必要时为其辩护。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>一个律师信任 Westlaw 的答案，不是因为底层的模型本身，而是因为数十年积累的精选案例法加上 2,700 多名领域专家的每日注解工作。</li><li>汤森路透围绕 agents 重建了法律研究流程，这些 agents <strong>不仅做检索，还做引用验证（citation validation and verification）</strong>。</li><li>客户反馈证明：原本需要&quot;数十小时&quot;的研究，现在&quot;几分钟&quot;就能得到高质量的起点供专业人员评估和完善。</li></ul>
 <p>这一节建立了全文最核心的洞见：<strong>在专业领域，验证比流畅更重要</strong>。</p>
 <p>---</p>
-<h3>第三部分：构建 Agent-First 产品</h3>
+<h3 id="第三部分构建-agent-first-产品">第三部分：构建 Agent-First 产品</h3>
 <p><strong>这一节讲什么</strong>：汤森路透将产品构建思维从&quot;更智能的聊天机器人&quot;转变为&quot;统一 Agent&quot;。一个 Agent 现在可以同时访问数百种工具，完成实时规划、委托和编排。</p>
 <p><strong>为什么重要</strong>：这个转变不只是技术升级，而是<strong>人机交互范式的根本改变</strong>。过去专业人员需要手动协调多种工具；现在他们只需定义期望的结果，由 Agent 在后台协调执行。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>CoCounsel Legal 从&quot;顺序执行独立技能&quot;重构为基于 Claude Agent SDK 的实时编排系统。</li><li>评估模型的核心测试变成了：<strong>评估模型在制定计划和使用工具方面的能力</strong>。</li><li>选择 Anthropic 作为合作伙伴的决定性因素不是基准测试成绩，而是其&quot;企业 AI 构建方法论&quot;——透明度、安全性和负责任的 AI 开发。</li></ul>
 <p>---</p>
-<h3>第四部分：专业知识工作对模型的四个要求</h3>
+<h3 id="第四部分专业知识工作对模型的四个要求">第四部分：专业知识工作对模型的四个要求</h3>
 <p>这是全文最系统化的部分。Hron 明确列出了汤森路透在信任一个模型之前必须满足的四个条件：</p>
 <p><strong>条件一：检查自己的引用</strong></p>
 <p>系统不仅检索来源，还要在将结论呈现给人工审查之前<strong>验证</strong>所引用的内容。这是区别于通用 AI 的关键能力。</p>
@@ -86,22 +87,22 @@
 <p><strong>条件四：为团队释放以前没有精力处理的工作时间</strong></p>
 <p>汤森路透正在开发复杂法律工作的起草能力（如动议起草、文件备案），这些任务&quot;过去总是需要过多的上下文和精确度&quot;，是早期模型无法胜任的。</p>
 <p>---</p>
-<h3>第五部分：AI 的投资回报</h3>
+<h3 id="第五部分ai-的投资回报">第五部分：AI 的投资回报</h3>
 <p><strong>这一节讲什么</strong>：Hron 提出了一个反直觉的 ROI 观点。</p>
 <p><strong>为什么重要</strong>：很多企业在部署 AI 时急于计算&quot;每任务成本&quot;，但 Hron 认为这样做会&quot;只见树木不见森林&quot;。<strong>在追求投资回报率之前，团队需要先感受到文化和思维方式的转变</strong>，一旦这种转变发生，回报自然会随之而来。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>内部错误修复工具：将生产问题的根本原因分析从 3 小时缩短到 4 分钟。</li><li>对工程师而言：<strong>&quot;编写代码行不再是工作本身&quot;</strong>，现在最重要的技能是系统思维、判断力和品味。</li><li>AI 正在让人们变得更加&quot;T 型&quot;——能够跨越产品、设计和财务，而不是局限在单一领域。</li></ul>
 <p>---</p>
-<h3>第六部分：下一步</h3>
+<h3 id="第六部分下一步">第六部分：下一步</h3>
 <p><strong>这一节讲什么</strong>：展望未来方向与个人使用体验。</p>
 <p><strong>为什么重要</strong>：这一节将视野从企业级产品拉回到具体的技术路线和个人开发者的视角，形成从宏观到微观的完整闭环。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>技术发展方向：更长时域的工作、更好的上下文管理、可信赖的跨任务链工具调用。</li><li>Hron 个人使用 Claude Code 和 Claude Cowork 的体验：能够快速重新熟悉数月未接触的代码库，用 CFO 或战略官的视角检验想法。</li></ul>
 <p>---</p>
-<h2>关键对比表</h2>
+<h2 id="关键对比表">关键对比表</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>维度</th><th>通用 AI</th><th>Fiduciary-Grade AI（专业级 AI）</th></tr></thead><tbody><tr><td>核心目标</td><td>流畅性和准确性</td><td>可验证性和可辩护性</td></tr><tr><td>评估标准</td><td>基准测试分数</td><td>专业人员的审查标准</td></tr><tr><td>内容基础</td><td>公共数据</td><td>权威精选内容 + 领域专家注解</td></tr><tr><td>人机关系</td><td>AI 给出答案</td><td>AI 辅助，人工决策和验证</td></tr><tr><td>错误代价</td><td>可接受一定错误率</td><td>&quot;几乎正确&quot;不可接受</td></tr><tr><td>责任归属</td><td>模型/供应商</td><td>最终由专业人士承担</td></tr></tbody></table></div>
 <p>---</p>
-<h2>关键句短摘译</h2>
+<h2 id="关键句短摘译">关键句短摘译</h2>
 <ol><li><strong>&quot;We&#39;re a technology company focused on professions that demand accuracy and precision.&quot;</strong></li></ol>
 <p>*我们是一家专注于对准确性和精确性有严苛要求的职业领域的科技公司。*</p>
 <p>→ 这句话确立了全文的基调：专业领域没有&quot;差不多&quot;的容错空间。</p>
@@ -127,10 +128,10 @@
 <p>*将人带入工作产品的开发循环中，而不是依赖 Agent 一次性给出答案。*</p>
 <p>→ 解释了人机协作的正确模式。</p>
 <p>---</p>
-<h2>术语表</h2>
+<h2 id="术语表">术语表</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>英文术语</th><th>中文解释</th></tr></thead><tbody><tr><td><strong>Fiduciary-Grade AI™</strong></td><td>汤森路透提出的专业级 AI 理念，指扎根于权威内容、由领域专家塑造、直接嵌入专业工作流程的 AI，使输出透明、可验证、高风险场景下可辩护</td></tr><tr><td><strong>Agent</strong></td><td>Agent（智能体），能够自主规划、使用工具、跨系统执行多步骤任务的 AI 系统，区别于只做一问一答的聊天机器人</td></tr><tr><td><strong>Citation validation</strong></td><td>引用验证，确认 AI 引用的来源是否准确、相关且可靠的流程</td></tr><tr><td><strong>Deep research</strong></td><td>深度研究，AI 对复杂问题进行多步骤、多来源检索和分析的研究模式</td></tr><tr><td><strong>Claude Agent SDK</strong></td><td>Anthropic 提供的开发者工具包，用于构建基于 Claude 的 Agent 应用</td></tr><tr><td><strong>CoCounsel Legal</strong></td><td>汤森路透的专业级法律 AI 平台，基于 Claude 构建</td></tr><tr><td><strong>Westlaw</strong></td><td>全球领先的法律研究数据库，包含精选判例法和法律评论</td></tr><tr><td><strong>DORA (DevOps Research and Assessment)</strong></td><td>DevOps 研究与评估，一套衡量软件交付绩效的指标体系</td></tr><tr><td><strong>Tool calling</strong></td><td>工具调用，Agent 调用外部工具（如搜索、数据库查询）完成特定任务的能力</td></tr><tr><td><strong>T-shaped</strong></td><td>T 型，指既在某个领域有深度专业能力（T 的竖线），又能跨领域协作（T 的横线）的人才特征</td></tr></tbody></table></div>
 <p>---</p>
-<h2>文章结尾怎么收束</h2>
+<h2 id="文章结尾怎么收束">文章结尾怎么收束</h2>
 <p>文章结尾部分通过三个层面完成了逻辑闭环：</p>
 <p><strong>第一层：技术展望</strong>。Hron 明确指出了 Claude Fable 5 和未来模型需要推进的方向——更长时域的工作、更好的上下文管理、跨任务链可靠的工具调用。这些都是为第四部分提出的&quot;四个必要条件&quot;服务的——模型需要变得更强，才能真正满足专业 AI 的要求。</p>
 <p><strong>第二层：个人视角</strong>。Hron 从 CTO 的角色切换到普通使用者，分享 Claude Code 和 Claude Cowork 如何帮助他个人提升工作效率。这种从企业级到个人级的延伸，让读者感受到这些技术能力不是抽象的，而是真实可用的。</p>

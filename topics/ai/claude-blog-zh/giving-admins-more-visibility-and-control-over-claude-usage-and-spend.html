@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>为管理员提供更强的 Claude 使用可见性与支出控制能力</title>
+<style>
+:root{--bg:#fafaf8;--bg-elev:#fff;--bg-soft:#f4f3ee;--fg:#1a1a1a;--fg-soft:#555;--fg-mute:#888;--border:#e2e0d8;--accent:#285c4d;--accent-soft:#e8f2ee;--link:#0969da;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;}
+.page{max-width:860px;margin:0 auto;padding:40px 28px 96px;}
+.sitebar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--fg-mute);}
+.sitebar a{color:var(--accent);text-decoration:none;font-weight:600;}
+.sitebar a:hover{text-decoration:underline;}
+h1{font-size:30px;line-height:1.3;margin:0 0 10px;color:var(--fg);}
+.meta{font-size:13.5px;color:var(--fg-mute);margin-bottom:6px;}
+.meta a{color:var(--accent);}
+.lead{font-size:17px;color:var(--fg-soft);font-style:italic;border-left:3px solid var(--accent);padding-left:14px;margin:20px 0 28px;}
+h2{font-size:22px;margin-top:38px;margin-bottom:12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px;}
+p{margin:12px 0;}
+blockquote{margin:16px 0;padding:10px 16px;background:var(--accent-soft);border-left:4px solid var(--accent);color:var(--fg-soft);}
+.footer-note{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--fg-mute);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sitebar">
+    <a href="index.html">← 返回 Claude Blog 中文全译目录</a>
+    <span>Claude Blog 全文翻译</span>
+  </div>
+  <article>
+    <h1>为管理员提供更强的 Claude 使用可见性与支出控制能力</h1>
+    <p class="meta">
+      原文标题：Giving admins more visibility and control over Claude spend ｜
+      发布日期：2026 年 7 月 2 日 ｜ 分类：Product announcements ｜ 产品：Claude Enterprise ｜ 阅读时长：约 5 分钟 ｜
+      <a href="https://claude.com/blog/giving-admins-more-visibility-and-control-over-claude-usage-and-spend" target="_blank">查看原文</a>
+    </p>
+    <p class="lead">Claude Enterprise 现已上线全新的分析功能与成本控制工具。</p>
+
+    <p>我们正在为 Claude Enterprise 推出更丰富的管理员分析功能、模型级别的权限管理，以及支出提醒。随着 Claude 在组织内承接越来越复杂、越来越有难度的智能体工作，使用量和成本模式已经和标准聊天工具截然不同。这些新的控制能力，能让管理员既看清 Claude 的使用情况，又拥有管理成本的工具。</p>
+
+    <p>今天新增的功能，是在 Anthropic 已经提供的控制能力基础上构建的：各个层级的支出上限、访问权限与模型路由、带导出功能和 Analytics API 的使用分析仪表盘，以及努力级别（effort）控制。更丰富的分析能力和更细粒度的成本控制，是我们持续数月打造的这套控制体系中最新加入的部分。</p>
+
+    <h2>追踪采用情况与成本</h2>
+
+    <p>面向管理员的分析仪表盘，现在可以按组和按用户展示使用情况与成本，诸如创建的 artifacts、编辑的文件、使用的技能和连接器等产出指标，会直接显示在对应成本旁边。管理员可以按 IT 团队已经在管理的 SCIM 组进行筛选，让这份细分数据直接对应现有的组织架构。</p>
+
+    <p>Claude Code 在管理控制台内新增了两个聚焦于价值和使用情况的标签页，带来更丰富的洞察。"使用情况"标签展示全组织范围内的活跃开发者数量、会话次数和高频命令，并每日更新。"价值"标签则汇总使用与成本数据，帮助管理员一眼看懂 Claude Code 带来的价值，估算生产力提升、每次提交的成本，以及年度价值。标签页中的每一条公式都是可见的，输入参数也可以调整。</p>
+
+    <p>Analytics chat（分析对话）现在可以回答范围更广的问题，并生成可以进一步深入研究的更丰富的 artifacts。管理员可以用日常语言提问——比如"哪些团队本月的 Claude 使用量翻倍了？"或者"我们在哪些坐席上获得的价值最高？"——Claude 会返回可导出、可分享给利益相关方的图表。</p>
+
+    <p>使用量和成本数据现在可以通过 Analytics API 以编程方式获取，因此财务和 IT 团队可以把 Claude 的使用与成本数据引入他们已经在使用的工具——比如 Datadog Cloud Cost Management 和 CloudZero——和其他云与 AI 支出放在一起查看。结果可以按日期范围、团队、产品或模型筛选。各项技能会各自上报自己的使用量和成本，新的端点还能追踪插件的采用情况和 artifact 的创建情况。</p>
+
+    <p>管理员可以把使用可见性延伸到单个用户——成本、产品和模型细分，以及相对于支出限额的进度——这样没有人会遇到意外的额度中断。用户也可以查看自己随时间变化的使用趋势，包括自己最依赖哪些产品、模型和技能，以及这些活动累积起来的支出情况。</p>
+
+    <h2>用于管理支出的控制工具</h2>
+
+    <p>"模型默认值与权限管理"让管理员可以设置聊天、Cowork 和 Claude Code 中新对话默认使用哪个 Claude 模型，这样常规工作就不会默认套用最贵的选项。管理员可以控制哪些模型对特定角色开放，或对整个组织开放。</p>
+
+    <p>支出阈值提醒会在组织级支出限额达到 75% 和 90% 时通知管理员，让他们有时间在任何人被中途拦截之前提高上限。用户会在达到 75% 和 95% 阈值时收到应用内通知，并且无需离开 Claude 就能直接向自己的管理员申请提高限额。</p>
+
+    <p>对于需要在众多组之间管理限额的组织，Admin API 可以把成本控制工作流转化为脚本，让控制能力随组织规模一起扩展。可以大规模自动化处理提额申请审核、识别接近支出限额的成员，以及标记使用量快速变化的情况。</p>
+
+    <blockquote>"成本可见性不该是一件每月才做一次的事。精细化的支出数据和提醒，能持续提醒团队重新审视自己是如何使用 Claude 的，而不是等到账单周期结束时才大吃一惊。有了 Analytics API，我们可以把这些数据直接引入我们每天都在用的工具里。"<br>—— Kyra Abbu，产品经理（Workato）</blockquote>
+
+    <blockquote>"我不会让那些正在创造公司最佳季度业绩的人慢下来，我的 CFO 也没有要求我这么做。他要的是投资回报率。我们已经把连接了企业 MCP 服务器的 Claude 和 4% 的营收提升联系了起来，而按团队把成本和业务影响放在一起看，正是我用来让这个论证站得住脚的方法。"<br>—— Carter Busse，CIO（Nubank）</blockquote>
+
+    <blockquote>"单看 token 使用量说明不了太多问题。我真正想看到的，是哪些技能在整个组织里被一次又一次地反复运行——那才是价值的真实信号。"<br>—— Ciro Yamada，产品总监</blockquote>
+
+    <h2>开始使用</h2>
+
+    <p>对于负责在整个组织中管理 Claude 的管理员：可以在管理控制台中查看使用情况和成本细分，按组设置模型默认值和支出限额，并配置支出阈值提醒以提前应对超支。使用量数据可以在管理仪表盘中查看，而 Analytics API 让财务和 IT 团队可以把同样的指标提取到现有的报表系统中。</p>
+
+    <p class="footer-note">本文由个人学习工作台整理翻译，仅供学习参考，如需引用请以<a href="https://claude.com/blog/giving-admins-more-visibility-and-control-over-claude-usage-and-spend" target="_blank">原文</a>为准。</p>
+  </article>
+</div>
+</body>
+</html>

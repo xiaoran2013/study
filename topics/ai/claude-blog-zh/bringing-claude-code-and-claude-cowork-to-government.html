@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>将 Claude Code 与 Claude Cowork 引入政府部门</title>
+<style>
+:root{--bg:#fafaf8;--bg-elev:#fff;--bg-soft:#f4f3ee;--fg:#1a1a1a;--fg-soft:#555;--fg-mute:#888;--border:#e2e0d8;--accent:#285c4d;--accent-soft:#e8f2ee;--link:#0969da;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;}
+.page{max-width:860px;margin:0 auto;padding:40px 28px 96px;}
+.sitebar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--fg-mute);}
+.sitebar a{color:var(--accent);text-decoration:none;font-weight:600;}
+.sitebar a:hover{text-decoration:underline;}
+h1{font-size:30px;line-height:1.3;margin:0 0 10px;color:var(--fg);}
+.meta{font-size:13.5px;color:var(--fg-mute);margin-bottom:6px;}
+.meta a{color:var(--accent);}
+h2{font-size:22px;margin-top:38px;margin-bottom:12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px;}
+p{margin:12px 0;}
+.footer-note{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--fg-mute);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sitebar">
+    <a href="index.html">← 返回 Claude Blog 中文全译目录</a>
+    <span>Claude Blog 全文翻译</span>
+  </div>
+  <article>
+    <h1>将 Claude Code 与 Claude Cowork 引入政府部门</h1>
+    <p class="meta">
+      原文标题：Bringing Claude Code and Claude Cowork to government ｜
+      发布日期：2026 年 7 月 7 日 ｜ 分类：Product announcements / Claude Code ｜ 产品：Claude Code / Claude Cowork ｜ 阅读时长：约 5 分钟 ｜
+      <a href="https://claude.com/blog/bringing-claude-code-and-claude-cowork-to-government" target="_blank">查看原文</a>
+    </p>
+
+    <p>Claude Code 和 Claude Cowork 现已在 Claude for Government Desktop 中开放公开测试版，基于与商业客户完全相同的应用程序构建，并通过 FedRAMP High 认证环境交付。</p>
+
+    <p>借助 Claude Code，公共部门团队可以构建和现代化改造支撑公共服务的软件系统。Claude Cowork 直接在桌面上处理文件，使政府机构工作人员能够把备忘录撰写、RFP（招标书）审阅、案件处理以及幻灯片制作等工作委派给 Claude。</p>
+
+    <p>这次扩展的体验还配备了额外的治理能力。管理员可以设置默认配置，并在各部门之间分配和管控支出。安全团队和授权官员则能获得防篡改的审计日志，以及支持机构 ATO（运营授权）流程的相关文档。</p>
+
+    <p>今天的发布，让各政府机构在推进各自使命的过程中，更容易采购、授权和分配 AI 能力。</p>
+
+    <h2>新增内容</h2>
+
+    <p><strong>Claude Code 与 Claude Cowork。</strong> 各机构将以与商业用户相同的节奏获得新功能。对话历史记录本地存储在机构管理的设备上，推理运行在经过 FedRAMP High 认证的环境内。</p>
+
+    <p><strong>契合拨款制度的计费方式。</strong> 项目办公室可以用标准坐席把 AI 支出与已拨付的资金挂钩，也可以自定义坐席层级、设定支出与模型使用上限，使用量以固定增量购买，并设有硬性的不可超支上限。管理员可以在管理控制台中按用户和按模型追踪使用情况，自动余额预警会在余额告急前发出提醒。</p>
+
+    <p><strong>匹配部门组织架构的管理方式。</strong> 部门级管理员可以把坐席和预付使用量分配给下属机构，同时允许各下属机构自行管理各自的用户。管理员可以使用 SCIM 组映射，为特定坐席层级设置速率限制、支出上限和可用模型。此外，分层配置还可以为下属机构设置默认值，包括 Claude 可以连接哪些内容、可以使用哪些功能，以及指导 Claude 与用户交互方式的相关指令。</p>
+
+    <p><strong>内建的监督机制。</strong> 每一项管理操作都会被记录进一份哈希链式的审计日志中，机构管理员可以直接在产品内查看。Anthropic 一侧的敏感操作需要双人审批。使用量导出仅包含计量数据，机构无需转移敏感材料即可满足 ATO 和监察长（IG）的相关要求。</p>
+
+    <h2>安全与监督</h2>
+
+    <p>对于正在评估桌面部署方案的安全团队，我们正在发布《FedRAMP 安全配置指南》，这是一份公开文档，客户可以据此以安全的方式配置自己的 Claude for Government 产品。</p>
+
+    <p>此外，FedRAMP 要求我们提供正式的变更通知，其中包含与本次变更相关的详细信息。</p>
+
+    <p>最后，新桌面客户端的渗透测试摘要现已提供，后续的渗透测试摘要也将在完成后陆续提供。变更通知和渗透测试摘要可通过 Anthropic 信任中心在保密协议（NDA）下获取。该应用通过各机构标准的 MDM（移动设备管理）平台进行部署。</p>
+
+    <h2>开始使用</h2>
+
+    <p>Claude for Government 从今天起开放测试版。Anthropic 仍然是签约方和计费方——各机构无需单独建立云服务商关系即可开始使用。</p>
+
+    <p>新客户可以在 <a href="https://claude.com/solutions/government" target="_blank">claude.com/solutions/government</a> 申请访问权限。</p>
+
+    <p>安全团队可以通过 Anthropic 信任中心下载渗透测试文档。</p>
+
+    <p class="footer-note">本文由个人学习工作台整理翻译，仅供学习参考，如需引用请以<a href="https://claude.com/blog/bringing-claude-code-and-claude-cowork-to-government" target="_blank">原文</a>为准。</p>
+  </article>
+</div>
+</body>
+</html>

@@ -18,6 +18,7 @@
       <a href="../../../ai.html" class="active">AI</a>
       <a href="../../../english.html">英语</a>
       <a href="../../../k12.html">学科</a>
+      <a href="../../../investment.html">投资</a>
     </nav>
   </header>
 
@@ -31,57 +32,57 @@
 
   <main class="doc-shell">
     <article class="doc-content">
-<h1>选择 Claude Code 中的模型与努力级别</h1>
+<h1 id="选择-claude-code-中的模型与努力级别">选择 Claude Code 中的模型与努力级别</h1>
 <blockquote>原文: https://claude.ai/blog/claude-model-and-effort-level-in-claude-code</blockquote>
 <blockquote>日期: Jul 07, 2026</blockquote>
 <blockquote>分类: Claude Code</blockquote>
 <blockquote>产品: Claude Code</blockquote>
 <p>---</p>
-<h2>文章在讲什么</h2>
+<h2 id="文章在讲什么">文章在讲什么</h2>
 <p>这篇文章出自 Claude Code 团队的技术成员 Lydia Hallie，主题是帮助用户理解 Claude Code 中两个最核心的设置：<strong>模型选择（model selection）</strong>和<strong>努力级别（effort level）</strong>。</p>
 <p>很多用户以为&quot;更大的模型 = 更好的答案&quot;和&quot;更高的努力级别 = 更长的思考时间&quot;。第一个假设基本正确，但第二个理解是严重简化。作者指出，努力级别实际上控制的是 Claude 在一个任务上<strong>做多少工作</strong>，包括读多少文件、做多少验证、走多少步骤——而不仅仅是&quot;想了多久&quot;。</p>
 <p>这篇文章的背景是：Claude Code 是 Anthropic 推出的命令行编程工具，用户需要在这两个维度上做选择，但很多人并不理解它们真正在控制什么，导致要么选错设置浪费成本，要么在问题出现时不知道该调哪个参数。</p>
 <p>---</p>
-<h2>原文结构地图</h2>
+<h2 id="原文结构地图">原文结构地图</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>主要章节</th><th>作用</th></tr></thead><tbody><tr><td>Claude Code effort levels and model selection</td><td>引出问题：两个设置分别控制什么，纠正常见误解</td></tr><tr><td>How model selection works</td><td>深入技术细节：模型是什么、权重（weights）如何决定能力</td></tr><tr><td>How effort works</td><td>解释 effort 如何影响 Claude 的行为：读取、验证、步数</td></tr><tr><td>Picking an effort level</td><td>给出实操建议：大多数情况下用默认值</td></tr><tr><td>What to change when Claude gets it wrong</td><td>决策框架：是没尽力还是没能力</td></tr><tr><td>Effort, model, and token consumption</td><td>讨论成本：模型和 effort 如何共同影响 token 消耗和总费用</td></tr><tr><td>Start with the defaults, then reach for the dials</td><td>总结建议，呼应开头</td></tr></tbody></table></div>
 <p>---</p>
-<h2>核心概念讲解</h2>
-<h3>模型选择：选择哪套&quot;权重&quot;</h3>
+<h2 id="核心概念讲解">核心概念讲解</h2>
+<h3 id="模型选择选择哪套权重">模型选择：选择哪套&quot;权重&quot;</h3>
 <p>当你选择 Sonnet、Opus 或 Fable 时，你实际上是在选择<strong>不同的权重集合（weights）</strong>来处理你的请求。</p>
 <p>什么是权重？作者用了一个很清晰的解释：</p>
 <blockquote>模型接收一段文字后，要预测下一个 token 是什么。它通过把输入经过一套大型矩阵（ billions of numbers organized into large matrices）来计算每个 token 的概率。这套矩阵中的数字就是权重。</blockquote>
 <p>关键理解：</p>
 <ul><li><strong>权重是固定的</strong>。训练完成后，权重就冻结了。你的提示词、CLAUDE.md、上下文都不会改变权重。这叫做&quot;推理（inference）&quot;——用训练好的模型，权重不变。</li><li><strong>模型的知识存在于权重中</strong>。如果一个库在模型训练时还不存在，它就不在权重里。你可以把文档放进上下文让 Claude 参考，那是&quot;引导（steering）&quot;而非&quot;教学（teaching）&quot;。</li><li><strong>换模型 = 换权重</strong>。更大的模型意味着更强大的能力，但也意味着更高的 token 成本。</li></ul>
-<h3>努力级别：控制做多少工作</h3>
+<h3 id="努力级别控制做多少工作">努力级别：控制做多少工作</h3>
 <p>努力级别（effort）不是简单的&quot;思考时间&quot;，它控制的是 Claude <strong>为一个请求做多少工作</strong>，包括：</p>
 <ul><li>读多少文件</li><li>做多少验证</li><li>在中途停下来问你之前，走多远</li></ul>
 <p>当努力级别高时，Claude 会先制定计划，并根据执行结果动态调整——如果第一步就找到 bug，后面的检查可能就跳过了。作者特别强调，训练过程中团队会注意防止&quot;过度思考（overthinking）&quot;，因为那会降低效率。</p>
-<h3>两者之间的关系</h3>
+<h3 id="两者之间的关系">两者之间的关系</h3>
 <p>作者的比喻非常到位：</p>
 <blockquote>Fable 是 specialist（专家），见过几乎没人见过的问题；Opus 是 expert（资深专家）；Sonnet 是很棒的 generalist（通才）。努力级别决定这三者在你任务上花多少时间。</blockquote>
 <ul><li><strong>Opus 低努力</strong>：像给一位资深专家 5 分钟，他有深度经验，但只能快速浏览你的代码。</li><li><strong>Sonnet 高努力</strong>：像给一位很棒的通才整个下午，他会读所有内容、运行测试、仔细检查，但对&quot;我见过完全一样的问题&quot;这种识别能力较弱。</li><li><strong>Fable 低努力</strong>：即便只给片刻，这位专家也能看到别人看不到的关键点——这就是你花最多钱买的东西。</li></ul>
 <p>---</p>
-<h2>文章主体讲解</h2>
-<h3>第一部分：纠正两个误解</h3>
+<h2 id="文章主体讲解">文章主体讲解</h2>
+<h3 id="第一部分纠正两个误解">第一部分：纠正两个误解</h3>
 <p>这一节作者指出用户的两个常见假设，然后说明哪个对、哪个错。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>&quot;更大的模型 = 更好的输出&quot;——这个假设<strong>正确</strong>，因为最大的模型在行业基准测试中确实更强。</li><li>&quot;更高的努力级别 = 更长的思考时间&quot;——这个假设<strong>过于简化</strong>。努力级别控制的是整体工作量，包括文件读取、验证、步数等，而不仅仅是思考时间。</li></ul>
-<h3>第二部分：模型选择的技术原理</h3>
+<h3 id="第二部分模型选择的技术原理">第二部分：模型选择的技术原理</h3>
 <p>这一节深入解释模型实际上是什么。</p>
 <p><strong>为什么重要</strong>：理解模型选择的本质，才能明白为什么换模型不等于&quot;给模型灌输知识&quot;。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>模型的工作是预测下一个 token（词元）。它对词汇表中每个 token 计算概率，然后从最高概率中选取。</li><li>权重（weights）是数十亿个数字，组织成大型矩阵。输入经过这些矩阵的乘法运算，得出概率分布。</li><li>权重在训练时确定，之后完全固定。你的任何输入都无法改变权重。</li><li>幻觉（hallucination）不是因为&quot;查不到&quot;，而是权重根据训练时学到的模式生成了看起来合理的 token 序列。</li><li>换模型就是换一套权重，同时也决定了每个输出 token 的成本。</li></ul>
-<h3>第三部分：努力级别如何工作</h3>
+<h3 id="第三部分努力级别如何工作">第三部分：努力级别如何工作</h3>
 <p>这一节解释 effort 设置如何影响 Claude 的行为。</p>
 <p><strong>为什么重要</strong>：理解 effort 的真正含义，才能在结果不好时判断是否需要调整它。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>Claude 生成的 token 分三类：<strong>思考（thinking）</strong>、<strong>工具调用（tool calls）</strong>、<strong>给你的文字（text to you）</strong>。它们都是普通输出 token，费率相同。</li><li>思考 token 和你读到的文件一样，都会留在上下文中影响后续推理。</li><li>effort 作为请求的一部分发送给模型，模型根据它决定行为：需要多深入、多确定才能认为任务完成。</li><li>effort 在每个回合都会重新评估。计划不是固定的，Claude 会根据执行结果动态调整。</li><li>高 effort 意味着更倾向于验证和双重检查，但不会为简单任务人为增加使用量。</li></ul>
-<h3>第四部分：如何选择努力级别</h3>
+<h3 id="第四部分如何选择努力级别">第四部分：如何选择努力级别</h3>
 <p>这一节给出实操建议。</p>
 <p><strong>为什么重要</strong>：用户不应该每个任务都纠结于 effort 设置。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>大多数任务应该使用<strong>模型的默认努力级别</strong>，这是模型认为大多数人愿意为一个任务花费的工作量。</li><li>effort 是&quot;手动覆盖&quot;，用于你有强烈偏好（更彻底或更快）时。</li><li>应该把它当作<strong>整体偏好</strong>，而不是逐任务决策。</li><li>一个新洞察：Opus 4.8 使用默认 effort 时，相比 Opus 4.7 的默认 effort，能产生更好结果且 token 数量相近。</li></ul>
-<h3>第五部分：Claude 犯错时该改什么</h3>
+<h3 id="第五部分claude-犯错时该改什么">第五部分：Claude 犯错时该改什么</h3>
 <p>这一节给出核心决策框架。</p>
 <p><strong>为什么重要</strong>：这是全文最实用的部分，帮助用户在结果不满意时做出正确调整。</p>
 <p><strong>关键点</strong>：</p>
@@ -89,25 +90,25 @@
 <div class="doc-table-wrap"><table><thead><tr><th>情况</th><th>应该调整什么</th><th>例子</th></tr></thead><tbody><tr><td>问题太难</td><td>选更大的模型</td><td>微妙的 bug、不熟悉的领域、架构决策</td></tr><tr><td>Claude 跳过文件、没运行测试、没检查</td><td>提高 effort 级别</td><td>你选了低于默认的 effort</td></tr></tbody></table></div>
 <p><strong>模型大小的建议</strong>：</p>
 <ul><li>更大的模型更适合处理模糊性；更小的模型在精确指令下表现更好。</li><li>如果任务一直是 routine 的，可以降级模型以提升速度并降低成本。</li><li>Fable 的独特价值：即便低 effort，它也能完成 Opus 和 Sonnet 在任何 effort 下都无法完成的任务。</li></ul>
-<h3>第六部分：成本与 token 消耗</h3>
+<h3 id="第六部分成本与-token-消耗">第六部分：成本与 token 消耗</h3>
 <p>这一节分析两个设置如何共同影响费用。</p>
 <p><strong>为什么重要</strong>：帮助用户在质量和成本之间做出明智权衡。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li><strong>常规任务</strong>：两个模型在同一 effort 下通常都能完成，提高 effort 不值得。小模型成本更低。</li><li><strong>困难的多步任务</strong>：小模型需要&quot;苦熬&quot;，烧掉大量迭代；大模型用更少的步骤达到相同质量。总成本可能反而更低。</li><li><strong>Fable 的特殊地位</strong>：在长多步任务上遥遥领先，能完成其他模型任何 effort 下都无法完成的工作。这也是它最贵的原因——应该留给真正需要它的任务。</li><li>effort 不限制 token 消耗，只是影响消耗倾向。硬上限是 max_tokens（会截断），更柔和的控制如&quot;任务预算&quot;或&quot;请保持简洁&quot;更实用。</li></ul>
-<h3>第七部分：从默认值开始，然后调旋钮</h3>
+<h3 id="第七部分从默认值开始然后调旋钮">第七部分：从默认值开始，然后调旋钮</h3>
 <p>这是全文的收尾，与开头呼应。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>大多数时候不需要考虑这两个设置。</li><li>结果不理想时问：&quot;是不够尽力还是不够有知识？&quot;然后相应调整。</li><li>作者的核心建议始终是：<strong>从默认开始，按需微调</strong>。</li></ul>
 <p>---</p>
-<h2>关键对比表</h2>
-<h3>模型对比</h3>
+<h2 id="关键对比表">关键对比表</h2>
+<h3 id="模型对比">模型对比</h3>
 <div class="doc-table-wrap"><table><thead><tr><th>特性</th><th>Sonnet</th><th>Opus</th><th>Fable</th></tr></thead><tbody><tr><td>定位</td><td>很棒的通才（generalist）</td><td>资深专家（expert）</td><td>专家（specialist）</td></tr><tr><td>擅长</td><td>精确指令下的常规任务</td><td>深度经验、复杂任务</td><td>解决别人解决不了的问题</td></tr><tr><td>性价比</td><td>常规任务成本低</td><td>中等</td><td>只留给需要它的任务</td></tr><tr><td>特殊能力</td><td>—</td><td>—</td><td>能完成其他模型任何 effort 下都无法完成的工作</td></tr></tbody></table></div>
-<h3>模型 vs 努力级别</h3>
+<h3 id="模型-vs-努力级别">模型 vs 努力级别</h3>
 <div class="doc-table-wrap"><table><thead><tr><th>维度</th><th>模型选择</th><th>努力级别</th></tr></thead><tbody><tr><td>控制什么</td><td>能力范围（权重）</td><td>工作量（文件、验证、步数）</td></tr><tr><td>何时调高</td><td>问题太难、知识不够</td><td>Claude 跳过步骤、没充分验证</td></tr><tr><td>类比</td><td>选谁来做</td><td>给这个人多少时间</td></tr><tr><td>成本影响</td><td>每个 token 的单价</td><td>生成的 token 总数</td></tr></tbody></table></div>
-<h3>何时改什么</h3>
+<h3 id="何时改什么">何时改什么</h3>
 <div class="doc-table-wrap"><table><thead><tr><th>错误表现</th><th>原因判断</th><th>调整动作</th></tr></thead><tbody><tr><td>自信地调用不存在的 API（幻觉）</td><td>知识不够（模型没学过）</td><td>换更大模型或提供上下文引导</td></tr><tr><td>跳过文件、没运行测试</td><td>尝试不够（effort 太低）</td><td>提高 effort 级别</td></tr><tr><td>任务一直 routine，质量没问题</td><td>能力过剩</td><td>降级模型省成本</td></tr><tr><td>context 清晰但仍然出错</td><td>知识不够</td><td>换更大模型</td></tr></tbody></table></div>
 <p>---</p>
-<h2>关键句短摘译</h2>
+<h2 id="关键句短摘译">关键句短摘译</h2>
 <p><strong>1. &quot;Effort level controls how much work Claude does on your request overall.&quot;</strong></p>
 <p>努力级别控制 Claude 在你的请求上做多少工作。</p>
 <p>*为什么重要*：这是全文的核心纠正——effort 不只是思考时间，而是整体工作量。</p>
@@ -130,10 +131,10 @@
 <p>从默认值开始，然后再去调旋钮。</p>
 <p>*为什么重要*：作者的核心建议，避免过度优化。</p>
 <p>---</p>
-<h2>术语表</h2>
+<h2 id="术语表">术语表</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>英文术语</th><th>中文解释</th></tr></thead><tbody><tr><td><strong>Model selection</strong></td><td>模型选择。指在 Claude Code 中选择使用哪个 Claude 模型（Sonnet、Opus、Fable）。</td></tr><tr><td><strong>Effort level</strong></td><td>努力级别。控制 Claude 在任务上投入多少工作的设置。</td></tr><tr><td><strong>Weights</strong></td><td>权重。也称 parameters，是数十亿个数字，组织成大型矩阵，决定模型的输出概率。</td></tr><tr><td><strong>Tokens</strong></td><td>词元。文本处理的基本单位，模型一次生成一个 token。</td></tr><tr><td><strong>Tokenization</strong></td><td>分词。将文本分割成 token 并映射为整数的过程。</td></tr><tr><td><strong>Inference</strong></td><td>推理。使用已训练好的模型（权重固定）进行预测的过程。</td></tr><tr><td><strong>Hallucination</strong></td><td>幻觉。模型生成看似合理但实际错误的输出，因权重中不存在对应知识。</td></tr><tr><td><strong>Steering</strong></td><td>引导。通过上下文让模型参考特定信息，但不改变模型权重。</td></tr><tr><td><strong>Max_tokens</strong></td><td>最大 token 数。硬性上限，触发时会截断响应。</td></tr><tr><td><strong>Overthinking</strong></td><td>过度思考。模型为简单任务花费过多工作，降低效率。</td></tr></tbody></table></div>
 <p>---</p>
-<h2>文章结尾怎么收束</h2>
+<h2 id="文章结尾怎么收束">文章结尾怎么收束</h2>
 <p>作者在结尾回到了开头的核心信息：<strong>大多数时候你不应该考虑这两个设置</strong>。</p>
 <p>全文的逻辑线是：</p>
 <ol><li><strong>破除误解</strong>：effort 不只是思考时间。</li><li><strong>解释原理</strong>：模型是权重，努力是工作量。</li><li><strong>给出框架</strong>：从默认值开始，出问题时问&quot;尽力还是尽力不够&quot;和&quot;够不够知道&quot;。</li><li><strong>成本考量</strong>：解释模型和 effort 如何共同影响 token 消耗。</li><li><strong>回归默认</strong>：强调不要过度优化，从默认值开始，按需微调。</li></ol>

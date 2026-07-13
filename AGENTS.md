@@ -91,7 +91,7 @@ GitHub = 公开静态站点、版本管理、Pages 发布
 
 ### 默认应该提交
 
-- 页面入口: `index.html`, `ai.html`, `english.html`, `k12.html`, `doc.html`。
+- 页面入口: `index.html`, `ai.html`, `english.html`, `k12.html`, `investment.html`, `doc.html`。
 - 前端资源: `_assets/style.css`。
 - 可公开阅读的文档: `README.md`, `PROJECT_BACKGROUND.md`, `DIRECTORY_STRUCTURE.md`, `AGENTS.md`, `ITERATION_LOG.md`。
 - 可公开学习内容: `topics/`。
@@ -149,7 +149,7 @@ python3 -m http.server 8080
 ```bash
 python3 - <<'PY'
 from urllib.request import urlopen
-for p in ['/', '/ai.html', '/english.html', '/k12.html']:
+for p in ['/', '/ai.html', '/english.html', '/k12.html', '/investment.html']:
     with urlopen('http://localhost:8080' + p, timeout=5) as r:
         print(p, r.status)
 PY
@@ -201,10 +201,11 @@ find . -maxdepth 3 -type f \( -name '.env' -o -name '.env.*' -o -name '*secret*'
 | `ai.html` | AI 学习主题入口 |
 | `english.html` | 英语学习主题入口 |
 | `k12.html` | 小学、初中和各学科学习主题入口 |
+| `investment.html` | 投资学习主题入口 |
 | `doc.html` | Markdown/JSON 文档阅读器 |
 | `_assets/` | 样式 |
 | `_sources/` | AI 搜索、抓取、翻译的原始材料(本地) |
-| `topics/` | AI、英语、学科等专题学习材料 |
+| `topics/` | AI、英语、学科、投资等专题学习材料 |
 | `scripts/` | 自动化脚本 |
 
 ## 9. 关键脚本
@@ -221,7 +222,7 @@ find . -maxdepth 3 -type f \( -name '.env' -o -name '.env.*' -o -name '*secret*'
 
 - 原因: `doc.html` 用浏览器 `fetch()` 现读 `.md`, 双击本地文件(`file://`)会被 CORS 挡住, 报 "Failed to fetch"; 静态 `.html` 不依赖 `fetch`, 双击就能看。
 - 规则: 新增或修改 `topics/**/*.md` 后, 运行一次 `node scripts/render-topic-docs.js`(或加 `--file <path>` 只渲染单个文件), 把生成的 `.html` 和 `.md` 一起提交。
-- 站点入口(`index.html`/`ai.html`/`english.html`/`k12.html`/`topics/**/index.html`)应直接链接到 `topics/xxx.html`, 不再使用 `doc.html?src=...`。
+- 站点入口(`index.html`/`ai.html`/`english.html`/`k12.html`/`investment.html`/`topics/**/index.html`)应直接链接到 `topics/xxx.html`, 不再使用 `doc.html?src=...`。
 - `doc.html` 仍然保留, 作为通用 fallback: 浏览 JSON/日志文件, 或预览还没跑生成脚本的新 Markdown 草稿时使用; 根目录的项目文档(`PROJECT_BACKGROUND.md`、`AGENTS.md`、`DIRECTORY_STRUCTURE.md`、`ITERATION_LOG.md`、`README.md`)目前仍只通过 `doc.html` 浏览, 没有生成静态 `.html`。
 
 ## 10. 自动化原则
@@ -240,10 +241,11 @@ find . -maxdepth 3 -type f \( -name '.env' -o -name '.env.*' -o -name '*secret*'
 - AI
 - 英语
 - 学科
+- 投资
 
 页面内动作放在内容区, 不混进顶栏。例如:
 
-- AI/英语/学科的学习路线放在主题页内容区。
+- AI/英语/学科/投资的学习路线放在主题页内容区。
 - 文档页显示 Markdown 一级标题, 文件名只作为路径信息。
 
 ## 12. 常用命令
@@ -280,16 +282,19 @@ lark-cli doctor
 ## 13. 当前状态速览
 
 - v4.0: 从零重构的个人学习工作台, 去掉了原有的股票投研部分, 专注 AI/英语/学科。
+- v4.1: 新增"投资"主题(`investment.html` + `topics/investment/`), 与 v4.0 去掉的股票投研部分不是一回事——不做行情、评级或组合追踪, 只做投资产品和策略的结构化读书笔记, 首篇是 ETF 投资策略整理。
 - AI 主题: 已有 Claude Blog 中文译读专题目录。
 - 英语主题: 当前仍以路线和素材池为主。
 - 学科主题: 已有小学、初中和各学科入口, 初中数学已有互动练习页。
+- 投资主题: 已有 ETF 投资策略详解(基本策略/套利与高频交易/融资融券/机构操作方式), 其余产品笔记待补充。
 - 飞书 CLI: 已接入, 可用于 Docs/Wiki/Base/Drive/Task 等私有工作台能力。
 
 ## 14. 下一步方向
 
-- 为 AI、英语、学科建立统一内容模板。
+- 为 AI、英语、学科、投资建立统一内容模板。
 - 建立飞书知识库、任务表、内容审核表和每日复盘页。
 - 增强 AI 主题的文章处理、Prompt 和 Agent 工作流沉淀。
 - 增强英语主题的表达卡片和复习队列。
+- 补充投资主题的其他产品笔记(指数基金、债券等)和实践复盘。
 - 增加全站搜索、标签和最近更新。
 - 内容会陆续增加, 后续可能扩展到更多学习主题。

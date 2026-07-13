@@ -18,6 +18,7 @@
       <a href="../../../ai.html" class="active">AI</a>
       <a href="../../../english.html">英语</a>
       <a href="../../../k12.html">学科</a>
+      <a href="../../../investment.html">投资</a>
     </nav>
   </header>
 
@@ -31,109 +32,109 @@
 
   <main class="doc-shell">
     <article class="doc-content">
-<h1>Fable 实操指南第五篇：发现你的未知</h1>
+<h1 id="fable-实操指南第五篇发现你的未知">Fable 实操指南第五篇：发现你的未知</h1>
 <blockquote>原文: https://claude.com/blog/a-field-guide-to-claude-fable-finding-your-unknowns</blockquote>
 <blockquote>日期: 2025-07-06</blockquote>
 <blockquote>分类: Claude Code</blockquote>
 <blockquote>产品: Claude Code</blockquote>
 <p>---</p>
-<h2>文章在讲什么</h2>
+<h2 id="文章在讲什么">文章在讲什么</h2>
 <p>这篇文章讨论的是在使用 AI 编程助手（特别是 Claude Code）时，<strong>如何识别和管理自己不知道的东西</strong>——作者称之为&quot;未知&quot;（unknowns）。</p>
 <p>作者的核心观点是：随着 AI 模型能力越来越强，工作的质量越来越取决于你<strong>澄清 AI 未知的能力</strong>，而不是 AI 本身的聪明程度。</p>
 <p>文章提出了一套系统的框架和实操模式，帮助你在实现前、实现中和实现后三个阶段找到并处理这些未知。文章的独特之处在于：它不是讲&quot;怎么写 prompt&quot;，而是讲&quot;怎么知道自己不知道什么&quot;，这是一个更高阶的元认知问题。</p>
 <p>---</p>
-<h2>原文结构地图</h2>
+<h2 id="原文结构地图">原文结构地图</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>主要部分</th><th>作用</th></tr></thead><tbody><tr><td>Knowing your unknowns</td><td>提出 4 类未知的基本框架</td></tr><tr><td>Help Claude help you</td><td>说明如何让 Claude 帮助你发现未知</td></tr><tr><td>Pre-implementation（5个模式）</td><td>规划阶段的策略</td></tr><tr><td>During implementation</td><td>实现中的策略</td></tr><tr><td>Post implementation</td><td>实现后的策略</td></tr><tr><td>How this comes together: launching Fable</td><td>用真实案例演示所有模式</td></tr><tr><td>Matching the Map and Territory</td><td>总结升华</td></tr></tbody></table></div>
 <p>---</p>
-<h2>核心概念讲解</h2>
-<h3>地图与领土（Map and Territory）</h3>
+<h2 id="核心概念讲解">核心概念讲解</h2>
+<h3 id="地图与领土map-and-territory">地图与领土（Map and Territory）</h3>
 <p>这是整篇文章的隐喻基础：</p>
 <ul><li><strong>地图</strong> = 你给 Claude 的提示词、上下文、期望描述</li><li><strong>领土</strong> = 真实的代码库、业务逻辑、实际约束</li></ul>
 <p>两者之间的差距就是<strong>未知</strong>。Claude 遇到未知时，只能根据对你意图的最佳猜测做决策。你对未知的识别和处理能力，直接决定了最终工作质量。</p>
-<h3>四象限未知框架</h3>
+<h3 id="四象限未知框架">四象限未知框架</h3>
 <p>作者借用军事/情报领域的经典分类法，将未知分为四种：</p>
 <div class="doc-table-wrap"><table><thead><tr><th>类型</th><th>含义</th><th>在 prompt 中的表现</th></tr></thead><tbody><tr><td><strong>Known Knowns</strong>（已知已知）</td><td>你明确告诉 Claude 的需求</td><td>prompt 里的指令</td></tr><tr><td><strong>Known Unknowns</strong>（已知未知）</td><td>你知道自己没想清楚的部分</td><td>你会注明&quot;这个我不确定&quot;的地方</td></tr><tr><td><strong>Unknown Knowns</strong>（未知已知）</td><td>你心里有数但从没说出来的东西</td><td>容易被遗漏的隐性偏好</td></tr><tr><td><strong>Unknown Unknowns</strong>（未知未知）</td><td>你压根不知道需要考虑什么</td><td>最危险，通常要踩坑了才发现</td></tr></tbody></table></div>
 <p>作者指出，最好的 AI 编程者拥有相对较少的未知——他们对需求和代码库都有深入了解。但他们同时也<strong>预设了未知的存在</strong>，并主动去发现它们。</p>
 <p>---</p>
-<h2>文章主体讲解</h2>
-<h3>一、Knowing your unknowns</h3>
+<h2 id="文章主体讲解">文章主体讲解</h2>
+<h3 id="一knowing-your-unknowns">一、Knowing your unknowns</h3>
 <p><strong>这一节讲什么</strong>：引出四象限未知框架。</p>
 <p><strong>为什么重要</strong>：很多人把 prompt 写得不够好归咎于&quot;AI 不够聪明&quot;，但真相往往是用户自己也没想清楚自己要什么。作者指出，当你发现 Fable 的输出质量不够好时，问题往往不是模型能力，而是<strong>你自己对未知的澄清程度</strong>。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>减少和处理未知是 AI 编程的核心技能</li><li>这个技能是可以练习提高的</li><li>看高手如 Boris 或 Jarred 怎么 prompt，你会发现他们知道自己要什么</li></ul>
 <p>---</p>
-<h3>二、Help Claude help you</h3>
+<h3 id="二help-claude-help-you">二、Help Claude help you</h3>
 <p><strong>这一节讲什么</strong>：怎么让 Claude 成为发现未知的工具。</p>
 <p><strong>为什么重要</strong>：你不需要独自面对所有未知。Claude 可以快速搜索代码库和网络，比你更了解大多数技术话题，而且能从失败中快速迭代。关键是你要给它足够的上下文。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>太具体 → Claude 不会灵活变通，即使方向错了也照做</li><li>太模糊 → Claude 用行业最佳实践填补空白，可能根本不适合你</li><li>给 Claude 你的<strong>起点信息</strong>：你处于什么思考阶段、你对问题和代码库熟悉程度如何</li></ul>
 <p>---</p>
-<h3>三、Pre-implementation（实现前）</h3>
+<h3 id="三pre-implementation实现前">三、Pre-implementation（实现前）</h3>
 <p>这部分是文章最实用的地方，作者提供了 5 种具体模式：</p>
-<h4>1. Blind Spot Pass（盲点扫描）</h4>
+<h4 id="1-blind-spot-pass盲点扫描">1. Blind Spot Pass（盲点扫描）</h4>
 <p><strong>讲什么</strong>：让 Claude 帮你发现你不知道你不知道的东西。</p>
 <p><strong>为什么重要</strong>：当你进入一个陌生的代码领域或处理不熟悉的工作时，你可能连该问什么问题都不知道。这种情况下你需要 Claude 反过来&quot;教你认识你的盲区&quot;。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>直接用&quot;blind spot pass&quot;和&quot;unknown unknowns&quot;这些关键词</li><li>告诉 Claude 你是什么样的人、你知道多少，这有助于它调整解释方式</li><li>示例：你要添加一个新的认证提供者，但你完全不了解代码库中的认证模块</li></ul>
-<h4>2. Brainstorms and prototypes（头脑风暴与原型）</h4>
+<h4 id="2-brainstorms-and-prototypes头脑风暴与原型">2. Brainstorms and prototypes（头脑风暴与原型）</h4>
 <p><strong>讲什么</strong>：用快速原型来暴露&quot;未知已知&quot;。</p>
 <p><strong>为什么重要</strong>：有些需求你自己也说不清楚，但看到成品就知道对不对——比如视觉设计或交互细节。在实现阶段才发现这类问题代价很高，因为代码已经写好，要改就得回滚。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>视觉设计类需求尤其适合做原型，因为&quot;知道什么是好的&quot;往往是&quot;看到才知道&quot;</li><li>作者几乎每个编程环节都会先做探索或头脑风暴</li><li>示例：让 Claude 做 4 个截然不同的设计方案让你挑</li></ul>
-<h4>3. Interviews（访谈）</h4>
+<h4 id="3-interviews访谈">3. Interviews（访谈）</h4>
 <p><strong>讲什么</strong>：让 Claude 反问你，帮你暴露歧义点。</p>
 <p><strong>为什么重要</strong>：有时候你自己都不知道哪里没想清楚。Claude 通过提问可以帮你挖出这些隐含的歧义，特别是那些会影响架构决策的问题。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>给 Claude 你的问题背景，让它的提问更有针对性</li><li>要求它一次只问一个问题，优先问&quot;答案会改变架构&quot;的问题</li><li>示例：&quot;关于任何模糊的地方一次问一个问题，优先那些答案会改变架构的问题&quot;</li></ul>
-<h4>4. References（参考）</h4>
+<h4 id="4-references参考">4. References（参考）</h4>
 <p><strong>讲什么</strong>：当语言描述不够时，直接给源代码。</p>
 <p><strong>为什么重要</strong>：如果你能找到实现了你想要的逻辑的代码，哪怕在另一种编程语言中，都比截图或文档强一万倍。源代码包含了结构、边界情况、隐含逻辑——这些东西靠描述根本说不清。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>最好的参考是源代码</li><li>可以指向 vendor 文件夹里的依赖库，让 Claude 读懂后再重新实现</li><li>示例：&quot;这个 Rust 库实现了精确的退避逻辑，读它然后在我们的 TypeScript 客户端中复现&quot;</li></ul>
-<h4>5. Implementation Plans（实现计划）</h4>
+<h4 id="5-implementation-plans实现计划">5. Implementation Plans（实现计划）</h4>
 <p><strong>讲什么</strong>：在正式动手前让 Claude 出一个实现计划供你审核。</p>
 <p><strong>为什么重要</strong>：计划帮你梳理思路，而且 Claude 在制定计划时会暴露它认为可能需要调整的地方。关注最可能变动的部分（数据模型、类型接口、用户界面）比关注机械的重构有意义得多。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>要求计划把&quot;你最可能改动的部分&quot;放在前面</li><li>把你信任 Claude 能做好的机械重构部分放后面</li><li>示例：&quot;写一个 HTML 格式的实现计划，把我可能想改动的部分（数据模型、新类型接口、用户可见的部分）放前面&quot;</li></ul>
 <p>---</p>
-<h3>四、During implementation（实现中）</h3>
-<h4>Implementation notes（实现笔记）</h4>
+<h3 id="四during-implementation实现中">四、During implementation（实现中）</h3>
+<h4 id="implementation-notes实现笔记">Implementation notes（实现笔记）</h4>
 <p><strong>讲什么</strong>：让 Claude 记录实现过程中的偏离决策。</p>
 <p><strong>为什么重要</strong>：无论你准备得多充分，实现过程中总会有 Claude 遇到意外边缘情况需要临时调整的时候。你需要一个机制来记录这些&quot;偏差&quot;，方便事后复盘和学习。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>新开一个 session，把计划、原型等产物传给 Claude</li><li>创建一个 <code>implementation-notes.md</code> 文件</li><li>要求 Claude 遇到需要偏离原计划的情况时，选择保守方案，记录偏差原因，然后继续</li><li>示例：&quot;如果遇到边缘情况迫使你偏离计划，选择保守方案，在 &#39;Deviations&#39; 下记录，然后继续&quot;</li></ul>
 <p>---</p>
-<h3>五、Post implementation（实现后）</h3>
-<h4>1. Pitches and explainers（提案和说明文档）</h4>
+<h3 id="五post-implementation实现后">五、Post implementation（实现后）</h3>
+<h4 id="1-pitches-and-explainers提案和说明文档">1. Pitches and explainers（提案和说明文档）</h4>
 <p><strong>讲什么</strong>：为审批和 buy-in 准备材料。</p>
 <p><strong>为什么重要</strong>：交付代码只是完成了一半，你需要让别人理解、认可并批准你的方案。把原型、规格说明、实现笔记打包成一份文档，能让评审者快速进入和你一样的思考框架。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>评审者需要知道你遇到了哪些未知、怎么处理的</li><li>专家会特别关注你是否考虑了他们的领域可能预见到的风险</li><li>示例：&quot;把原型、规格说明、实现笔记打包成一个文档发 Slack，顶部放 demo GIF&quot;</li></ul>
-<h4>2. Quizzes（测验）</h4>
+<h4 id="2-quizzes测验">2. Quizzes（测验）</h4>
 <p><strong>讲什么</strong>：让 Claude 考你，确保你真的理解了改动。</p>
 <p><strong>为什么重要</strong>：Claude 可能在一次长会话中做了很多事，你看 diff 只能得到表面的理解。很多行为取决于你代码库中已有的路径，你的代码里实际会发生什么，你可能并不清楚。不理解就合并是危险的。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>要求 Claude 给你一份报告 + 测验</li><li>只有通过测验才合并</li><li>示例：&quot;给我一个 HTML 报告讲解所有改动和上下文，然后在底部给我一个测验，我必须完全答对才能合并&quot;</li></ul>
 <p>---</p>
-<h3>六、How this comes together: launching Fable</h3>
+<h3 id="六how-this-comes-together-launching-fable">六、How this comes together: launching Fable</h3>
 <p><strong>这一节讲什么</strong>：作者用自己用 Claude Code 剪辑 Fable 发布视频的真实案例，演示所有模式如何串联使用。</p>
 <p><strong>为什么重要</strong>：这是一个完整的&quot;发现问题→处理未知→完成工作&quot;的例子，让你看到理论落地。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>作者不熟悉视频剪辑领域，所以主动识别未知</li><li>用原型验证&quot;字幕时间轴驱动 UI&quot;是否可行</li><li>遇到色彩分级时，他先说&quot;我不知道什么是好的&quot;，然后请 Claude 教他认识这个领域</li></ul>
 <p>---</p>
-<h3>七、Matching the Map and Territory</h3>
+<h3 id="七matching-the-map-and-territory">七、Matching the Map and Territory</h3>
 <p><strong>这一节讲什么</strong>：总结升华。</p>
 <p><strong>为什么重要</strong>：模型越好，你越需要花时间定义你的未知。模型能做更多事了，但如果你给它的地图不准确，它就会在错误的领土上走得更快。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>每个 brainstorm、prototype、interview、reference 都是一种<strong>在变得昂贵之前发现未知</strong>的廉价方式</li><li>下次项目开始时，先问 Claude：&quot;帮我发现我的未知&quot;</li></ul>
 <p>---</p>
-<h2>关键对比表</h2>
-<h3>三阶段的未知处理策略</h3>
+<h2 id="关键对比表">关键对比表</h2>
+<h3 id="三阶段的未知处理策略">三阶段的未知处理策略</h3>
 <div class="doc-table-wrap"><table><thead><tr><th>阶段</th><th>目标</th><th>核心模式</th></tr></thead><tbody><tr><td><strong>实现前</strong></td><td>减少未知，发现盲区</td><td>Blind spot pass、头脑风暴、访谈、参考、实现计划</td></tr><tr><td><strong>实现中</strong></td><td>记录意外，保持方向感</td><td>Implementation notes</td></tr><tr><td><strong>实现后</strong></td><td>验证理解，获取认可</td><td>Pitches/explainers、Quizzes</td></tr></tbody></table></div>
-<h3>prompt 具体程度的两难</h3>
+<h3 id="prompt-具体程度的两难">prompt 具体程度的两难</h3>
 <div class="doc-table-wrap"><table><thead><tr><th>太具体</th><th>太模糊</th></tr></thead><tbody><tr><td>Claude 不会灵活变通</td><td>Claude 用行业最佳实践填充，可能不适合你</td></tr><tr><td>方向错了也照做</td><td>你不知道什么时候该调整方向</td></tr><tr><td>失去迭代能力</td><td>Claude 可能做出你没预料到的选择</td></tr></tbody></table></div>
 <p>---</p>
-<h2>关键句短摘译</h2>
+<h2 id="关键句短摘译">关键句短摘译</h2>
 <ol><li><strong>&quot;The difference between the map and the territory is what I call unknowns.&quot;</strong></li></ol>
 <ul><li>地图与领土之间的差距，就是我所说的未知。</li><li>这是全文的核心隐喻，理解这个才能理解后面的所有内容。</li></ul>
 <ol><li><strong>&quot;Claude Fable is the first model where I find the quality of the work is bottlenecked by my ability to clarify its unknowns.&quot;</strong></li></ol>
@@ -151,10 +152,10 @@
 <ol><li><strong>&quot;The better models get, the more you can achieve with the right approach.&quot;</strong></li></ol>
 <ul><li>模型越好，用对方法你能成就的越多。</li><li>这句话看似在说模型进步，实际上是在强调&quot;方法&quot;的重要性。</li></ul>
 <p>---</p>
-<h2>术语表</h2>
+<h2 id="术语表">术语表</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>英文术语</th><th>中文解释</th></tr></thead><tbody><tr><td><strong>Unknowns</strong></td><td>未知，指你对任务的理解和实际任务之间的信息缺口</td></tr><tr><td><strong>Map and Territory</strong></td><td>地图与领土，比喻&quot;你的描述&quot;和&quot;真实情况&quot;之间的区别</td></tr><tr><td><strong>Known Knowns</strong></td><td>已知已知，你知道且告诉 AI 的信息</td></tr><tr><td><strong>Known Unknowns</strong></td><td>已知未知，你知道自己没想清楚的部分</td></tr><tr><td><strong>Unknown Knowns</strong></td><td>未知已知，你心里有数但没说出来的隐性偏好</td></tr><tr><td><strong>Unknown Unknowns</strong></td><td>未知未知，你压根不知道需要考虑的盲区</td></tr><tr><td><strong>Blind Spot Pass</strong></td><td>盲点扫描，让 AI 帮你发现你不知道的盲区</td></tr><tr><td><strong>Agentic Coding</strong></td><td>代理式编程，使用 AI 代理完成编程任务的方式</td></tr><tr><td><strong>Long-horizon task</strong></td><td>长周期任务，需要 AI 执行多个步骤、跨越较长时间的复杂任务</td></tr><tr><td><strong>Buy-in</strong></td><td>认可/支持，指利益相关者对你方案的同意</td></tr><tr><td><strong>Implementation Notes</strong></td><td>实现笔记，记录实现过程中的决策和偏离</td></tr></tbody></table></div>
 <p>---</p>
-<h2>文章结尾怎么收束</h2>
+<h2 id="文章结尾怎么收束">文章结尾怎么收束</h2>
 <p>文章最后回到了开头的隐喻——<strong>地图与领土</strong>——形成了一个完美的逻辑闭环：</p>
 <p><strong>开头</strong>：提出了地图与领土的比喻，说明未知的本质。</p>
 <p><strong>中间</strong>：分三个阶段（实现前/中/后）给出了具体的操作模式。</p>

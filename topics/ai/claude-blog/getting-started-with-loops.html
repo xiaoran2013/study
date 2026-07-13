@@ -18,6 +18,7 @@
       <a href="../../../ai.html" class="active">AI</a>
       <a href="../../../english.html">英语</a>
       <a href="../../../k12.html">学科</a>
+      <a href="../../../investment.html">投资</a>
     </nav>
   </header>
 
@@ -31,75 +32,75 @@
 
   <main class="doc-shell">
     <article class="doc-content">
-<h1>循环入门：让 AI 替你循环工作</h1>
+<h1 id="循环入门让-ai-替你循环工作">循环入门：让 AI 替你循环工作</h1>
 <blockquote>原文: https://claude.com/blog/getting-started-with-loops</blockquote>
 <blockquote>日期: Jun 30, 2026</blockquote>
 <blockquote>分类: Claude Code</blockquote>
 <blockquote>产品: Claude Code</blockquote>
 <p>---</p>
-<h2>文章在讲什么</h2>
+<h2 id="文章在讲什么">文章在讲什么</h2>
 <p>这篇文章是 Claude Code 团队写的实践指南，主题是如何用<strong>循环（Loops）</strong>让 AI 代理自动重复工作，直到达成目标为止。</p>
 <p>作者观察到，现在很多人都在讨论&quot;设计循环&quot;而不是&quot;写提示词&quot;，但网上对这个概念的解释五花八门。所以这篇文章的目标很明确：<strong>给出一种清晰的定义和分类方法</strong>，帮助开发者理解循环是什么、有哪些类型、什么时候该用哪种。</p>
 <p>整篇文章的逻辑是：从最简单的场景出发，介绍四种循环类型，然后告诉你怎么选择、怎么开始尝试。它强调的核心原则是：<strong>从最简单的方案开始，不要过度设计</strong>。</p>
 <p>---</p>
-<h2>原文结构地图</h2>
+<h2 id="原文结构地图">原文结构地图</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>章节</th><th>作用</th></tr></thead><tbody><tr><td>引言（开篇到&quot;We&#39;ll cover...&quot;）</td><td>破题：为什么循环值得学，建立问题背景</td></tr><tr><td>Turn-based loops</td><td>介绍第一种循环类型</td></tr><tr><td>对比表格</td><td>用一张表格横向对比四种循环的触发方式、适用场景、对应命令</td></tr><tr><td>如何开始（&quot;To get started...&quot;到结尾）</td><td>给出实操步骤和心态建议</td></tr><tr><td>作者署名</td><td>表明内容来源</td></tr></tbody></table></div>
 <p>值得注意的是，文章非常短，核心内容几乎浓缩在一张表格和一段行动指南里。作者的目的是快速传达&quot;循环是什么&quot;和&quot;怎么开始用&quot;，而不是深入讲解每种循环的技术细节。</p>
 <p>---</p>
-<h2>核心概念讲解</h2>
-<h3>什么是循环（Loop）？</h3>
+<h2 id="核心概念讲解">核心概念讲解</h2>
+<h3 id="什么是循环loop">什么是循环（Loop）？</h3>
 <p>文章给循环下了一个定义：</p>
 <blockquote>循环 = <strong>代理重复工作周期，直到满足停止条件为止</strong>。</blockquote>
 <p>这个定义里有三个关键词需要拆开理解：</p>
 <ul><li><strong>代理（Agent）</strong>：在 Claude Code 里指的是 AI 模型在执行任务时的角色，它可以接收指令、执行动作、返回结果。</li><li><strong>重复工作周期</strong>：代理不是执行一次就结束，而是会多轮执行，每轮可能做不同的事情。</li><li><strong>停止条件</strong>：循环不会无限进行，必须有一个明确的退出点。</li></ul>
 <p>类比一下：就像你让一个实习生帮你处理文件，你会告诉他&quot;做完这 100 份就停下&quot;或者&quot;处理到没有新文件为止&quot;。循环就是把这个授权过程自动化。</p>
-<h3>循环的四个维度</h3>
+<h3 id="循环的四个维度">循环的四个维度</h3>
 <p>文章说，区分不同循环类型要看这四个方面：</p>
 <div class="doc-table-wrap"><table><thead><tr><th>维度</th><th>含义</th></tr></thead><tbody><tr><td>触发方式（How triggered）</td><td>循环在什么情况下开始</td></tr><tr><td>停止方式（How stopped）</td><td>循环在什么情况下结束</td></tr><tr><td>使用的原语（Claude Code primitive）</td><td>具体用哪个命令或工具来实现</td></tr><tr><td>适合的任务类型</td><td>哪种工作最适合这种循环</td></tr></tbody></table></div>
 <p>理解这四个维度很重要，因为它们决定了<strong>你在循环中需要&quot;交出什么控制权&quot;</strong>。文章后面就是围绕这四个维度展开的。</p>
-<h3>核心心智模型：&quot;你交出什么？&quot;</h3>
+<h3 id="核心心智模型你交出什么">核心心智模型：&quot;你交出什么？&quot;</h3>
 <p>作者在四种循环的对比中，用了一个贯穿始终的问题：<strong>&quot;你可以把哪一部分工作交给代理？&quot;</strong></p>
 <ul><li>Turn-based：你把<strong>检查工作</strong>交出去</li><li>Goal-based：你把<strong>目标定义</strong>交出去</li><li>Time-based：你把<strong>触发时机</strong>交出去</li><li>Proactive：你把<strong>整个提示</strong>交出去</li></ul>
 <p>这个思考框架帮助你在实际工作中快速判断该用哪种循环。</p>
 <p>---</p>
-<h2>文章主体讲解</h2>
-<h3>引言部分：为什么循环值得学</h3>
+<h2 id="文章主体讲解">文章主体讲解</h2>
+<h3 id="引言部分为什么循环值得学">引言部分：为什么循环值得学</h3>
 <p><strong>这一节讲什么</strong>：作者先抛出一个观察——现在大家都在谈&quot;设计循环&quot;而不是&quot;写提示词&quot;，但网上对循环的解释各不相同。然后他给出了 Claude Code 团队的定义，并预告了文章会覆盖的内容。</p>
 <p><strong>为什么重要</strong>：这解决了读者可能存在的困惑——&quot;循环到底是什么？我在网上看到好多说法。&quot;有了统一定义，后面才能展开讨论。</p>
 <p><strong>关键点</strong>：</p>
 <ul><li>循环的定义是清晰的，不是模糊的概念</li><li>文章会介绍主要类型、如何选择、如何在保持代码质量的同时控制 token 消耗</li><li>但不要滥用循环：<strong>从最简单的方案开始</strong></li></ul>
 <p>作者最后这句话很关键。它提醒我们，循环是高级工具，不是所有任务都需要它。这为整篇文章定下了&quot;实用主义&quot;的基调。</p>
-<h3>四种循环类型</h3>
+<h3 id="四种循环类型">四种循环类型</h3>
 <p>文章用一张表格介绍了四种循环。为了更好地理解，我逐个展开：</p>
-<h4>1. Turn-based loops（基于轮次的循环）</h4>
+<h4 id="1-turn-based-loops基于轮次的循环">1. Turn-based loops（基于轮次的循环）</h4>
 <ul><li><strong>触发方式</strong>：你主动发起下一轮</li><li><strong>停止方式</strong>：你判断&quot;可以了&quot;才停下</li><li><strong>使用场景</strong>：探索性任务、不确定要做什么、需要做决策</li><li><strong>对应工具</strong>：Custom verification skills（自定义验证技能）</li></ul>
 <p>这种循环最像我们日常使用 AI 的方式：你问一句，AI 答一句，你觉得满意了就说&quot;可以了&quot;。区别在于，这里 AI 可以多轮执行，而且每次执行后会等待你检查。</p>
 <p>适合的场景是当你还在<strong>探索问题</strong>或者<strong>需要判断</strong>的时候。比如你不确定代码改对了没有，需要人工介入确认。</p>
-<h4>2. Goal-based loops（基于目标的循环）</h4>
+<h4 id="2-goal-based-loops基于目标的循环">2. Goal-based loops（基于目标的循环）</h4>
 <ul><li><strong>触发方式</strong>：代理自动继续</li><li><strong>停止方式</strong>：达成目标后自动停止</li><li><strong>使用场景</strong>：目标明确、知道&quot;完成&quot;长什么样</li><li><strong>对应工具</strong>：<code>/goal</code> 命令</li></ul>
 <p>这是最符合直觉的循环类型：你告诉 AI &quot;把这个功能写完&quot;，AI 会一直工作直到他认为完成了。你不需要逐轮检查，只需要定义好目标即可。</p>
 <p>关键是你必须有<strong>清晰的目标</strong>。如果目标模糊，AI 可能无法正确判断何时停止。</p>
-<h4>3. Time-based loops（基于时间的循环）</h4>
+<h4 id="3-time-based-loops基于时间的循环">3. Time-based loops（基于时间的循环）</h4>
 <ul><li><strong>触发方式</strong>：定时触发（比如每天早上、每小时）</li><li><strong>停止方式</strong>：按计划停止</li><li><strong>使用场景</strong>：外部工作、定时任务</li><li><strong>对应工具</strong>：<code>/loop</code>、<code>/schedule</code></li></ul>
 <p>这种循环的特点是<strong>工作发生在你的项目外部</strong>，并且按时间表运行。比如定期拉取数据、定期发送报告等。</p>
 <p>它的核心价值是让你从&quot;记得去做&quot;这件事中解放出来，交给定时器触发。</p>
-<h4>4. Proactive loops（主动式循环）</h4>
+<h4 id="4-proactive-loops主动式循环">4. Proactive loops（主动式循环）</h4>
 <ul><li><strong>触发方式</strong>：AI 根据情况自己决定</li><li><strong>停止方式</strong>：任务完成或条件不满足</li><li><strong>使用场景</strong>：重复性且定义明确的任务</li><li><strong>对应工具</strong>：以上所有，以及 dynamic workflows（动态工作流）</li></ul>
 <p>这是最&quot;智能&quot;的循环。你把完整的提示交出去，AI 会自主判断什么时候该做什么。它适用于 recurring（周期性发生）且 well-defined（定义清晰）的工作。</p>
 <p>作者把这种放在最后，可能暗示它是最复杂的类型，需要对前三种有充分理解后再使用。</p>
-<h3>如何开始：行动指南</h3>
+<h3 id="如何开始行动指南">如何开始：行动指南</h3>
 <p><strong>这一节讲什么</strong>：作者给出了从零开始尝试循环的具体步骤。</p>
 <p><strong>为什么重要</strong>：理论和实践之间有鸿沟，这一段把&quot;知道循环是什么&quot;变成&quot;真的用起来&quot;。</p>
 <p><strong>关键点</strong>：</p>
 <ol><li><strong>从你现有的工作入手</strong>：不要凭空想象一个场景，找一个你现在就在做、且你是瓶颈的任务。</li><li><strong>问自己一个关键问题</strong>：哪部分工作我可以交出去？是可以写验证检查？还是目标已经够清晰？还是工作会按时到来？</li><li><strong>先跑起来</strong>：运行循环，观察结果，注意它在哪里卡住或者超出范围。</li><li><strong>迭代</strong>：不要期望一次就完美，根据观察调整。</li></ol>
 <p>这个方法论很务实——从小处着手，观察反馈，逐步完善。它的本质是把循环设计当成一个实验，而不是一个计划。</p>
 <p>---</p>
-<h2>关键对比表</h2>
+<h2 id="关键对比表">关键对比表</h2>
 <p>原文的核心就是这张对比表，我把它重新整理得更清晰：</p>
 <div class="doc-table-wrap"><table><thead><tr><th>循环类型</th><th>你交出的部分</th><th>触发方式</th><th>停止方式</th><th>适合场景</th><th>典型命令</th></tr></thead><tbody><tr><td>Turn-based</td><td>检查权</td><td>你手动触发</td><td>你判断</td><td>探索性、决策性任务</td><td>Custom verification skills</td></tr><tr><td>Goal-based</td><td>停止条件</td><td>自动继续</td><td>目标达成</td><td>目标清晰的任务</td><td><code>/goal</code></td></tr><tr><td>Time-based</td><td>触发时机</td><td>定时触发</td><td>按计划</td><td>外部工作、定时任务</td><td><code>/loop</code>、<code>/schedule</code></td></tr><tr><td>Proactive</td><td>整个提示</td><td>AI 自主决定</td><td>任务完成</td><td>重复性、定义明确的任务</td><td>上述所有 + dynamic workflows</td></tr></tbody></table></div>
 <p>这张表的核心价值在于帮助你<strong>做选择</strong>：面对一个任务，你先问自己&quot;我可以放弃哪部分控制权&quot;，然后对应到合适的循环类型。</p>
 <p>---</p>
-<h2>关键句短摘译</h2>
+<h2 id="关键句短摘译">关键句短摘译</h2>
 <ol><li><strong>&quot;Agents repeating cycles of work until a stop condition is met.&quot;</strong></li></ol>
 <ul><li>中文：代理重复工作周期，直到满足停止条件。</li><li>重要性：这是循环的核心定义，后面所有内容都围绕它展开。</li></ul>
 <ol><li><strong>&quot;Pick one task where you&#39;re the bottleneck&quot;</strong></li></ol>
@@ -117,10 +118,10 @@
 <ol><li><strong>&quot;The work is recurring and well-defined&quot;</strong></li></ol>
 <ul><li>中文：工作是重复性的且定义明确的。</li><li>重要性：这是 Proactive 循环的前提条件。</li></ul>
 <p>---</p>
-<h2>术语表</h2>
+<h2 id="术语表">术语表</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>英文术语</th><th>中文含义</th><th>在文中的用法</th></tr></thead><tbody><tr><td>Loop</td><td>循环</td><td>核心概念，指代理重复工作直到满足条件</td></tr><tr><td>Agent</td><td>代理</td><td>在 Claude Code 中执行任务的 AI 角色</td></tr><tr><td>Turn-based</td><td>基于轮次的</td><td>一种循环类型，需要你参与每轮检查</td></tr><tr><td>Goal-based</td><td>基于目标的</td><td>一种循环类型，目标明确后自动运行</td></tr><tr><td>Time-based</td><td>基于时间的</td><td>一种循环类型，由时间表触发</td></tr><tr><td>Proactive</td><td>主动式的</td><td>一种循环类型，AI 自主决定何时行动</td></tr><tr><td>Trigger</td><td>触发</td><td>启动循环的条件</td></tr><tr><td>Stop condition</td><td>停止条件</td><td>结束循环的条件</td></tr><tr><td>Primitive</td><td>原语/基础工具</td><td>Claude Code 提供的内置命令或功能</td></tr><tr><td>Verification</td><td>验证</td><td>检查结果是否正确的过程</td></tr><tr><td>Iterate</td><td>迭代</td><td>根据反馈反复改进</td></tr><tr><td>Bottleneck</td><td>瓶颈</td><td>限制整体效率的环节</td></tr><tr><td>Over-reach</td><td>超出范围</td><td>代理做了超出要求的事情</td></tr></tbody></table></div>
 <p>---</p>
-<h2>文章结尾怎么收束</h2>
+<h2 id="文章结尾怎么收束">文章结尾怎么收束</h2>
 <p>文章的结尾很简洁，只有两段话，但逻辑很完整：</p>
 <p><strong>第一段</strong>是操作指南的复述，强调&quot;从你现有的工作入手、选择合适任务、运行并观察、不要怕迭代&quot;。这是对全文行动建议的浓缩。</p>
 <p><strong>第二段</strong>是外部资源指引，告诉你可以去哪里阅读更多技术细节（Claude Code 文档）。</p>

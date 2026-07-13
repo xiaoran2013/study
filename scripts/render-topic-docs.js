@@ -60,7 +60,11 @@ function escapeHtml(value) {
 function makeRenderer(outDirAbs) {
   function docLink(href, text) {
     // href/text 在这里已经是 escapeHtml() 处理过的文本(来自调用方), 不要再转义一次
-    if (/^(https?:|mailto:|#)/i.test(href)) {
+    if (/^#/.test(href)) {
+      // 页内锚点(比如手写目录跳转到标题), 不需要新开标签页
+      return `<a href="${href}">${text}</a>`;
+    }
+    if (/^(https?:|mailto:)/i.test(href)) {
       return `<a href="${href}" target="_blank" rel="noopener">${text}</a>`;
     }
     const clean = href.replace(/^\.\//, "");
@@ -99,9 +103,19 @@ function makeRenderer(outDirAbs) {
     return { html, next: index };
   }
 
+  function slugify(text) {
+    return text
+      .replace(/[`*]/g, "")
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^\w一-龥-]/g, "");
+  }
+
   function renderMarkdown(markdown) {
     const lines = markdown.replace(/\r\n/g, "\n").split("\n");
     const blocks = [];
+    const usedIds = new Map();
     let index = 0;
     let inCode = false;
     let code = [];
@@ -157,7 +171,16 @@ function makeRenderer(outDirAbs) {
       if (heading) {
         flushList();
         const level = heading[1].length;
-        blocks.push(`<h${level}>${inlineMarkdown(heading[2])}</h${level}>`);
+        const text = heading[2];
+        let id = slugify(text) || `section-${blocks.length}`;
+        if (usedIds.has(id)) {
+          const n = usedIds.get(id) + 1;
+          usedIds.set(id, n);
+          id = `${id}-${n}`;
+        } else {
+          usedIds.set(id, 0);
+        }
+        blocks.push(`<h${level} id="${escapeHtml(id)}">${inlineMarkdown(text)}</h${level}>`);
         index += 1;
         continue;
       }
@@ -202,6 +225,7 @@ function makeRenderer(outDirAbs) {
 function navSection(mdRootRel) {
   if (mdRootRel === "topics/english-roadmap.md" || mdRootRel.startsWith("topics/english/")) return "english";
   if (mdRootRel === "topics/k12-roadmap.md" || mdRootRel.startsWith("topics/k12/")) return "k12";
+  if (mdRootRel === "topics/investment-roadmap.md" || mdRootRel.startsWith("topics/investment/")) return "investment";
   return "ai";
 }
 
@@ -211,6 +235,7 @@ function pageTemplate({ title, sourcePath, bodyHtml, outDirAbs, section }) {
   const aiRel = relFrom(outDirAbs, "ai.html");
   const englishRel = relFrom(outDirAbs, "english.html");
   const k12Rel = relFrom(outDirAbs, "k12.html");
+  const investmentRel = relFrom(outDirAbs, "investment.html");
   const navClass = key => (key === section ? ' class="active"' : "");
 
   return `<!DOCTYPE html>
@@ -233,6 +258,7 @@ function pageTemplate({ title, sourcePath, bodyHtml, outDirAbs, section }) {
       <a href="${escapeHtml(aiRel)}"${navClass("ai")}>AI</a>
       <a href="${escapeHtml(englishRel)}"${navClass("english")}>英语</a>
       <a href="${escapeHtml(k12Rel)}"${navClass("k12")}>学科</a>
+      <a href="${escapeHtml(investmentRel)}"${navClass("investment")}>投资</a>
     </nav>
   </header>
 

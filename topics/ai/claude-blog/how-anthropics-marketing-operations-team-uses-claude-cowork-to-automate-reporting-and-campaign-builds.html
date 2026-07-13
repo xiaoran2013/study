@@ -18,6 +18,7 @@
       <a href="../../../ai.html" class="active">AI</a>
       <a href="../../../english.html">英语</a>
       <a href="../../../k12.html">学科</a>
+      <a href="../../../investment.html">投资</a>
     </nav>
   </header>
 
@@ -31,42 +32,42 @@
 
   <main class="doc-shell">
     <article class="doc-content">
-<h1>Anthropic 市场运营团队如何使用 Claude Cowork 自动化报告与活动搭建</h1>
+<h1 id="anthropic-市场运营团队如何使用-claude-cowork-自动化报告与活动搭建">Anthropic 市场运营团队如何使用 Claude Cowork 自动化报告与活动搭建</h1>
 <blockquote>原文: https://claude.com/blog/how-anthropics-marketing-operations-team-uses-claude-cowork-to-automate-reporting-and-campaign-builds</blockquote>
 <blockquote>日期: Jul 08, 2026</blockquote>
 <blockquote>分类: Enterprise AI</blockquote>
 <blockquote>产品: Claude Cowork</blockquote>
 <p>---</p>
-<h2>文章在讲什么</h2>
+<h2 id="文章在讲什么">文章在讲什么</h2>
 <p>这篇文章讲述了 Anthropic 公司内部市场运营团队（Marketing Operations）如何利用 <strong>Claude Cowork</strong> 这一工具，将原本需要大量手动操作的工作自动化。</p>
 <p>文章聚焦两个典型场景：</p>
 <ul><li><strong>Ian Chan</strong> — 负责每周营销数据报告，过去每周要花一两天手动汇总数据，现在压缩到两小时以内</li><li><strong>Annabel Custer</strong> — 负责活动运营，每次搭建活动需要在多个平台（Salesforce、HubSpot、Swoogo、邮件工具）之间来回操作，现在大部分流程由 Claude 自动完成</li></ul>
 <p>作者通过这两个具体案例，说明了「技能（Skills）」和「连接器（Connectors）」这两个核心概念如何配合工作，并最后给出了四条实践建议。</p>
 <p>这篇文章的核心价值在于：<strong>它不是泛泛谈 AI 能做什么，而是展示了在真实企业环境中、从真实痛点出发的具体实现路径。</strong></p>
 <p>---</p>
-<h2>原文结构地图</h2>
+<h2 id="原文结构地图">原文结构地图</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>主要章节</th><th>作用</th></tr></thead><tbody><tr><td>开篇背景</td><td>说明市场运营团队面临的典型困境：系统之间集成差、报告靠手动、活动搭建重复劳动</td></tr><tr><td>Ian 的案例：报告自动化</td><td>展示从数据收集→报告生成→人工审核→任务追踪的完整流程</td></tr><tr><td>Annabel 的案例：活动搭建自动化</td><td>展示多平台协调、自动化分发、审计验证的分层架构</td></tr><tr><td>给市场运营团队的起步建议</td><td>四条实操性强的经验总结</td></tr><tr><td>收尾</td><td>点明人机协作的核心逻辑——机器处理重复，人专注判断</td></tr></tbody></table></div>
 <p>---</p>
-<h2>核心概念讲解</h2>
+<h2 id="核心概念讲解">核心概念讲解</h2>
 <p>在阅读这篇文章之前，需要理解几个关键概念及其相互关系：</p>
-<h3>1. Claude Cowork</h3>
+<h3 id="1-claude-cowork">1. Claude Cowork</h3>
 <p>Anthropic 推出的企业级 AI 协作工具。其核心能力是让 AI <strong>在真实工作环境中操作工具</strong>（不只是回答问题），包括读写文件、连接外部平台、执行工作流。</p>
-<h3>2. Skills（技能）</h3>
+<h3 id="2-skills技能">2. Skills（技能）</h3>
 <p>这是文章最核心的概念之一。<strong>Skill 是预先配置好的工作模板</strong>，告诉 Claude 在特定场景下应该如何行动。</p>
 <ul><li>一个 Skill 包含：触发条件、执行步骤、输出格式</li><li>Skills 由用户（运营人员）构建，并随着经验积累不断更新</li><li>关键理念：<strong>当你在同一个地方纠正 Claude 超过一次，就应该把反馈写进 Skill 里</strong></li></ul>
-<h3>3. Connectors（连接器）</h3>
+<h3 id="3-connectors连接器">3. Connectors（连接器）</h3>
 <p>Claude Cowork 与外部工具之间的「桥梁」。Ian 和 Annabel 的所有自动化都依赖连接器来访问 Salesforce、HubSpot、Asana、Slack、Gmail 等平台。</p>
 <p><strong>Skills 和 Connectors 的关系</strong>可以这样理解：</p>
 <ul><li><strong>Connector</strong> = 「Claude 能用什么工具」</li><li><strong>Skill</strong> = 「Claude 在什么情况下用什么工具做什么」</li></ul>
 <p>没有 Connector，Claude 不知道如何操作外部系统；没有 Skill，Claude 不知道什么时候该做什么。</p>
-<h3>4. Dispatcher Skill（分发技能）</h3>
+<h3 id="4-dispatcher-skill分发技能">4. Dispatcher Skill（分发技能）</h3>
 <p>Annabel 案例中的关键设计：有一个专门的 Skill 负责「判断」——读取请求、识别类型、分发给对应的专业 Skill 处理。这样做的好处是<strong>路由逻辑和执行逻辑解耦</strong>，可以独立优化每个部分。</p>
-<h3>5. Human-in-the-Loop（人在回路）</h3>
+<h3 id="5-human-in-the-loop人在回路">5. Human-in-the-Loop（人在回路）</h3>
 <p>文章反复强调的核心原则：Claude 负责数据处理和流程执行，<strong>人工负责审核和判断</strong>。这不是因为 AI 不可信，而是因为：</p>
 <ul><li>数据异常需要人工确认处理方式</li><li>输出质量需要人工把关</li><li>策略判断和例外情况超出 AI 的权限范围</li></ul>
 <p>---</p>
-<h2>文章主体讲解</h2>
-<h3>第一部分：背景铺垫</h3>
+<h2 id="文章主体讲解">文章主体讲解</h2>
+<h3 id="第一部分背景铺垫">第一部分：背景铺垫</h3>
 <p><strong>这一节讲什么：</strong></p>
 <p>作者开门见山地描述了市场运营团队（Marketing Ops）的典型处境——理论上他们负责自动化，但实际工作中大量时间花在手动操作上：工具之间集成不畅、报告靠手工汇总、活动页面一个一个搭建。</p>
 <p><strong>为什么重要：</strong></p>
@@ -74,7 +75,7 @@
 <p><strong>关键点：</strong></p>
 <ul><li>痛点是「系统集成不完整」和「重复性手动操作」</li><li>自动化确实是 Marketing Ops 的职责范围，但自动化的前提是要有可靠的流程</li></ul>
 <p>---</p>
-<h3>第二部分：Ian 的报告自动化</h3>
+<h3 id="第二部分ian-的报告自动化">第二部分：Ian 的报告自动化</h3>
 <p><strong>这一节讲什么：</strong></p>
 <p>Ian 负责每周的营销数据报告。过去他要花一到两天追踪数据、核对数字、写叙事。现在 Claude Cowork 每周自动完成大部分工作。</p>
 <p><strong>为什么重要：</strong></p>
@@ -100,7 +101,7 @@ Claude 生成领导层汇报用的幻灯片
 <p><strong>工作重心的转移：</strong></p>
 <p>Ian 的工作从「处理数据」转变为「帮助其他人正确使用数据」——教市场人员如何提问、如何解读结果、如何构建提示词。同时他也有余力深入数据层，优化 Claude 对数字和定义的理解。</p>
 <p>---</p>
-<h3>第三部分：Annabel 的活动搭建自动化</h3>
+<h3 id="第三部分annabel-的活动搭建自动化">第三部分：Annabel 的活动搭建自动化</h3>
 <p><strong>这一节讲什么：</strong></p>
 <p>Annabel 负责营销活动的技术搭建，每个活动都需要在 CRM、营销自动化平台、活动管理平台、邮件工具之间分别配置。现在这套流程由 Claude 自动完成。</p>
 <p><strong>为什么重要：</strong></p>
@@ -128,7 +129,7 @@ Annabel 人工审核后发布</code></pre>
 <p><strong>与 Ian 案例的共性：</strong></p>
 <p>Annabel 的主要动机不是省时间，而是<strong>质量一致性</strong>——随着团队规模扩大，手动搭建容易出错（如确认邮件显示错误城市名、落地页损坏），Claude 确保每次执行标准一致。</p>
 <p>---</p>
-<h3>第四部分：四条起步建议</h3>
+<h3 id="第四部分四条起步建议">第四部分：四条起步建议</h3>
 <p><strong>这一节讲什么：</strong></p>
 <p>作者总结了四个实操性很强的经验，供其他市场运营团队参考。</p>
 <p><strong>为什么重要：</strong></p>
@@ -143,7 +144,7 @@ Annabel 人工审核后发布</code></pre>
 <p><strong>④ 利用定时任务</strong></p>
 <p>那些每周日晚上自动运行的、每小时检查一次的任务，是真正「零心智负担」的自动化。从这类可预测的工作开始建立信心。</p>
 <p>---</p>
-<h2>文章结尾怎么收束</h2>
+<h2 id="文章结尾怎么收束">文章结尾怎么收束</h2>
 <p>文章的结尾非常简洁有力，没有长篇总结，而是用两条平行的主线收拢全文：</p>
 <p><strong>对 Ian 和 Annabel 工作重心的共同描述：</strong></p>
 <ul><li>他们都从「操作执行」转向了「赋能支持」——帮助团队成员正确提问、解读数据、优化流程</li><li>他们都有余力做更战略性、更有长期价值的工作</li></ul>
@@ -151,10 +152,10 @@ Annabel 人工审核后发布</code></pre>
 <p>Claude Cowork 的价值不在于替代人，而在于<strong>把人的时间从重复性操作中释放出来，投向需要判断力、创意和战略的工作</strong>。与此同时，<strong>人工审核不是瓶颈，而是质量保障的必要环节</strong>。</p>
 <p>这两点共同构成了文章的核心信息：<strong>AI 自动化和人机协作不是对立的选择，而是相互配合的关系。</strong></p>
 <p>---</p>
-<h2>关键句短摘译</h2>
+<h2 id="关键句短摘译">关键句短摘译</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>英文原文</th><th>中文含义</th><th>为什么重要</th></tr></thead><tbody><tr><td>&quot;The recovered hours have shifted the shape of their work.&quot;</td><td>节省下来的时间改变了工作的形态</td><td>点明自动化不是单纯省时，而是让人做更高价值的事</td></tr><tr><td>&quot;Claude flags the mismatch instead of guessing.&quot;</td><td>Claude 标记不匹配而不是擅自猜测</td><td>体现了「人在回路」的设计哲学——AI 应在不确定时求助，而非自作主张</td></tr><tr><td>&quot;Keeping it separate lets Annabel refine each specialist skill on its own without touching the routing.&quot;</td><td>分离设计让她能独立优化每个专业 Skill 而不影响路由逻辑</td><td>这是系统设计的重要原则：模块化降低维护复杂度</td></tr><tr><td>&quot;Her primary motivation to build them was quality of work.&quot;</td><td>她构建自动化的首要动机是工作质量</td><td>说明效率不是唯一目标，一致性和可扩展性同样重要</td></tr><tr><td>&quot;When you find yourself correcting Claude on the same thing more than once, that feedback belongs in a skill.&quot;</td><td>当你发现自己反复纠正同类问题时，反馈应该写进 Skill</td><td>这是 Skill 迭代的核心原则</td></tr><tr><td>&quot;Human validation has become an integral part of both workstreams.&quot;</td><td>人工验证已成为两个工作流中不可或缺的环节</td><td>再次强调人机协作的本质</td></tr><tr><td>&quot;Claude reads instructions differently than a human writes them.&quot;</td><td>Claude 读取指令的方式和人类编写指令的方式不同</td><td>这是为什么要主动让 Claude 反思指令的原因</td></tr><tr><td>&quot;Work that runs on its own every Sunday night or every hour is work no one has to remember to do.&quot;</td><td>每周日晚上或每小时自动运行的任务，是不需要任何人记得去做的任务</td><td>解释定时自动化的核心价值——零心智负担</td></tr></tbody></table></div>
 <p>---</p>
-<h2>术语表</h2>
+<h2 id="术语表">术语表</h2>
 <div class="doc-table-wrap"><table><thead><tr><th>英文术语</th><th>中文解释</th></tr></thead><tbody><tr><td>Marketing Operations (MarOps)</td><td>市场运营团队，负责营销技术栈管理、报告、活动搭建等支撑性工作</td></tr><tr><td>Claude Cowork</td><td>Anthropic 推出的企业级 AI 协作工具，允许 AI 操作外部平台和执行工作流</td></tr><tr><td>Skill</td><td>预配置的工作模板，告诉 Claude 在特定场景下的执行步骤和行为规范</td></tr><tr><td>Connector</td><td>连接器，Claude Cowork 与外部工具（Salesforce、HubSpot、Asana 等）之间的集成通道</td></tr><tr><td>Dispatcher Skill</td><td>分发技能，负责读取请求并路由到对应的专业技能</td></tr><tr><td>Specialist Skill</td><td>专业技能，处理特定类型任务（如活动搭建、数据导入）</td></tr><tr><td>Audit Agent</td><td>审计代理，独立运行的 Claude 实例，用于验证自动化输出的正确性</td></tr><tr><td>Human-in-the-Loop</td><td>人在回路，AI 与人工协同的工作模式，人工负责审核和关键决策</td></tr><tr><td>Martech Tools</td><td>营销技术工具，如 CRM、营销自动化平台、邮件工具等</td></tr><tr><td>Asana</td><td>任务管理工具，用于追踪工作进度和待办事项</td></tr><tr><td>Proofreading Skill</td><td>校对技能，核验报告中每个数字与可靠来源的一致性</td></tr></tbody></table></div>
     </article>
   </main>

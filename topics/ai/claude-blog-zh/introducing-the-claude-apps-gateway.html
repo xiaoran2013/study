@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面向 Amazon Bedrock 与 Google Cloud 的 Claude Apps Gateway 正式发布</title>
+<style>
+:root{--bg:#fafaf8;--bg-elev:#fff;--bg-soft:#f4f3ee;--fg:#1a1a1a;--fg-soft:#555;--fg-mute:#888;--border:#e2e0d8;--accent:#285c4d;--accent-soft:#e8f2ee;--link:#0969da;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;}
+.page{max-width:860px;margin:0 auto;padding:40px 28px 96px;}
+.sitebar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--fg-mute);}
+.sitebar a{color:var(--accent);text-decoration:none;font-weight:600;}
+.sitebar a:hover{text-decoration:underline;}
+h1{font-size:30px;line-height:1.3;margin:0 0 10px;color:var(--fg);}
+.meta{font-size:13.5px;color:var(--fg-mute);margin-bottom:6px;}
+.meta a{color:var(--accent);}
+h2{font-size:22px;margin-top:38px;margin-bottom:12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px;}
+p{margin:12px 0;}
+ul{margin:12px 0;padding-left:24px;}
+li{margin:8px 0;}
+.footer-note{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--fg-mute);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sitebar">
+    <a href="index.html">← 返回 Claude Blog 中文全译目录</a>
+    <span>Claude Blog 全文翻译</span>
+  </div>
+  <article>
+    <h1>面向 Amazon Bedrock 与 Google Cloud 的 Claude Apps Gateway 正式发布</h1>
+    <p class="meta">
+      原文标题：Introducing the Claude apps gateway for Amazon Bedrock and Google Cloud ｜
+      发布日期：2026 年 6 月 29 日 ｜ 分类：Product announcements ｜ 产品：Claude Code ｜ 阅读时长：约 5 分钟 ｜
+      <a href="https://claude.com/blog/introducing-the-claude-apps-gateway" target="_blank">查看原文</a>
+    </p>
+
+    <p>今天，我们正式推出面向 Amazon Bedrock 和 Google Cloud 的 Claude apps gateway。此前，在这些平台上运行 Claude Code，意味着要为每位开发者单独配置一份云凭证，手动把设置推送到每一台笔记本电脑，还要另外搭建一套工具来查看每位开发者的支出情况。这个网关是一个自托管的控制平面，为 Claude Code 提供企业级 SSO 登录、集中执行的策略、基于角色的访问控制，以及按用户划分的成本归因。</p>
+
+    <h2>部署网关</h2>
+
+    <p>该网关以单个无状态容器的形式部署在 Linux 上，由一个 PostgreSQL 数据库提供支撑。它保存你的上游凭证，依据你的身份提供商对开发者进行身份验证，分发并执行受管设置，并向你自己运营的采集器上报按用户划分的使用情况。为一名开发者开通权限，只需把他加入你的身份提供商（IdP）；解除权限，只需把他移除。</p>
+
+    <p>这个网关由 Anthropic 构建并发布，内置在开发者已经在安装的同一个 <code>claude</code> 二进制文件中，因此你可以在自己的基础设施上用一个无状态容器来运行它。因为网关和客户端是一起构建的，<code>/login</code> 流程能够感知网关的存在，客户端会在登录时自动应用受管设置，策略也能在每一次请求中得到一致的执行。</p>
+
+    <h2>网关的运作方式</h2>
+
+    <p>网关负责处理以下事项：</p>
+
+    <ul>
+      <li><strong>身份验证。</strong> 它作为 OpenID Connect（OIDC）的依赖方，对接 Google Workspace、Microsoft Entra ID、Okta，或任何符合标准的 OIDC 提供商，并签发短期有效的会话。开发者的设备上不会留存长期有效的密钥。</li>
+      <li><strong>策略管理。</strong> 你可以在服务器端一次性定义受管设置，客户端会在登录时接收这些策略，网关会在每一次请求中执行它们。你可以集中调整允许使用的模型和默认设置。</li>
+      <li><strong>遥测数据。</strong> 客户端会为每一次请求打上使用量标记，网关通过 OTLP 把这些数据转发给你配置的采集器——运行在你自己的网络中，按你自己设定的保留周期存储。</li>
+      <li><strong>路由。</strong> 网关保存你的上游凭证，把推理请求路由到 Claude API、Amazon Bedrock 或 Google Cloud，并可以在不同服务商之间配置可选的故障转移。</li>
+      <li><strong>支出上限。</strong> 网关允许你设置每日、每周和每月的支出限额，限额可以按组织、按组或按用户来设定。</li>
+    </ul>
+
+    <p>除非你把网关配置为使用 Claude API，否则它不会向 Anthropic 发送推理流量或使用数据。我们也在公开网关所使用的协议，这样其他网关开发者也可以实现同样的功能。</p>
+
+    <h2>开始使用</h2>
+
+    <p>该网关现已发布。要开始使用：</p>
+
+    <ul>
+      <li><strong>部署网关：</strong> 下载 Claude Code CLI 二进制文件，把 <code>gateway.yaml</code> 指向你的 OIDC 发行方和上游凭证，并在你的 IdP 中注册一个 OIDC 应用。</li>
+      <li><strong>进行推广：</strong> 在客户端机器的 <code>managed-settings.json</code> 中配置 <code>forceLoginMethod</code> 和 <code>forceLoginGatewayUrl</code> 参数。客户端会在首次启动时连接到你的网关。</li>
+    </ul>
+
+    <p>查看文档以了解更多信息。</p>
+
+    <p class="footer-note">本文由个人学习工作台整理翻译，仅供学习参考，如需引用请以<a href="https://claude.com/blog/introducing-the-claude-apps-gateway" target="_blank">原文</a>为准。</p>
+  </article>
+</div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>集中管理 MCP 连接器的授权</title>
+<style>
+:root{--bg:#fafaf8;--bg-elev:#fff;--bg-soft:#f4f3ee;--fg:#1a1a1a;--fg-soft:#555;--fg-mute:#888;--border:#e2e0d8;--accent:#285c4d;--accent-soft:#e8f2ee;--link:#0969da;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;}
+.page{max-width:860px;margin:0 auto;padding:40px 28px 96px;}
+.sitebar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--fg-mute);}
+.sitebar a{color:var(--accent);text-decoration:none;font-weight:600;}
+.sitebar a:hover{text-decoration:underline;}
+h1{font-size:30px;line-height:1.3;margin:0 0 10px;color:var(--fg);}
+.meta{font-size:13.5px;color:var(--fg-mute);margin-bottom:6px;}
+.meta a{color:var(--accent);}
+h2{font-size:22px;margin-top:38px;margin-bottom:12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px;}
+h3{font-size:18px;margin-top:26px;margin-bottom:8px;color:#1f2937;}
+p{margin:12px 0;}
+blockquote{margin:16px 0;padding:10px 16px;background:var(--accent-soft);border-left:4px solid var(--accent);color:var(--fg-soft);}
+.footer-note{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--fg-mute);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sitebar">
+    <a href="index.html">← 返回 Claude Blog 中文全译目录</a>
+    <span>Claude Blog 全文翻译</span>
+  </div>
+  <article>
+    <h1>集中管理 MCP 连接器的授权</h1>
+    <p class="meta">
+      原文标题：Centrally manage authorization for MCP connectors ｜
+      发布日期：2026 年 6 月 18 日 ｜ 分类：Enterprise AI / Product announcements ｜ 产品：Claude Enterprise、Claude apps ｜ 阅读时长：约 6 分钟 ｜
+      <a href="https://claude.com/blog/enterprise-managed-auth" target="_blank">查看原文</a>
+    </p>
+
+    <p>管理员现在可以通过身份提供商，为整个组织统一开通 MCP 连接器，首先支持 Okta。用户在首次登录时会自动获得连接器访问权限，授权由所在组织集中配置完成。</p>
+
+    <p>连接器让 Claude 在工作中更加有用——它们把团队已经在使用的工具中的上下文，带给 Claude。此前，开通连接器需要在两个步骤上分别采取行动：管理员为整个组织启用某个连接器，然后每一位用户还需要自行完成授权。</p>
+
+    <p>企业管理式授权简化了第二个步骤。管理员只需一次性完成对某个连接器的授权，用户则通过他们已经拥有的 IdP 组和角色继承访问权限，连接器在用户第一次打开 Claude 时就已经就绪。最终结果是：终端用户实现了零操作的连接器配置。</p>
+
+    <p>企业管理式授权是 Model Context Protocol（MCP）"企业管理式授权（Enterprise-Managed Authorization）"扩展的首个实现。它构建在一个开放标准之上，因此任何连接器都可以支持它——包括你自己团队构建的自定义连接器——并且对每一位 Claude 客户而言，它们的运作方式都是一致的。</p>
+
+    <h3>运作方式</h3>
+
+    <p>把你的身份提供商连接到 Claude，然后选择要为你的组织启用哪些 MCP 连接器。当一名员工登录时，他们的连接器就已经就绪。在 Claude 聊天、Claude Code 和 Cowork 之间，访问权限保持一致。</p>
+
+    <p>对管理员来说，这把 MCP 访问管理纳入了你已经用来管理其余技术栈的同一套工作流程：一次性开通，按组划定范围，通过 IdP 管理撤销权限。由于通过 IdP 检查访问权限几乎没有摩擦成本，管理员可以缩短访问令牌的有效期而不影响生产力——因此当某人被取消授权时，他们的连接器访问权限会迅速失效，而不是滞留在一个旧令牌上。访问权限通过你已经信任的身份提供商来运行，因此连接器和其他一切一样，都受到相同的安全与访问控制约束，而不是一个需要单独监控的独立入口。</p>
+
+    <p>管理员还可以要求某个连接器只能通过 IdP 进行连接，这样可以把工作用途和个人用途干净利落地区分开来，防止有人不小心把个人账户连接到工作工具上。</p>
+
+    <h3>与生态系统共同构建</h3>
+
+    <p>企业管理式授权涵盖三类角色：负责管理访问权限的身份提供商、支持该标准的 MCP 服务提供商，以及正在为团队部署受管连接的 Claude 客户。</p>
+
+    <p><strong>身份提供商。</strong> Okta 在发布时即获得支持，未来还将支持更多身份提供商。</p>
+
+    <p><strong>MCP 服务提供商。</strong> Asana、Atlassian、Canva、Figma、Granola、Linear 和 Supabase 在发布时即支持企业管理式授权，Slack 即将支持。</p>
+
+    <p><strong>Claude 客户。</strong> Hubspot、Ramp 和 Webflow 等组织，正在为其团队推广企业管理式授权。</p>
+
+    <blockquote>"企业管理式授权是实现 Asana 愿景——成为人机协作团队操作系统——的一个基础性里程碑。通过为组织提供一种安全、可控的方式，将 Claude 与其最关键的工作流程连接起来，我们正在释放让 AI 驱动的价值在整个企业范围内规模化的能力——并由大规模部署所要求的绝对治理、合规和信任作为支撑。"<br>—— Arnab Bose，首席产品官（Asana）</blockquote>
+
+    <blockquote>"企业管理式授权让 Claude Enterprise 客户更容易大规模采用 Atlassian Rovo MCP，让员工能够以简单的方式，把 Claude 和他们已经在 Jira、Confluence 和 Teamwork Graph 上依赖的 Atlassian 工作连接起来。同样重要的是，它为管理员提供了一个集中管理 MCP 客户端访问权限的地方，让组织能够在保持所期望的治理水平的同时，更快地推进 AI 应用。"<br>—— Brendan Haire，Rovo 与 AI 工程副总裁（Atlassian）</blockquote>
+
+    <blockquote>"Canva 已经获得财富 500 强企业中 95% 的信任，我们的 MCP 服务器让更多团队能够在同一个工作流程中，用 Canva 的 AI 与设计工具创建、编辑和发布符合品牌调性的设计。通过 Okta 实现的企业管理式授权，让企业用一套自己已经信任的系统来管理 AI 访问变得清晰而简单，帮助团队安全、规模化地借助 AI 进行创作。"<br>—— Anwar Haneef，生态系统总经理兼负责人（Canva）</blockquote>
+
+    <blockquote>"Figma MCP 把代码和画布的力量结合在一起，让团队能够更快推进、探索更多可能，打造出脱颖而出的产品。随着 MCP 采用率的增长，企业管理式授权让企业更容易在不拖慢团队速度的前提下，安全地规模化部署 MCP。"<br>—— Devdatta Akhawe，工程副总裁（Figma）</blockquote>
+
+    <blockquote>"很高兴看到 Anthropic 和 Okta 合作，让企业更容易安全、集中、规模化地连接到 MCP 服务器。Granola 帮助团队捕捉工作中一些最重要的上下文：决策、细节和后续跟进，随时发生随时记录。MCP 让这些内容能够在各类团队工具之间发挥作用，而企业管理式授权则让它能够毫无摩擦地在整个团队中普及。"<br>—— Chris Pedregal，CEO 兼联合创始人（Granola）</blockquote>
+
+    <blockquote>"企业管理式授权正是我们一直在寻找的、适用于 MCP 连接的安全性与用户体验。用户只需执行标准的 Okta 登录，就能以自己的个人上下文连接到我们软件生态中的所有 MCP 主机。个人身份得以传递，但没有人会被一堆 OAuth 授权绊住。这对企业管理来说是一次巨大的胜利，尤其是结合了对这些 MCP 主机所暴露的各项独立工具的精细化控制之后。"<br>—— Andrew Meinert，系统运营与 AI 总监（Hubspot）</blockquote>
+
+    <blockquote>"只需登录一次，所有 MCP 连接器就自动配置完成，这几乎有点神奇。"<br>—— Tom Moor，工程负责人（Linear）</blockquote>
+
+    <blockquote>"围绕 MCP 的势头令人瞩目，但随着我们迈向一个互联的 AI 劳动力时代，安全性绝不能是事后才考虑的问题。通过把跨应用访问（Cross App Access）协议嵌入 MCP，形成企业管理式授权扩展，并在 Claude 生态系统中加以实现，我们把身份变成了一个集中化的治理平面，为安全团队提供严格的合规控制，也为用户带来无缝、安全的体验。"<br>—— Aaron Parecki，身份标准总监（Okta）</blockquote>
+
+    <blockquote>"在有企业管理式授权之前，让一名新员工接入他们完整的工具包，意味着要排队等待一个又一个连接器的 OAuth 审批。现在，他们登录 Claude 的第一天就已经连接就绪——2000 名员工，通过 Okta 完成配置，无需额外操作。"<br>—— Cameron Leavenworth，AI 高级 IT 工程师（Ramp）</blockquote>
+
+    <blockquote>"Slack 是人类和智能体并肩工作的地方，处于同一段对话、同一份上下文，朝着同一个目标努力。通过 Slack MCP 服务器，这一切现在都可以被 Claude 获取——不仅可以读取，还可以据此采取行动。企业管理式授权意味着组织可以毫无阻碍地为所有用户推广访问权限。安全团队通过他们已有的身份提供商一次性完成配置，用户则获得无缝的访问体验。"<br>—— Rod García，工程副总裁（Slack）</blockquote>
+
+    <blockquote>"此前，要通过 Claude 使用 Supabase，唯一的办法就是成为组织所有者，或者给团队里的每个人分发个人访问令牌（Personal Access Token）。企业管理式授权解决了这个问题：由你的 IdP 控制访问权限和角色，这样构建者就可以用 Claude 探索和查询自己的数据，而无需 IT 部门在安全性上做出妥协。"<br>—— Bil Harmer，首席信息安全官（Supabase）</blockquote>
+
+    <blockquote>"我们的团队打开 Claude，他们被授权使用的每一个工具都已经在那里，范围由 IT 部门已经在运行的身份分组来界定。企业管理式授权把 AI 变成了一种人们会主动使用、而不是需要申请的东西，我们正在把它推广到整个 Webflow。"<br>—— Reed Shackelford，企业 AI 运营高级经理（Webflow）</blockquote>
+
+    <h3>开始使用</h3>
+
+    <p>企业管理式授权目前已面向 Claude Team 和 Enterprise 套餐的客户开放测试版。在我们的帮助中心了解更多信息，并申请加入以开始使用。</p>
+
+    <p>任何身份提供商或 MCP 服务提供商都可以通过实现 MCP 授权规范的开放扩展来添加对企业管理式授权的支持。可以提交申请以加入测试版。</p>
+
+    <p class="footer-note">本文由个人学习工作台整理翻译，仅供学习参考，如需引用请以<a href="https://claude.com/blog/enterprise-managed-auth" target="_blank">原文</a>为准。</p>
+  </article>
+</div>
+</body>
+</html>

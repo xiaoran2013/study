@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>引导 Claude Code：CLAUDE.md 文件、技能、钩子、规则、子智能体等</title>
+<style>
+:root{--bg:#fafaf8;--bg-elev:#fff;--bg-soft:#f4f3ee;--fg:#1a1a1a;--fg-soft:#555;--fg-mute:#888;--border:#e2e0d8;--accent:#285c4d;--accent-soft:#e8f2ee;--link:#0969da;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75;}
+.page{max-width:900px;margin:0 auto;padding:40px 28px 96px;}
+.sitebar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--fg-mute);}
+.sitebar a{color:var(--accent);text-decoration:none;font-weight:600;}
+.sitebar a:hover{text-decoration:underline;}
+h1{font-size:30px;line-height:1.3;margin:0 0 10px;color:var(--fg);}
+.meta{font-size:13.5px;color:var(--fg-mute);margin-bottom:6px;}
+.meta a{color:var(--accent);}
+h2{font-size:22px;margin-top:38px;margin-bottom:12px;color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:6px;}
+h3{font-size:18px;margin-top:26px;margin-bottom:8px;color:#1f2937;}
+p{margin:12px 0;}
+ul,ol{margin:12px 0;padding-left:24px;}
+li{margin:8px 0;}
+code{background:var(--bg-soft);padding:1px 5px;border-radius:4px;font-size:0.92em;}
+pre{background:#1e1e1e;color:#e8e8e8;padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:13.5px;margin:16px 0;}
+pre code{background:none;padding:0;color:inherit;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px;}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top;}
+th{background:var(--accent-soft);color:var(--accent);}
+figure{margin:20px 0;text-align:center;}
+figcaption{font-size:13px;color:var(--fg-mute);margin-top:6px;}
+.footer-note{margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:13px;color:var(--fg-mute);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sitebar">
+    <a href="index.html">← 返回 Claude Blog 中文全译目录</a>
+    <span>Claude Blog 全文翻译</span>
+  </div>
+  <article>
+    <h1>引导 Claude Code：CLAUDE.md 文件、技能、钩子、规则、子智能体等</h1>
+    <p class="meta">
+      原文标题：Steering Claude Code: CLAUDE.md files, skills, hooks, rules, subagents and more ｜
+      发布日期：2026 年 6 月 18 日 ｜ 分类：Claude Code ｜ 产品：Claude Code ｜ 阅读时长：约 8 分钟 ｜
+      <a href="https://claude.com/blog/steering-claude-code-skills-hooks-rules-subagents-and-more" target="_blank">查看原文</a>
+    </p>
+
+    <p>Claude 的设计初衷是按照你的工作方式来运作，而在 Claude Code 中，你可以对它进行自定义。</p>
+
+    <p>目前有七种方法可以用来指示 Claude 的行为：CLAUDE.md 文件、规则（rules）、技能（skills）、子智能体（subagents）、钩子（hooks）、输出风格（output styles），以及追加系统提示词（appending the system prompt）。</p>
+
+    <p>每种方法都会控制以下三个方面：</p>
+
+    <ul>
+      <li>指令何时被加载进上下文；</li>
+      <li>它是否能在长会话中持续存在（即压缩/compaction 行为）；以及</li>
+      <li>它所携带的权威性有多强。</li>
+    </ul>
+
+    <p>下表快速总结了各种方法之间的关键差异，正文部分则提供了更多细节，以及一套决策框架，帮助你判断每一条 Claude 指令应该放在哪里。</p>
+
+    <table>
+      <tr><th>方法</th><th>何时加载</th><th>压缩行为</th><th>上下文成本</th><th>适用场景</th></tr>
+      <tr><td>CLAUDE.md（根目录）</td><td>会话开始时加载；整个会话期间始终留在上下文中</td><td>被记忆化。首次读取后为本次会话缓存；压缩后清除并重新读取</td><td>高。无论是否相关，每一行都消耗 token</td><td>构建命令、目录结构、monorepo 结构、编码规范、团队规范</td></tr>
+      <tr><td>CLAUDE.md（子目录）</td><td>按需加载，当 Claude 读取该子目录下文件时加载</td><td>直到该子目录再次被触及前一直丢失</td><td>低。只有在处理相关子目录时才消耗上下文</td><td>特定于某个子目录的规范</td></tr>
+      <tr><td>Rules（规则）</td><td>会话开始时加载（用户级规则），或仅在触及匹配文件时加载（路径限定）</td><td>压缩后重新注入</td><td>中等。除非路径限定，否则始终加载</td><td>特定的约束或规范（如所有 API 处理函数必须用 Zod 校验输入）</td></tr>
+      <tr><td>Skills（技能）</td><td>会话开始时加载名称和描述；调用时加载完整正文</td><td>已调用的技能在共享预算内重新注入；最早的优先丢弃</td><td>低。完整正文仅在调用时加载；受共享 token 预算限制</td><td>程序化工作流程（部署或发布清单）</td></tr>
+      <tr><td>Subagents（子智能体）</td><td>会话开始时加载名称、描述和工具列表；通过 Agent 工具调用时才加载正文</td><td>只有最终消息（摘要及元数据）返回主会话</td><td>低。调用前对主上下文零消耗；在独立上下文窗口中运行</td><td>并行运行的工作，或应隔离运行、只返回摘要的旁支任务（深度搜索、日志分析、依赖审计）</td></tr>
+      <tr><td>Hooks（钩子）</td><td>生命周期事件触发时执行</td><td>完全绕过压缩</td><td>低。配置存在于主上下文之外；部分输出可能返回</td><td>确定性自动化：运行 linter、完成后发 Slack 通知、阻止命令、PreCompact 时备份聊天记录</td></tr>
+      <tr><td>Output styles（输出风格）</td><td>会话开始时加载；注入系统提示词</td><td>永不压缩</td><td>高。占用上下文窗口，但覆盖默认系统提示词</td><td>重大角色转变（代码助手变为通用助手）</td></tr>
+      <tr><td>追加系统提示词</td><td>会话开始时加载；作为 CLI 参数传入</td><td>永不压缩；仅适用于该次调用</td><td>中等。会话首次请求后缓存</td><td>语气、回复长度、格式偏好</td></tr>
+    </table>
+
+    <h2>传递指令的七种方法</h2>
+
+    <h3>CLAUDE.md 文件</h3>
+
+    <p>CLAUDE.md 是位于项目根目录下的一个 markdown 文件。它会在会话开始时加载进上下文，并在整个会话期间始终留在那里。</p>
+
+    <p>构建命令、目录结构、monorepo 结构、编码规范和团队规范，都很适合放在这里。</p>
+
+    <p>这里有两种类型，它们的加载方式各不相同：</p>
+
+    <ul>
+      <li><strong>始终加载：</strong> 第一种类型是根目录下的 CLAUDE.md 文件，可以放在共享仓库中，也可以本地保存、用于你个人对某个项目的偏好设置。所有这些文件都会在会话开始时加载，并且不会在长会话中丢失或退化。当 Claude Code 压缩对话时，它会重新读取这些文件。</li>
+      <li><strong>按需加载：</strong> 位于你启动会话所在文件夹下方子目录中的 CLAUDE.md 文件。例如，<code>app/api/CLAUDE.md</code> 会在 Claude 读取 <code>app/api</code> 下的某个文件时加载，而不是在会话开始时加载。它的压缩行为和路径限定规则相同：在该子目录再次被触及之前，它会一直处于丢失状态。</li>
+    </ul>
+
+    <figure><figcaption>当前工作目录下方所有子目录中的 CLAUDE.md 文件，都会在 Claude 读取该目录内的某个文件时被加载。</figcaption></figure>
+
+    <p>在一个共享仓库中，CLAUDE.md 的膨胀方式，和任何无人专门负责的配置文件一样：每个团队都会往里追加自己的指令，却没有人删除任何内容。这样的成本会随着规模不断累积。</p>
+
+    <p>无论是否与当前任务相关，每一行都会加载进每一位在该仓库中工作的工程师的每一次会话中。这不仅消耗 token，也会稀释 Claude 对真正重要指令的遵从度。随着文件不断膨胀，应该把特定于团队的规范推送到路径限定的规则中，把操作流程推送到技能（skills）中，让它们只在相关时才加载。</p>
+
+    <p><strong>小提示：</strong> 把 CLAUDE.md 控制在 200 行以内，为它指定一个负责人，并像对待代码一样评审对它的修改。可以把这个文件想象成给 Claude 提供的一份代码库概览，或者一个索引，指向 Claude 在需要时可以获取更多信息的其他文件。</p>
+
+    <p>在 monorepo 中，给每个团队的目录配备自己的子目录 CLAUDE.md，这样团队就只会加载自己的规范，开发者也可以使用 <code>claudeMdExcludes</code> 设置，跳过那些他们从不涉及的团队代码的文件。</p>
+
+    <p>对于那些必须适用于组织内每一个仓库的标准——比如安全策略、合规要求——可以通过 MDM 或配置管理工具，将一份集中管理的 CLAUDE.md 部署到开发者的机器上，并且这份文件不能被个人设置排除在外。</p>
+
+    <p>关于配置 CLAUDE.md 的更多内容，请参阅我们的博客文章《CLAUDE.md files: Customizing Claude Code for your codebase》。</p>
+
+    <h3>规则（Rules）</h3>
+
+    <p>规则是位于 <code>.claude/rules/</code> 目录下的 markdown 文件，用来为 Claude 提供具体的约束或规范。</p>
+
+    <p>未限定范围的规则，其行为方式和 CLAUDE.md 类似：它们始终会在会话开始时加载，并在压缩后被重新注入。这可能会造成 token 浪费，即使这些内容和当前任务并不相关，也会被加载进上下文。</p>
+
+    <p>路径限定规则允许你通过添加一个 <code>paths</code> 字段来控制规则的加载时机，让规则指令只在相关时才加载。</p>
+
+    <p>举例来说：一条限定于 <code>src/api/**</code> 的规则，在一次只涉及文档的会话中不会被加载进上下文。它只有在 Claude 读取 <code>src/api/</code> 目录下的文件时才会被加载。</p>
+
+    <p>具体形式如下：</p>
+
+    <pre><code>---
+paths:
+  - "src/api/**"
+  - "**/*.handler.ts"
+---
+All API handlers must validate input with Zod before processing.</code></pre>
+
+    <p><strong>小提示：</strong> 像"迁移文件只能追加，不能修改"这样特定于文件的约束，最适合作为一条<strong>规则</strong>放在你的 <code>paths:</code> frontmatter 中。当指令涉及一个跨越代码库中多个（但非全部）角落的横切关注点或文件时，优先选择路径限定的规则，而不是嵌套的 CLAUDE.md 文件。</p>
+
+    <h3>技能（Skills）</h3>
+
+    <p>技能存放在 <code>.claude/skills/</code> 目录下，以文件夹的形式包含 Claude 动态加载的指令、脚本和资源。每个技能都有一个 <code>SKILL.md</code> 文件，包含名称、描述和正文。</p>
+
+    <p>只有名称和描述会在会话开始时加载；完整正文只有在 Claude 调用该技能时才会加载，无论是通过斜杠命令（<code>/code-review</code>）还是通过任务自动匹配来调用。</p>
+
+    <figure><figcaption>技能是通过你的系统提示词来触发的。</figcaption></figure>
+
+    <p>举例来说，<code>/code-review</code> 是一个内置技能，用于评审你当前的 diff 并汇报发现的问题，而不会修改文件。这个技能定义了具体的执行方案，确保你每次调用它时，Claude 都遵循相同的结构化流程。</p>
+
+    <p>在压缩时，Claude Code 会在所有已调用技能共享的总预算范围内，重新注入已调用的技能。如果你在一次会话中调用了很多技能，最早调用的那些会被优先丢弃。</p>
+
+    <p><strong>小提示：</strong> 像部署工作流、发布清单或评审流程这样具有程序性质的指令，应该放进一个技能里，而不是放进 CLAUDE.md。</p>
+
+    <p>Claude Code 自带了一些技能，但你也可以编写自己的自定义技能。我们的《为 Claude 构建技能完整指南》展示了具体的实现方法。</p>
+
+    <h3>子智能体（Subagents）</h3>
+
+    <p>子智能体是位于 <code>.claude/agents/</code> 目录下的 markdown 文件，用于定义针对特定旁支任务的独立助手。每个文件都使用 YAML frontmatter（名称、描述，外加可选的模型和工具访问权限字段），随后是构成该子智能体系统提示词的正文。</p>
+
+    <p>子智能体和技能有相似之处：名称、描述和工具列表会在会话开始时加载，但子智能体正文中更大篇幅的上下文不会自动触发调用。Claude 通过 Agent 工具调用它们，并传入一个提示词字符串。</p>
+
+    <figure><figcaption>Claude Code 的上下文窗口保存着 Claude 对你本次会话所了解的一切。这里的交互式时间线详细展示了各项内容何时被加载。</figcaption></figure>
+
+    <p>子智能体正文中更大篇幅的指令上下文，不仅不会自动触发调用，而且永远不会进入父会话。</p>
+
+    <p>子智能体会在自己全新的上下文窗口中运行，返回到你主会话中的，只有子智能体的最终消息（通常是许多子任务的汇总结果）加上元数据。</p>
+
+    <p>这种模式具有可扩展性：子智能体最多可以嵌套五层，而动态工作流可以编排数十到数百个后台智能体，而无需你逐一指定子智能体架构的每一个细节。编排计划和中间结果保存在脚本变量中，而不是 Claude 的上下文窗口中，这使得规模扩展成为可能，同时不会损失指令的保真度。</p>
+
+    <p><strong>小提示：</strong> 这种隔离性正是选择子智能体而非技能的主要原因之一。当一项旁支任务——比如深度搜索、一次日志分析，或一次依赖审计——会用你不会再引用的中间结果扰乱你的主对话时，就应该选择子智能体。当你希望这个流程在主线程中展开、以便你能看到并引导每一步时，就应该选择技能。</p>
+
+    <h3>钩子（Hooks）</h3>
+
+    <p>钩子是用户自定义的命令、HTTP 端点或 LLM 提示词，它们通过在 Claude 生命周期中的特定事件（比如文件编辑、工具调用或会话开始）上触发，为 Claude 的行为提供更具确定性的控制。</p>
+
+    <figure><figcaption>Claude Code 会话中钩子可以触发的事件示意图。</figcaption></figure>
+
+    <p>你可以在 <code>settings.json</code>、受管策略设置，或技能/智能体的 frontmatter 中注册钩子。</p>
+
+    <p>钩子有几种类型：command、HTTP、mcp_tool、prompt 和 agent。所有钩子都是确定性触发的。前三种是确定性执行的，而后两种（prompt 和 agent）则依靠 Claude 的判断力而非一套固定规则来决定输出结果。</p>
+
+    <p>钩子的上下文成本很低，因为其配置或指令存在于主上下文窗口之外。硬件层（harness）会根据钩子类型运行相应的处理程序（command、http、mcp_tool），或者用独立的窗口发起模型调用（prompt、agent）。</p>
+
+    <p>有些钩子的输出可能会被保存到主上下文窗口中。例如，一个阻断性钩子的标准错误信息会被保存在上下文中，这样 Claude 就能知道这次调用为什么被拒绝。</p>
+
+    <p>但大多数钩子的输出不会被保存到主窗口中，除非配置中明确要求返回该输出。如果你在压缩之前，使用 <code>PreCompact</code> 事件把聊天记录备份到另一个文件中以供日后参考，Claude 并不会知道哪个文件保存了这份聊天记录。</p>
+
+    <p>这使得这些类型的钩子在根本上不同于 CLAUDE.md、规则和技能。你可以在我们的文章《如何配置钩子》中了解更多。</p>
+
+    <p><strong>小提示：</strong> 把钩子用在任何应该确定性发生的事情上：编辑后运行 linter、任务完成后发布到 Slack、在特定命令执行前将其阻止。一个 <code>PreToolUse</code> 钩子可以检查任意工具调用，并以退出码 2 拒绝执行。</p>
+
+    <p>它们的上下文成本很低，因为它们是由 harness 运行的代码，而不是被加载进上下文中给 Claude 的指令。</p>
+
+    <h3>输出风格（Output styles）</h3>
+
+    <p>输出风格是位于 <code>.claude/output-styles/</code> 目录下的文件，用于把指令注入系统提示词中。它们永远不会被压缩，会在每次会话开始时加载，并且在一次会话中的首次请求后被缓存，这意味着它们的上下文成本是中等的。</p>
+
+    <p>由于它们位于系统提示词中，输出风格在我们目前讨论过的所有方法里，携带着最高的指令遵从权重，应当谨慎使用。</p>
+
+    <p><strong>对输出风格的修改会替换默认的输出风格</strong>（除非你在该风格的 frontmatter 中设置了 <code>keep-coding-instructions: true</code>）。</p>
+
+    <p>在 Claude Code 中，这会移除告诉 Claude 它正在帮助用户完成软件工程任务的指令，以及其他一些关键的默认指令，比如：</p>
+
+    <ul>
+      <li>如何界定改动的范围；</li>
+      <li>什么时候应该添加或省略代码注释；</li>
+      <li>遇到安全问题该如何处理；以及</li>
+      <li>诸如在宣布任务完成之前运行测试之类的验证习惯。</li>
+    </ul>
+
+    <p>默认情况下，一个自定义的输出风格会丢掉所有这些内容，Claude Code 会更像一个通用助手，而不是一个软件工程助手。</p>
+
+    <p><strong>小提示：</strong> 在编写自定义输出风格之前，先看看内置的风格。<strong>Proactive（主动型）</strong>、<strong>Explanatory（讲解型）</strong>和 <strong>Learning（学习型）</strong>已经覆盖了最常见的需求（自主性、教学模式、协作式编程），你无需专门维护一个风格文件。</p>
+
+    <h3>追加系统提示词</h3>
+
+    <p>修改输出风格之外的另一种选择，是使用 <code>append-system-prompt</code> 参数。修改输出风格文件可能会给 Claude 的行为带来巨大、意想不到的改变，而追加参数则只是在原有系统提示词的基础上做加法。它不会修改 Claude 的角色，只是在其默认角色之上添加指令。</p>
+
+    <p>它也是在调用时传入的，只适用于那一次调用，而不会作为文件持久保存在各个会话之间。</p>
+
+    <p>与其他传递指令的方法相比，追加系统提示词的上下文成本可能更高。它会增加输入 token 数，不过提示缓存（prompt caching）会在一次会话中的首次请求之后降低这一成本。指示 Claude 使用更冗长的风格，也会增加输出 token 数。</p>
+
+    <p><strong>小提示：</strong> 追加系统提示词最适合用来添加特定的编码标准、输出格式，或领域相关知识。请记住，追加系统提示词在遵从度上会有边际效益递减的问题。一般来说，你用这种方法提供的指令越多，Claude 遵循的严格程度就会越低，尤其是当其中出现相互矛盾的指令时。</p>
+
+    <h2>Claude Code 自定义的几点小建议</h2>
+
+    <p>如果你发现自己正在做以下任何一件事，或许应该考虑为你的指令换一个存放位置：</p>
+
+    <p><strong>在 CLAUDE.md 中写"每次 X，都要做 Y"。</strong> 如果这个行为需要可靠地发生——比如每次编辑后都运行 prettier，或者任务完成后发布到 Slack——请改用 <code>settings.json</code> 中的钩子。模型"选择"运行一个格式化工具，和格式化工具"自动"运行，是两回事。</p>
+
+    <p><strong>在 CLAUDE.md 中写"绝不要做这个"。</strong> 当有某件事绝对不能发生时，指令并不是正确的工具。大多数时候 Claude 会遵循这条指令，但在长会话、模糊情境下承受压力时，或者由于在处理任务时接触到的文件中存在提示注入（prompt injection），模型也可能无法遵守一条被提示的规则。真正的护栏必须是确定性的，而实现这种确定性的方法是钩子（hooks）和权限（permissions）。一个 <code>PreToolUse</code> 钩子可以检查一次调用，并以退出码 2 阻止它。<strong>受管设置（Managed settings）</strong> 更进一步：它们由管理员部署，用户的本地配置无法覆盖它们，是唯一能够强制执行确定性、全组织统一护栏的方式。</p>
+
+    <p><strong>在 CLAUDE.md 中写一个 30 行的流程。</strong> 流程性内容应该放进技能里。CLAUDE.md 是用来存放 Claude 应该始终掌握的事实性内容的地方：构建命令、monorepo 结构、团队规范。一份部署运行手册或一份安全评审清单，应该放在 <code>.claude/skills/</code> 中，只在被调用时才加载正文。</p>
+
+    <p><strong>一条没有设置 paths 的、特定于某个 API 的规则。</strong> 如果一条规则只适用于 <code>src/api/**</code>，用 <code>paths:</code> 对它进行范围限定，可以让它在处理不相关工作时不被加载进上下文。未限定范围的规则，在机制上等同于把内容直接放进 CLAUDE.md：始终加载，始终消耗 token。</p>
+
+    <p><strong>把个人偏好写进项目级的 CLAUDE.md 文件。</strong> 所有基于文件的方法都有一个用户级别的对应版本，无论你在哪个仓库中，每次 Claude Code 会话都会加载它。把本地文件用于个人偏好设置（比如"始终使用语义化提交信息"）。把项目级文件留给那些团队通用、但特定于某个代码库的偏好设置。</p>
+
+    <h2>开始使用</h2>
+
+    <p>你可以在我们的《Claude Code 最佳实践》文档中找到更多提示和模式，涵盖从配置环境到跨并行会话扩展的方方面面。</p>
+
+    <p>一旦你把其中几项配置好并跑通，就可以把许多这类内容（技能、子智能体、钩子、输出风格）打包成一个插件，在团队成员或多个项目之间共享一套连贯的配置。</p>
+
+    <p class="footer-note">本文由个人学习工作台整理翻译，仅供学习参考，如需引用请以<a href="https://claude.com/blog/steering-claude-code-skills-hooks-rules-subagents-and-more" target="_blank">原文</a>为准。</p>
+  </article>
+</div>
+</body>
+</html>
