@@ -223,8 +223,6 @@ function makeRenderer(outDirAbs) {
 // ---------- 页面模板 ----------
 
 function navSection(mdRootRel) {
-  if (mdRootRel.startsWith("topics/english/")) return "english";
-  if (mdRootRel.startsWith("topics/k12/")) return "k12";
   if (mdRootRel.startsWith("topics/investment/")) return "investment";
   return "ai";
 }
@@ -233,8 +231,6 @@ function pageTemplate({ title, sourcePath, bodyHtml, outDirAbs, section }) {
   const cssRel = relFrom(outDirAbs, "_assets/style.css") + "?v=20260711-static";
   const homeRel = relFrom(outDirAbs, "index.html");
   const aiRel = relFrom(outDirAbs, "ai.html");
-  const englishRel = relFrom(outDirAbs, "english.html");
-  const k12Rel = relFrom(outDirAbs, "k12.html");
   const investmentRel = relFrom(outDirAbs, "investment.html");
   const navClass = key => (key === section ? ' class="active"' : "");
 
@@ -256,8 +252,6 @@ function pageTemplate({ title, sourcePath, bodyHtml, outDirAbs, section }) {
     <nav class="site-nav" aria-label="主导航">
       <a href="${escapeHtml(homeRel)}"${navClass("home")}>首页</a>
       <a href="${escapeHtml(aiRel)}"${navClass("ai")}>AI</a>
-      <a href="${escapeHtml(englishRel)}"${navClass("english")}>英语</a>
-      <a href="${escapeHtml(k12Rel)}"${navClass("k12")}>学科</a>
       <a href="${escapeHtml(investmentRel)}"${navClass("investment")}>投资</a>
     </nav>
   </header>

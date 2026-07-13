@@ -14,8 +14,6 @@
 .
 ├── index.html                 # 首页(沉淀流)
 ├── ai.html                    # AI 主题入口
-├── english.html               # 英语主题入口(占位)
-├── k12.html                   # 学科主题入口(占位)
 ├── investment.html            # 投资主题入口
 ├── README.md                  # 项目入口说明
 ├── PROJECT_BACKGROUND.md      # 项目总纲
@@ -45,11 +43,6 @@ topics/
 │       ├── agent-ontology.md/.html
 │       ├── ontology-101.html
 │       └── harness-engineering-self-improvement.md/.html
-├── english/
-│   └── roadmap.md/.html                 # 占位, 暂不扩充
-├── k12/
-│   ├── roadmap.md/.html                 # 占位, 暂不扩充
-│   └── math/                            # 系列: 初中数学专题
 └── investment/
     ├── roadmap.md/.html                 # 投资学习路线
     └── notes/

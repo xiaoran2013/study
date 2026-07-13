@@ -1,5 +1,12 @@
 # Study Workspace · 迭代日志
 
+## 2026-07-13 · v4.5 移除英语和 K12 主题
+
+- 按用户决定整体删除英语、K12 主题: `english.html`、`k12.html`、`topics/english/`、`topics/k12/`(含初中数学系列); 内容在 Git 历史 v4.4 之前可找回。
+- 全局导航收敛为: 首页、AI、投资。首页主题入口和"主题现状"同步更新, 新增"新主题随需生长"说明。
+- `render-topic-docs.js` 移除 english/k12 导航分支; 发布清单同步收敛。
+- `AGENTS.md`/`CLAUDE.md`/`README.md`/`DIRECTORY_STRUCTURE.md`/`PROJECT_BACKGROUND.md` 移除英语/学科相关描述。
+
 ## 2026-07-13 · v4.4 目录分层重构 + 文档重写
 
 - `topics/` 不再平铺: 路线图移入各主题目录(`topics/<主题>/roadmap.md`), AI/投资散篇笔记归入 `notes/` 子目录, 主题内形态统一为 "roadmap + 系列子目录 + notes"。
