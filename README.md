@@ -1,14 +1,17 @@
 # Study
 
-AI 驱动的个人自动化内容生成与学习工作台。
+用 Claude 持续学习和沉淀的个人工作台。
 
-这个项目不是普通博客，而是一个把 AI 搜索、结构化整理、静态网页展示、GitHub Pages 发布和飞书私有工作台串起来的个人学习系统，用来沉淀 AI、英语、学科等长期学习主题。内容会陆续增加。
+这个项目不是普通博客：内容来自与 Claude 的对话和定时任务，学到什么就沉淀什么，范围不预设、随积累自然生长。沉淀物是 Markdown + 静态 HTML，通过 GitHub Pages 发布长期可浏览的学习站点。
+
+在线访问: https://xiaoran2013.github.io/study/
 
 完整背景见:
 
 - `PROJECT_BACKGROUND.md`: 项目总纲。
 - `DIRECTORY_STRUCTURE.md`: 目录结构说明。
-- `AGENTS.md`: Agent 操作手册。
+- `AGENTS.md`: Agent 操作手册（含内容存放决策树）。
+- `CLAUDE.md`: Claude Code 项目记忆。
 
 ## 本地浏览
 
@@ -33,15 +36,9 @@ python3 -m http.server 8080
 
 ## 目录
 
-- `index.html`: 个人学习工作台首页。
-- `ai.html`: AI 学习主题入口。
-- `english.html`: 英语学习主题入口。
-- `k12.html`: 小学、初中和各学科学习主题入口。
-- `investment.html`: 投资学习主题入口。
-- `doc.html`: Markdown/JSON 文档浏览器。
-- `PROJECT_BACKGROUND.md`: 项目背景与定位。
-- `DIRECTORY_STRUCTURE.md`: 项目目录结构和 GitHub/飞书边界。
+- `index.html`: 首页（沉淀流：最近沉淀 + 生长方式 + 主题现状）。
+- `ai.html` / `english.html` / `k12.html` / `investment.html`: 主题入口页。
+- `topics/<主题>/`: 学习内容，主题内按 `roadmap.md` + 系列子目录 + `notes/` 分层。
 - `_assets/`: 样式。
 - `_sources/`: AI 处理用的原始材料（本地保留，不进入 Git 历史）。
-- `topics/`: AI、英语、学科等主题路线和笔记。
-- `scripts/`: 自动化脚本。
+- `scripts/`: 自动化脚本（Markdown 渲染、博客翻译等）。

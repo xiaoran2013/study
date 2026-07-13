@@ -35,10 +35,10 @@
 
 | 学段 | 学科 | 专题 | 入口 |
 | --- | --- | --- | --- |
-| 初中 | 数学 | 初中数学专题目录 | [打开目录](topics/k12/math/index.html) |
+| 初中 | 数学 | 初中数学专题目录 | [打开目录](math/index.html) |
 | 初中 | 数学 | 初中数学文档生成计划 | [打开计划](topics/k12/math/junior-math-generation-plan.md) |
-| 初中 | 数学 | 二次函数与抛物线 | [打开专题](topics/k12/math/quadratic-parabola.html) |
-| 初中 | 数学 | 抛物线交点题精讲 | [打开习题](topics/k12/math/quadratic-intersection-exercises.html) |
+| 初中 | 数学 | 二次函数与抛物线 | [打开专题](math/quadratic-parabola.html) |
+| 初中 | 数学 | 抛物线交点题精讲 | [打开习题](math/quadratic-intersection-exercises.html) |
 
 ## 记录模板
 

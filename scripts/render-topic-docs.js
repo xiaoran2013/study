@@ -223,9 +223,9 @@ function makeRenderer(outDirAbs) {
 // ---------- 页面模板 ----------
 
 function navSection(mdRootRel) {
-  if (mdRootRel === "topics/english-roadmap.md" || mdRootRel.startsWith("topics/english/")) return "english";
-  if (mdRootRel === "topics/k12-roadmap.md" || mdRootRel.startsWith("topics/k12/")) return "k12";
-  if (mdRootRel === "topics/investment-roadmap.md" || mdRootRel.startsWith("topics/investment/")) return "investment";
+  if (mdRootRel.startsWith("topics/english/")) return "english";
+  if (mdRootRel.startsWith("topics/k12/")) return "k12";
+  if (mdRootRel.startsWith("topics/investment/")) return "investment";
   return "ai";
 }
 

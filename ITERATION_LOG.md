@@ -1,5 +1,14 @@
 # Study Workspace · 迭代日志
 
+## 2026-07-13 · v4.4 目录分层重构 + 文档重写
+
+- `topics/` 不再平铺: 路线图移入各主题目录(`topics/<主题>/roadmap.md`), AI/投资散篇笔记归入 `notes/` 子目录, 主题内形态统一为 "roadmap + 系列子目录 + notes"。
+- 确立"AI 自动判断存放位置"的决策树, 写入 `AGENTS.md` 第 2 节; 新建 `CLAUDE.md` 作为 Claude Code 项目记忆(引用 AGENTS.md)。
+- 废弃 `doc.html`(运行时 fetch 阅读器, 所有内容已有静态 HTML 直链), 从仓库和发布清单移除。
+- 翻译风格模板移到 `scripts/templates/claude-blog-zh-style.txt`; 清理 `.DS_Store`。
+- 重写 `AGENTS.md`(去掉"远端未配置"等过期内容, 补充站点地址、标准沉淀流程、主题现状)、`DIRECTORY_STRUCTURE.md`、`README.md`。
+- `render-topic-docs.js` 导航判断适配新路径; 修复 k12 路线中三个失效的 `.html` 直链。
+
 ## 2026-07-13 · v4.3 首页改为沉淀流
 
 - 首页从"今日计划仪表盘"(今日入口/学习状态/今日清单)改为"沉淀流"视角, 反映项目真实形态: 范围不预设, 内容随与 Claude 的对话和定时任务持续积累。

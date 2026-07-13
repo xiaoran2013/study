@@ -17,7 +17,7 @@
 
 ## 已有内容
 
-- [ETF投资策略详解](investment/etf-strategies.html)：基于《ETF投资策略从入门到精通》（原著 *All About Exchange-Traded Funds*，Scott Paul Frush 著）整理，覆盖基本策略、期现套利与高频交易、融资融券策略、机构操作方式。
+- [ETF投资策略详解](topics/investment/notes/etf-strategies.md)：基于《ETF投资策略从入门到精通》（原著 *All About Exchange-Traded Funds*，Scott Paul Frush 著）整理，覆盖基本策略、期现套利与高频交易、融资融券策略、机构操作方式。
 
 ## 下一步
 

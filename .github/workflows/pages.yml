@@ -33,7 +33,7 @@ jobs:
           rm -rf .pages
           mkdir -p .pages/_assets
 
-          cp index.html ai.html english.html k12.html investment.html doc.html .pages/
+          cp index.html ai.html english.html k12.html investment.html .pages/
           cp README.md PROJECT_BACKGROUND.md DIRECTORY_STRUCTURE.md AGENTS.md ITERATION_LOG.md .pages/
           cp .nojekyll .pages/.nojekyll
           cp _assets/*.css .pages/_assets/
