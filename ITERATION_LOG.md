@@ -1,5 +1,10 @@
 # Study Workspace · 迭代日志
 
+## 2026-07-13 · 新增笔记: 本体标准全景
+
+- 新增 `topics/ai/notes/ontology-standards.md`: 系统梳理本体标准体系——W3C 栈(RDF/RDFS/OWL 2/SKOS/SPARQL/SHACL/SWRL/RIF)、ISO 体系(Common Logic 24707、顶层本体 21838 含 BFO/DOLCE/TUpper、叙词表 25964)、事实标准(schema.org、Dublin Core、PROV-O、OBO Foundry)、方法论(101/OntoClean/能力问题), 附选型速查表。
+- 与已有的 `agent-ontology.md`(为什么)、`ontology-101.md`(怎么建)构成本体论三篇互补; `ai.html` 加卡片, 首页"最近沉淀"加条目(超 8 条, 移除最旧的"AI 学习路线"一条)。
+
 ## 2026-07-13 · v4.5 移除英语和 K12 主题
 
 - 按用户决定整体删除英语、K12 主题: `english.html`、`k12.html`、`topics/english/`、`topics/k12/`(含初中数学系列); 内容在 Git 历史 v4.4 之前可找回。
