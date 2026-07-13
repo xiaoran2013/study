@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RDFS · 个人学习工作台</title>
+<link rel="stylesheet" href="../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../index.html">首页</a>
+      <a href="../ai.html">AI</a>
+      <a href="../investment.html">投资</a>
+      <a href="index.html" class="active">Wiki</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>RDFS</h1>
+      <p>wiki/rdfs.md · 更新于 2026-07-13</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1 id="rdfs">RDFS</h1>
+<p><strong>RDF Schema</strong>，W3C 推荐标准（2004，随 RDF 1.1 更新于 2014）。在 <a href="rdf.html">RDF</a> 之上定义最基本的&quot;词汇表&quot;：有哪些类、哪些属性、它们的层次关系，是<a href="semantic-web-stack.html">语义网标准栈</a>里最轻量的词汇层。</p>
+<h2 id="核心构件">核心构件</h2>
+<ul><li><code>rdfs:Class</code> / <code>rdf:type</code>: 声明类、声明实例属于某类。</li><li><code>rdfs:subClassOf</code>: 类层次（&quot;狗 ⊑ 哺乳动物&quot;），推理可自动传递。</li><li><code>rdfs:subPropertyOf</code>: 属性层次（&quot;母亲是 ⊑ 父母是&quot;）。</li><li><code>rdfs:domain</code> / <code>rdfs:range</code>: 属性的定义域和值域。</li><li><code>rdfs:label</code> / <code>rdfs:comment</code>: 人类可读的名字和注释。</li></ul>
+<h2 id="最大的坑">最大的坑</h2>
+<p>domain/range 是<strong>推断规则不是校验约束</strong>——你说&quot;石头出生于北京&quot;，RDFS 不报错，而是推断出&quot;石头是人&quot;。想要&quot;数据不合规就报错&quot;，用 <a href="shacl.html">SHACL</a>。</p>
+<h2 id="适用与局限">适用与局限</h2>
+<p>只需要&quot;类目 + 层次 + 属性归属&quot;的轻量场景够用，绝大多数 Web 词汇表（FOAF、Dublin Core）只到 RDFS 级别。表达不了基数、类不相交、逆关系、传递性——那些是 <a href="owl.html">OWL</a> 的活。</p>
+<h2 id="深入阅读">深入阅读</h2>
+<ul><li><a href="../topics/ai/notes/ontology-standards.html">本体标准全景 · RDFS 一节</a></li><li>规范: https://www.w3.org/TR/rdf-schema/</li></ul>
+<hr>
+<p><strong>被引用于</strong>: <a href="ontology.html">本体（Ontology）</a> · <a href="owl.html">OWL</a> · <a href="rdf.html">RDF</a> · <a href="semantic-web-stack.html">语义网标准栈（Semantic Web Stack）</a></p>
+    </article>
+  </main>
+</div>
+</body>
+</html>

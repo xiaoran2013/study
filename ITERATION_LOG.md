@@ -1,5 +1,12 @@
 # Study Workspace · 迭代日志
 
+## 2026-07-13 · v4.6 知识 Wiki 上线(卡帕西 LLM Wiki 模式)
+
+- 新增顶层 `wiki/`: LLM 维护的概念卡片网络, 平铺存放, 与 `topics/` 长文互补(卡片从长文提炼并链回)。首批 10 张本体标准卡片 + `index.md` 目录 + `log.md` 操作日志。
+- 三方兼容约定(GitHub 网页渲染 / Obsidian vault / Pages 站点): 标准 Markdown 链接 + 同目录文件名(不用 wikilink), YAML frontmatter 元数据, 反链由渲染脚本生成。写入 AGENTS.md 新第 5 节(原 5-10 节顺延为 6-11)。
+- `render-topic-docs.js` 改造: 扫描 `wiki/`; `.md` 链接按文件存在性双轨解析(先相对当前文件, 再根相对, 存量写法不受影响); 剥离 frontmatter 并显示 `updated`; wiki 页注入"被引用于"反链区块; 全局导航加 Wiki 项(存量 HTML 全量重渲染)。
+- 新增 `scripts/wiki-lint.js`(死链/孤儿页/index 缺漏检查); `.gitignore` 加 `.obsidian/`; `pages.yml` 发布 `wiki/`; 三个静态入口页导航加 Wiki。
+
 ## 2026-07-13 · 新增笔记: 本体标准全景
 
 - 新增 `topics/ai/notes/ontology-standards.md`: 系统梳理本体标准体系——W3C 栈(RDF/RDFS/OWL 2/SKOS/SPARQL/SHACL/SWRL/RIF)、ISO 体系(Common Logic 24707、顶层本体 21838 含 BFO/DOLCE/TUpper、叙词表 25964)、事实标准(schema.org、Dublin Core、PROV-O、OBO Foundry)、方法论(101/OntoClean/能力问题), 附选型速查表。

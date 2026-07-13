@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>语义网标准栈（Semantic Web Stack） · 个人学习工作台</title>
+<link rel="stylesheet" href="../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../index.html">首页</a>
+      <a href="../ai.html">AI</a>
+      <a href="../investment.html">投资</a>
+      <a href="index.html" class="active">Wiki</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>语义网标准栈（Semantic Web Stack）</h1>
+      <p>wiki/semantic-web-stack.md · 更新于 2026-07-13</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1 id="语义网标准栈semantic-web-stack">语义网标准栈（Semantic Web Stack）</h1>
+<p>W3C 的语义网标准栈是理解<a href="ontology.html">本体</a>相关标准之间关系的最好框架。各标准不是竞争关系，而是同一栈里<strong>不同层的分工</strong>，自下而上：</p>
+<pre><code>规则层     SWRL / RIF
+校验层     SHACL / ShEx
+查询层     SPARQL
+本体层     OWL 2          ← 重语义、可推理
+概念体系层  SKOS           ← 轻语义、词表
+词汇层     RDFS           ← 最基础的类/属性
+数据模型层  RDF（三元组）
+序列化     Turtle / JSON-LD / RDF/XML / N-Triples
+标识层     IRI / Unicode</code></pre>
+<p>一句话分工：<a href="rdf.html">RDF</a> 说&quot;怎么陈述事实&quot;，<a href="rdfs.html">RDFS</a> 说&quot;怎么定义基本词汇&quot;，<a href="owl.html">OWL</a> 说&quot;怎么定义严格概念和逻辑约束&quot;，<a href="skos.html">SKOS</a> 说&quot;怎么组织松散的概念词表&quot;，<a href="sparql.html">SPARQL</a> 说&quot;怎么查&quot;，<a href="shacl.html">SHACL</a> 说&quot;怎么校验数据合规&quot;。</p>
+<p>2026 年<a href="knowledge-graph.html">知识图谱</a>项目的典型组合：RDF + OWL 2（常取 RL profile）+ SKOS + SHACL + SPARQL + JSON-LD，需要行业互操作时再对齐一个<a href="top-level-ontology.html">顶层本体</a>。</p>
+<h2 id="深入阅读">深入阅读</h2>
+<ul><li><a href="../topics/ai/notes/ontology-standards.html">本体标准全景</a>（本站长文，含 ISO 体系和事实标准）</li></ul>
+<hr>
+<p><strong>被引用于</strong>: <a href="knowledge-graph.html">知识图谱（Knowledge Graph）</a> · <a href="ontology.html">本体（Ontology）</a> · <a href="rdf.html">RDF</a> · <a href="rdfs.html">RDFS</a></p>
+    </article>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RDF · 个人学习工作台</title>
+<link rel="stylesheet" href="../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../index.html">首页</a>
+      <a href="../ai.html">AI</a>
+      <a href="../investment.html">投资</a>
+      <a href="index.html" class="active">Wiki</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>RDF</h1>
+      <p>wiki/rdf.md · 更新于 2026-07-13</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1 id="rdf">RDF</h1>
+<p><strong>Resource Description Framework</strong>，W3C 推荐标准（1999/2004 → 1.1 于 2014 → 1.2 引入 RDF-star），是<a href="semantic-web-stack.html">语义网标准栈</a>的数据模型基座。</p>
+<p>核心思想：把一切知识拆成<strong>三元组（triple）</strong>——主语–谓语–宾语，如 <code>&lt;张三&gt; &lt;出生于&gt; &lt;北京&gt;</code>。大量三元组自然连成一张有向图，这就是<a href="knowledge-graph.html">知识图谱</a>的数据底座。</p>
+<h2 id="核心构件">核心构件</h2>
+<ul><li><strong>IRI</strong>: 全局唯一标识符，任何资源（实体、关系、概念）都用 IRI 命名，跨系统不撞名。</li><li><strong>字面量（Literal）</strong>: 字符串、数字、日期等值，可带语言标签（<code>&quot;北京&quot;@zh</code>）或数据类型（<code>^^xsd:date</code>）。</li><li><strong>空白节点（Blank Node）</strong>: 局部匿名节点，表示&quot;存在某个东西&quot;但不给全局名字。</li><li><strong>命名图（Named Graph）</strong>: 1.1 引入，给一组三元组打包命名，管理来源和上下文。</li></ul>
+<h2 id="序列化格式">序列化格式</h2>
+<p>同一数据模型的不同写法：<strong>Turtle</strong>（人最易读，教学和手写首选）、<strong>JSON-LD</strong>（Web 开发者友好，schema.org 主推）、<strong>N-Triples</strong>（一行一条，批处理）、<strong>RDF/XML</strong>（历史格式）、<strong>TriG / N-Quads</strong>（带命名图）。</p>
+<h2 id="局限">局限</h2>
+<p>RDF 只提供&quot;陈述事实&quot;的语法，不带语义——它不知道&quot;出生于&quot;意味着什么，也表达不了&quot;人不能同时出生于两个城市&quot;。语义靠上层的 <a href="rdfs.html">RDFS</a> 和 <a href="owl.html">OWL</a>；查询用 <a href="sparql.html">SPARQL</a>。</p>
+<h2 id="深入阅读">深入阅读</h2>
+<ul><li><a href="../topics/ai/notes/ontology-standards.html">本体标准全景 · RDF 一节</a></li><li>规范: https://www.w3.org/TR/rdf11-primer/</li></ul>
+<hr>
+<p><strong>被引用于</strong>: <a href="knowledge-graph.html">知识图谱（Knowledge Graph）</a> · <a href="ontology.html">本体（Ontology）</a> · <a href="rdfs.html">RDFS</a> · <a href="semantic-web-stack.html">语义网标准栈（Semantic Web Stack）</a> · <a href="shacl.html">SHACL</a> · <a href="sparql.html">SPARQL</a></p>
+    </article>
+  </main>
+</div>
+</body>
+</html>

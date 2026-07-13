@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>知识图谱（Knowledge Graph） · 个人学习工作台</title>
+<link rel="stylesheet" href="../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../index.html">首页</a>
+      <a href="../ai.html">AI</a>
+      <a href="../investment.html">投资</a>
+      <a href="index.html" class="active">Wiki</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>知识图谱（Knowledge Graph）</h1>
+      <p>wiki/knowledge-graph.md · 更新于 2026-07-13</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1 id="知识图谱knowledge-graph">知识图谱（Knowledge Graph）</h1>
+<p>知识图谱是<strong>以图结构组织的事实库</strong>：实体是节点，关系是边。数据底座通常是 <a href="rdf.html">RDF</a> 三元组，查询用 <a href="sparql.html">SPARQL</a>。公开的代表有 Wikidata、DBpedia；企业内则是数据目录、客户 360、风控图谱等。</p>
+<h2 id="与本体的关系">与本体的关系</h2>
+<p>知识图谱存&quot;实体和关系&quot;，<a href="ontology.html">本体</a>定义这些实体和关系<strong>意味着什么</strong>、遵循什么约束——本体是图谱的 schema 层/语义骨架。&quot;本体做骨架、事实做填充、原文做溯源&quot;是 Agent 长期记忆系统（如 GraphRAG 系）的代表性三层设计。</p>
+<h2 id="标准全家桶">标准全家桶</h2>
+<p>2026 年知识图谱项目的典型组合（详见<a href="semantic-web-stack.html">语义网标准栈</a>）：RDF 做数据模型 + <a href="owl.html">OWL</a>（常取 RL profile）做领域语义 + <a href="skos.html">SKOS</a> 做词表 + <a href="shacl.html">SHACL</a> 做数据校验 + SPARQL 做查询 + JSON-LD 做对外交换。</p>
+<h2 id="在-ai-agent-里的价值">在 AI Agent 里的价值</h2>
+<p>生产环境对比数据显示，结构化知识图谱记忆相比纯向量检索，多跳任务准确率提升 36%-46%，幻觉率降低 40% 以上。详见<a href="../topics/ai/notes/agent-ontology.html">本体论与 AI Agent</a>。</p>
+<h2 id="深入阅读">深入阅读</h2>
+<ul><li><a href="../topics/ai/notes/ontology-standards.html">本体标准全景</a></li></ul>
+<hr>
+<p><strong>被引用于</strong>: <a href="ontology.html">本体（Ontology）</a> · <a href="rdf.html">RDF</a> · <a href="semantic-web-stack.html">语义网标准栈（Semantic Web Stack）</a> · <a href="shacl.html">SHACL</a> · <a href="sparql.html">SPARQL</a></p>
+    </article>
+  </main>
+</div>
+</body>
+</html>

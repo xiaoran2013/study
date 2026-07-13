@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SHACL · 个人学习工作台</title>
+<link rel="stylesheet" href="../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../index.html">首页</a>
+      <a href="../ai.html">AI</a>
+      <a href="../investment.html">投资</a>
+      <a href="index.html" class="active">Wiki</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>SHACL</h1>
+      <p>wiki/shacl.md · 更新于 2026-07-13</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1 id="shacl">SHACL</h1>
+<p><strong>Shapes Constraint Language</strong>，W3C 推荐标准（2017）。<a href="rdf.html">RDF</a> 数据的<strong>校验标准</strong>：定义&quot;形状（Shape）&quot;约束数据长什么样，校验器输出合规报告。</p>
+<h2 id="为什么需要它">为什么需要它</h2>
+<p><a href="owl.html">OWL</a> 是开放世界的逻辑推理，天生做不了&quot;每条产品记录必须有且仅有一个价格字段&quot;这种封闭世界的数据质量校验（缺字段只会被当成&quot;未知&quot;）。SHACL 补上这块。<strong>工程分工的标准答案：OWL 管推理，SHACL 管校验</strong>，现代<a href="knowledge-graph.html">知识图谱</a>项目两者都用。</p>
+<h2 id="核心构件">核心构件</h2>
+<ul><li><code>sh:NodeShape</code> + <code>sh:targetClass</code>: 约束某类节点。</li><li><code>sh:property</code> + <code>sh:path</code>: 约束某属性。</li><li><code>sh:minCount</code> / <code>sh:maxCount</code>: 基数（必填/唯一）。</li><li><code>sh:datatype</code> / <code>sh:class</code> / <code>sh:pattern</code> / <code>sh:in</code>: 值类型、正则、枚举。</li><li><code>sh:sparql</code>: 嵌入 <a href="sparql.html">SPARQL</a> 写复杂约束。</li><li>严重级别: Violation / Warning / Info。</li></ul>
+<h2 id="替代方案">替代方案</h2>
+<p><strong>ShEx</strong>（Shape Expressions）：W3C 社区规范（非推荐标准），语法更紧凑，Wikidata 用它。工业界主流是 SHACL。</p>
+<h2 id="深入阅读">深入阅读</h2>
+<ul><li><a href="../topics/ai/notes/ontology-standards.html">本体标准全景 · SHACL 一节</a></li><li>规范: https://www.w3.org/TR/shacl/</li></ul>
+<hr>
+<p><strong>被引用于</strong>: <a href="knowledge-graph.html">知识图谱（Knowledge Graph）</a> · <a href="ontology.html">本体（Ontology）</a> · <a href="owl.html">OWL</a> · <a href="rdfs.html">RDFS</a> · <a href="semantic-web-stack.html">语义网标准栈（Semantic Web Stack）</a></p>
+    </article>
+  </main>
+</div>
+</body>
+</html>

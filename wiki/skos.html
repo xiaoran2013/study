@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SKOS · 个人学习工作台</title>
+<link rel="stylesheet" href="../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../index.html">首页</a>
+      <a href="../ai.html">AI</a>
+      <a href="../investment.html">投资</a>
+      <a href="index.html" class="active">Wiki</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>SKOS</h1>
+      <p>wiki/skos.md · 更新于 2026-07-13</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1 id="skos">SKOS</h1>
+<p><strong>Simple Knowledge Organization System</strong>，W3C 推荐标准（2009）。给叙词表、分类法、主题词表这类<strong>松散概念体系</strong>提供标准表示——它们的层次经不起严格逻辑推敲，硬翻译成 <a href="owl.html">OWL</a> 的逻辑类是常见的建模错误。</p>
+<h2 id="核心构件">核心构件</h2>
+<ul><li><code>skos:Concept</code>: 概念（不是类——&quot;经济学&quot;是概念，没有&quot;经济学的实例&quot;）。</li><li><code>skos:broader</code> / <code>skos:narrower</code>: 宽窄关系，<strong>不承诺</strong> subClassOf 那种逻辑蕴含。</li><li><code>skos:related</code>: 相关关系。</li><li><code>skos:prefLabel</code> / <code>altLabel</code> / <code>hiddenLabel</code>: 首选词、同义词、隐藏词，天然多语言。</li><li><code>skos:exactMatch</code> / <code>closeMatch</code>: 跨词表映射。</li></ul>
+<h2 id="判断标准skos-还是-owl">判断标准：SKOS 还是 OWL？</h2>
+<p>如果层次经不起&quot;每个 X 都必然是 Y&quot;的推敲（&quot;猫粮&quot;宽于&quot;宠物用品&quot;只是导航关系不是逻辑关系），用 SKOS。典型场景：标签体系、内容分类、企业术语表、搜索同义词扩展。</p>
+<p>相关 ISO 标准：ISO 25964（叙词表，2011/2013）与 SKOS 有官方映射。</p>
+<h2 id="深入阅读">深入阅读</h2>
+<ul><li><a href="../topics/ai/notes/ontology-standards.html">本体标准全景 · SKOS 一节</a></li><li>规范: https://www.w3.org/TR/skos-primer/</li></ul>
+<hr>
+<p><strong>被引用于</strong>: <a href="knowledge-graph.html">知识图谱（Knowledge Graph）</a> · <a href="ontology.html">本体（Ontology）</a> · <a href="semantic-web-stack.html">语义网标准栈（Semantic Web Stack）</a></p>
+    </article>
+  </main>
+</div>
+</body>
+</html>

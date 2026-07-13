@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>本体（Ontology） · 个人学习工作台</title>
+<link rel="stylesheet" href="../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../index.html">首页</a>
+      <a href="../ai.html">AI</a>
+      <a href="../investment.html">投资</a>
+      <a href="index.html" class="active">Wiki</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>本体（Ontology）</h1>
+      <p>wiki/ontology.md · 更新于 2026-07-13</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1 id="本体ontology">本体（Ontology）</h1>
+<p>本体是<strong>形式化的知识表示方法</strong>：定义一个领域里有哪些概念、概念之间有什么关系、遵循什么规则，让人和机器在同一套语义下推理。它源自哲学（存在论），在数据/知识工程领域被借用后成为<a href="knowledge-graph.html">知识图谱</a>的语义骨架。</p>
+<p>一个本体通常包含：<strong>类</strong>（概念，如&quot;交通工具&quot;）、<strong>类层次</strong>（&quot;汽车是交通工具的子类&quot;）、<strong>属性</strong>（类之间的关系和字面值特征）、<strong>约束</strong>（基数、不相交等）、<strong>实例</strong>。定义好&quot;汽车 ⊑ 交通工具&quot;后，推理机能自动推导汽车具备交通工具的属性，而不需要硬编码规则。</p>
+<h2 id="标准体系">标准体系</h2>
+<p>本体不是想怎么建就怎么建，工程上有一套分层标准（见<a href="semantic-web-stack.html">语义网标准栈</a>）：<a href="rdf.html">RDF</a> 陈述事实、<a href="rdfs.html">RDFS</a> 定义基本词汇、<a href="owl.html">OWL</a> 定义严格概念并支持推理、<a href="skos.html">SKOS</a> 组织松散词表、<a href="sparql.html">SPARQL</a> 查询、<a href="shacl.html">SHACL</a> 校验数据。跨领域互操作时对齐一个<a href="top-level-ontology.html">顶层本体</a>。</p>
+<h2 id="为什么-agent-时代重新重要">为什么 Agent 时代重新重要</h2>
+<p>Agent 大量失败的地方恰恰是&quot;理解业务语义&quot;这一层（什么算一个已完成的订单），而不是语言生成。本体作为语义层给数据赋予含义、支持自动推理、充当多 Agent 协作的公共契约。详见长文<a href="../topics/ai/notes/agent-ontology.html">本体论与 AI Agent</a>。</p>
+<h2 id="深入阅读">深入阅读</h2>
+<ul><li><a href="../topics/ai/notes/ontology-standards.html">本体标准全景</a>（本站长文，各标准详解）</li><li><a href="../topics/ai/notes/ontology-101.html">本体开发 101</a>（怎么动手建一个本体）</li></ul>
+<hr>
+<p><strong>被引用于</strong>: <a href="knowledge-graph.html">知识图谱（Knowledge Graph）</a> · <a href="owl.html">OWL</a> · <a href="semantic-web-stack.html">语义网标准栈（Semantic Web Stack）</a> · <a href="top-level-ontology.html">顶层本体（Top-Level Ontology）</a></p>
+    </article>
+  </main>
+</div>
+</body>
+</html>

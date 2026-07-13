@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPARQL · 个人学习工作台</title>
+<link rel="stylesheet" href="../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../index.html">首页</a>
+      <a href="../ai.html">AI</a>
+      <a href="../investment.html">投资</a>
+      <a href="index.html" class="active">Wiki</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>SPARQL</h1>
+      <p>wiki/sparql.md · 更新于 2026-07-13</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1 id="sparql">SPARQL</h1>
+<p><strong>SPARQL Protocol and RDF Query Language</strong>，W3C 推荐标准（1.0 于 2008，1.1 于 2013）。<a href="rdf.html">RDF</a> 图的标准查询语言，地位相当于关系数据库的 SQL。</p>
+<h2 id="核心构件">核心构件</h2>
+<ul><li><strong>基本图模式匹配</strong>: 写带变量的三元组模式去匹配图。</li><li><code>FILTER</code> / <code>OPTIONAL</code> / <code>UNION</code> / 聚合 / 子查询。</li><li><strong>属性路径</strong>: <code>foaf:knows+</code> 一跳到多跳的传递查询，图查询相对 SQL 的杀手锏。</li><li>四种查询形式: <code>SELECT</code> / <code>CONSTRUCT</code>（查询结果生成新三元组）/ <code>ASK</code> / <code>DESCRIBE</code>。</li><li><strong>SPARQL Update</strong>: 增删改。</li><li><strong>联邦查询</strong>: <code>SERVICE</code> 关键字一条查询同时问本地库和 Wikidata。</li></ul>
+<h2 id="配套协议">配套协议</h2>
+<p>SPARQL 还规定了 HTTP 协议层（endpoint 怎么收查询、返回 JSON/XML），所以 Wikidata、DBpedia 等公开<a href="knowledge-graph.html">知识图谱</a>都提供标准 endpoint。</p>
+<h2 id="实践注意">实践注意</h2>
+<p>SPARQL 查的是&quot;图里有什么&quot;，要查到 <a href="owl.html">OWL</a> 推理出的隐含事实需配合推理机（entailment regime），各三元组库支持程度不一。</p>
+<h2 id="深入阅读">深入阅读</h2>
+<ul><li><a href="../topics/ai/notes/ontology-standards.html">本体标准全景 · SPARQL 一节</a></li><li>规范: https://www.w3.org/TR/sparql11-overview/</li></ul>
+<hr>
+<p><strong>被引用于</strong>: <a href="knowledge-graph.html">知识图谱（Knowledge Graph）</a> · <a href="ontology.html">本体（Ontology）</a> · <a href="rdf.html">RDF</a> · <a href="semantic-web-stack.html">语义网标准栈（Semantic Web Stack）</a> · <a href="shacl.html">SHACL</a></p>
+    </article>
+  </main>
+</div>
+</body>
+</html>

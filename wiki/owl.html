@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OWL · 个人学习工作台</title>
+<link rel="stylesheet" href="../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../index.html">首页</a>
+      <a href="../ai.html">AI</a>
+      <a href="../investment.html">投资</a>
+      <a href="index.html" class="active">Wiki</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>OWL</h1>
+      <p>wiki/owl.md · 更新于 2026-07-13</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1 id="owl">OWL</h1>
+<p><strong>Web Ontology Language</strong>，W3C 推荐标准（2004 → OWL 2 于 2009/2012），<a href="ontology.html">本体</a>语言的核心标准，理论基础是<strong>描述逻辑（Description Logic）</strong>。</p>
+<p>与 <a href="rdfs.html">RDFS</a> 的本质区别：你不只是声明&quot;有个类叫父亲&quot;，而是<strong>定义</strong>&quot;父亲 ≡ 男性 ⊓ 至少有一个孩子&quot;。推理机据此自动分类实例、发现隐含事实、检查逻辑矛盾。</p>
+<h2 id="核心构件">核心构件</h2>
+<ul><li><strong>类表达式</strong>: 交、并、补、枚举、存在/全称限定、基数限制。</li><li><strong>属性特征</strong>: 传递（祖先）、对称（配偶）、函数性（每人恰好一个生父）、逆属性、属性链（&quot;父母的兄弟 ⊑ 叔伯&quot;）。</li><li><strong>公理</strong>: 类等价、类不相交、个体相同/不同（<code>sameAs</code>）、键。</li></ul>
+<h2 id="两个语义与三个-profile">两个语义与三个 Profile</h2>
+<p><strong>OWL DL</strong>（可判定，工程默认）vs <strong>OWL Full</strong>（与 RDF 完全兼容但不可判定，理论意义为主）。OWL 2 另裁剪三个性能子集：<strong>EL</strong>（超大类层次，如 30 多万类的 SNOMED CT）、<strong>QL</strong>（本体查数据库/OBDA，可改写成 SQL）、<strong>RL</strong>（规则引擎实现，三元组库普遍支持）。</p>
+<h2 id="两大坑">两大坑</h2>
+<ol><li><strong>开放世界假设（OWA）</strong>: 没陈述的事实是&quot;未知&quot;不是&quot;假&quot;；两个不同 IRI 可能指同一个体。与数据库直觉相反。</li><li><strong>OWL 做推理不做校验</strong>: &quot;必填字段检查&quot;要用 <a href="shacl.html">SHACL</a>。工程分工：OWL 管&quot;世界上什么是真的&quot;，SHACL 管&quot;我的数据合不合格&quot;。</li></ol>
+<p>工具：Protégé（编辑）、HermiT/ELK/Pellet（推理）、owlready2（编程）。</p>
+<h2 id="深入阅读">深入阅读</h2>
+<ul><li><a href="../topics/ai/notes/ontology-standards.html">本体标准全景 · OWL 一节</a></li><li>规范: https://www.w3.org/TR/owl2-primer/</li></ul>
+<hr>
+<p><strong>被引用于</strong>: <a href="knowledge-graph.html">知识图谱（Knowledge Graph）</a> · <a href="ontology.html">本体（Ontology）</a> · <a href="rdf.html">RDF</a> · <a href="rdfs.html">RDFS</a> · <a href="semantic-web-stack.html">语义网标准栈（Semantic Web Stack）</a> · <a href="shacl.html">SHACL</a> · <a href="skos.html">SKOS</a> · <a href="sparql.html">SPARQL</a> · <a href="top-level-ontology.html">顶层本体（Top-Level Ontology）</a></p>
+    </article>
+  </main>
+</div>
+</body>
+</html>
