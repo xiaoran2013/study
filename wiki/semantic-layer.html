@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>语义层（Semantic Layer） · 个人学习工作台</title>
+<link rel="stylesheet" href="../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../index.html">首页</a>
+      <a href="../ai.html">AI</a>
+      <a href="../investment.html">投资</a>
+      <a href="../data-engineering.html">数据工程</a>
+      <a href="index.html" class="active">Wiki</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>语义层（Semantic Layer）</h1>
+      <p>wiki/semantic-layer.md · 更新于 2026-07-14</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1 id="语义层semantic-layer">语义层（Semantic Layer）</h1>
+<p>语义层是架在物理表和数据消费者之间的<strong>统一业务定义层</strong>：把&quot;收入怎么算、活跃用户怎么数&quot;这类口径集中定义一次，BI 报表、取数、AI 问答都从同一份定义出发，消灭&quot;两个报表数字对不上&quot;的经典问题。代表实现：dbt Semantic Layer、Cube、Looker 的 LookML。</p>
+<p>一个语义层通常定义：<strong>实体</strong>（分析对象）、<strong>维度</strong>（切分视角）、<strong>度量/指标</strong>（聚合口径），以及指标之间的派生关系。这和<a href="dimensional-modeling.html">维度建模</a>一脉相承，但把定义从&quot;表结构&quot;提升到了&quot;业务概念&quot;层面。</p>
+<h2 id="与本体的关系">与本体的关系</h2>
+<p>语义层解决的正是<a href="ontology.html">本体</a>要解决的核心问题——<strong>共享的概念定义</strong>——只是表达力更弱：没有类层次推理、没有开放世界语义，换来的是贴近 SQL、BI 工具即插即用。可以把它看作面向分析场景的轻量本体；当需要跨系统对齐、机器推理时，才升级到 <a href="owl.html">OWL</a> + <a href="knowledge-graph.html">知识图谱</a>的完整栈。业务词汇表这条平行线的标准化表达则是 <a href="skos.html">SKOS</a>。</p>
+<p>LLM 时代语义层重新升温：Text-to-SQL 要产出正确口径的查询，前提是有机器可读的指标定义——这也是 Agent 需要语义层的同一个理由（见<a href="../topics/ai/notes/agent-ontology.html">本体论与 AI Agent</a>）。</p>
+<h2 id="深入阅读">深入阅读</h2>
+<ul><li><a href="../topics/data-engineering/roadmap.html">数据工程学习路线 · 第 6 章</a>（本站长文）</li></ul>
+<hr>
+<p><strong>被引用于</strong>: <a href="dimensional-modeling.html">维度建模</a></p>
+    </article>
+  </main>
+</div>
+</body>
+</html>

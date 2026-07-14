@@ -15,6 +15,7 @@
 ├── index.html                 # 首页(沉淀流)
 ├── ai.html                    # AI 主题入口
 ├── investment.html            # 投资主题入口
+├── data-engineering.html      # 数据工程主题入口
 ├── README.md                  # 项目入口说明
 ├── PROJECT_BACKGROUND.md      # 项目总纲
 ├── DIRECTORY_STRUCTURE.md     # 本文档
@@ -43,10 +44,12 @@ topics/
 │       ├── agent-ontology.md/.html
 │       ├── ontology-101.html
 │       └── harness-engineering-self-improvement.md/.html
-└── investment/
-    ├── roadmap.md/.html                 # 投资学习路线
-    └── notes/
-        └── etf-strategies.md/.html      # ETF 投资策略详解
+├── investment/
+│   ├── roadmap.md/.html                 # 投资学习路线
+│   └── notes/
+│       └── etf-strategies.md/.html      # ETF 投资策略详解
+└── data-engineering/
+    └── roadmap.md/.html                 # 数据工程学习路线(九章, 含 Ontology 支线)
 ```
 
 规则:

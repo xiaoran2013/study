@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>数据工程学习路线 · 个人学习工作台</title>
+<link rel="stylesheet" href="../../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../../index.html">首页</a>
+      <a href="../../ai.html">AI</a>
+      <a href="../../investment.html">投资</a>
+      <a href="../../data-engineering.html" class="active">数据工程</a>
+      <a href="../../wiki/index.html">Wiki</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>数据工程学习路线</h1>
+      <p>topics/data-engineering/roadmap.md · 更新于 2026-07-14</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1 id="数据工程学习路线">数据工程学习路线</h1>
+<p>这份路线把数据工程拆成两条主线：<strong>管道工程</strong>（把数据可靠地移动、转换、供给出去）和<strong>语义工程</strong>（让数据的含义被人和机器统一理解，即本体/Ontology 这条支线）。主流教材只讲第一条，第二条传统上归入知识工程，但在语义层、Data Fabric、GraphRAG 兴起之后，两条线正在合流——所以本路线把 Ontology 明确挂在第 1 章（建模）和第 6 章（治理）两个节点上，并与本站已有的<a href="../../wiki/ontology.html">本体</a>知识网络互相引用。</p>
+<p>全路线共 9 章：第 0 章是地基，第 1-4 章是核心技能（建模、数仓、存储、流），第 5-7 章是工程化和架构视野，第 8 章是资料总表和学习顺序建议。</p>
+<h2 id="第-0-章--基础工具sqlpython-与命令行">第 0 章 · 基础工具：SQL、Python 与命令行</h2>
+<p><strong>学什么</strong>：数据工程师 80% 的日常产出是 SQL 和 Python，这一章的目标不是&quot;会用&quot;，而是&quot;熟到不构成思考负担&quot;。</p>
+<ul><li><strong>SQL 进阶</strong>：窗口函数（<code>ROW_NUMBER</code>/<code>LAG</code>/滑动聚合）、CTE 与递归查询、<code>GROUP BY</code> 的扩展（<code>ROLLUP</code>/<code>GROUPING SETS</code>）、执行计划阅读（扫描方式、join 算法、谓词下推）。窗口函数和执行计划是面试和实战双重高频点。</li><li><strong>Python</strong>：超出脚本水平——虚拟环境与依赖管理、类型标注、日志、异常处理、包组织；数据侧掌握 pandas 的同时了解它的内存局限（为第 2 章的 Spark 埋伏笔）。</li><li><strong>Linux/Shell 与 Git</strong>：管道命令组合（<code>grep</code>/<code>awk</code>/<code>sort</code>/<code>uniq</code>）处理文本文件、cron、SSH；Git 分支协作流程。</li></ul>
+<p><strong>资料</strong>：SQL 推荐 Mode SQL Tutorial（免费、直接在浏览器练）+《SQL Cookbook》查阅；Python 推荐《Fluent Python》选读前半；命令行推荐 MIT 公开课 The Missing Semester。</p>
+<p><strong>过关标准</strong>：能不查文档写出&quot;每个用户最近一次订单&quot;（窗口函数），能解释一条慢查询为什么慢。</p>
+<h2 id="第-1-章--数据建模从-er-图到本体">第 1 章 · 数据建模：从 ER 图到本体</h2>
+<p><strong>学什么</strong>：建模是数据工程里最不会过时的技能——工具十年换一轮，建模思想五十年只加不减。这一章也是 <strong>Ontology 的第一个接口</strong>。</p>
+<ul><li><strong>关系建模</strong>：ER 图、三范式、主外键约束。目标是 OLTP 场景下&quot;一个事实只存一处&quot;。</li><li><strong>维度建模（重点）</strong>：Kimball 方法论——事实表与维度表、星型/雪花模型、粒度声明、缓慢变化维（SCD Type 1/2）、一致性维度与总线矩阵。这是分析型数仓的通用语言，dbt 社区的默认心智模型。</li><li><strong>Data Vault</strong>：了解即可——Hub/Link/Satellite 三件套，适合源系统多且频繁变化的大企业，中小场景不必用。</li><li><strong>宽表与反范式</strong>：大数据场景下为读性能牺牲规范性的常见做法，理解取舍即可。</li></ul>
+<p><strong>本体视角</strong>：概念建模和本体建模本质是同一件事的两种严格程度。ER 图里的实体/关系/属性，对应 <a href="../../wiki/rdfs.html">RDFS</a> 的类/属性；业务术语表对应 <a href="../../wiki/skos.html">SKOS</a> 的概念词表；需要机器自动推理和跨系统对齐时才升级到 <a href="../../wiki/owl.html">OWL</a>。学完维度建模后回头看本站的<a href="../../wiki/ontology.html">本体</a>卡片，会发现&quot;总线矩阵里的一致性维度&quot;就是朴素的共享本体。</p>
+<p><strong>资料</strong>：Kimball《The Data Warehouse Toolkit》（第 3 版，精读前 6 章 + 按行业查后面的案例章）；dbt 官方博客的 dimensional modeling 系列作现代化补充。</p>
+<p><strong>过关标准</strong>：给一个电商业务，能独立画出订单事实表 + 用户/商品/时间维度表，并说清每张表的粒度和 SCD 策略。</p>
+<h2 id="第-2-章--数据仓库与批处理">第 2 章 · 数据仓库与批处理</h2>
+<p><strong>学什么</strong>：把建模落到引擎上——数仓怎么分层、大规模数据怎么算。</p>
+<ul><li><strong>数仓架构</strong>：分层思想（staging → 中间层 → marts，国内习惯叫 ODS/DWD/DWS/ADS），每层职责和命名规范；MPP 数仓（Snowflake/BigQuery/Redshift）与 Lakehouse 的架构差异。</li><li><strong>Spark（重点）</strong>：RDD → DataFrame → Spark SQL 的演进、宽窄依赖与 shuffle、分区与数据倾斜调优、Catalyst 优化器概念。Spark 是批处理事实标准，值得深入到原理层。</li><li><strong>dbt（重点）</strong>：用 SQL + Jinja 管理转换逻辑，模型依赖 DAG、增量模型、测试、文档生成。dbt 把软件工程实践（版本控制、测试、CI）带进了 SQL 开发，是&quot;Analytics Engineering&quot;岗位的核心工具。</li></ul>
+<p><strong>资料</strong>：《Fundamentals of Data Engineering》（Reis &amp; Housley，全路线主线教材，先通读一遍建立地图）；Spark 推荐《Learning Spark》第 2 版（免费电子版）+ 官方文档；dbt 官方 Fundamentals 课程（免费，约 5 小时）。</p>
+<p><strong>过关标准</strong>：能用 dbt 搭一个三层结构的小型数仓项目；能解释一个 Spark 任务的 shuffle 发生在哪、为什么倾斜。</p>
+<h2 id="第-3-章--存储与文件格式">第 3 章 · 存储与文件格式</h2>
+<p><strong>学什么</strong>：理解数据在磁盘上长什么样，是排查性能问题和做架构选型的底气。</p>
+<ul><li><strong>行存 vs 列存</strong>：为什么分析查询用列存快一个数量级；编码与压缩（字典编码、RLE、Delta 编码）。</li><li><strong>Parquet（重点）</strong>：Row Group / Column Chunk / Page 三级结构，统计信息如何支撑谓词下推。</li><li><strong>开放表格式</strong>：Iceberg / Delta Lake / Hudi 三选一深入（推荐 Iceberg，社区势头最强）——它们在 Parquet 之上补齐了 ACID 事务、schema 演进、时间旅行、隐藏分区，是 Lakehouse 架构的基石。</li><li><strong>对象存储</strong>：S3 的一致性模型、分区键设计对吞吐的影响。</li></ul>
+<p><strong>资料</strong>：《Designing Data-Intensive Applications》（Kleppmann，DDIA）第 2-3 章讲存储引擎的本质，是这一章的理论底座——这本书值得整本精读，全路线按章拆到各处；Iceberg 官方文档 + Tabular 博客。</p>
+<p><strong>过关标准</strong>：能解释同一份数据存 CSV、Parquet、Iceberg 表的差别，以及各自适合的查询模式。</p>
+<h2 id="第-4-章--流处理与消息系统">第 4 章 · 流处理与消息系统</h2>
+<p><strong>学什么</strong>：从&quot;每天跑一次&quot;到&quot;数据到达即处理&quot;。</p>
+<ul><li><strong>Kafka（重点）</strong>：主题/分区/消费组模型、offset 管理、副本与 ISR、消息投递语义（at-least-once vs exactly-once 的真实含义与代价）。</li><li><strong>流处理语义</strong>：事件时间 vs 处理时间、乱序与 watermark、窗口（滚动/滑动/会话）、状态管理与 checkpoint。这些概念比具体框架更重要。</li><li><strong>Flink</strong>：流处理事实标准，理解它如何实现有状态的 exactly-once；对比 Spark Structured Streaming 的微批模型。</li><li><strong>CDC</strong>：用 Debezium 类工具把数据库变更流式同步到下游，是打通 OLTP 与分析系统的主流方案。</li></ul>
+<p><strong>资料</strong>：DDIA 第 11 章&quot;流处理&quot;（先读，建立概念框架）；《Kafka 权威指南》第 2 版；Flink 官方文档的 Learn Flink 路径。</p>
+<p><strong>过关标准</strong>：能说清一条消息从生产到消费经过哪些环节、哪里可能丢/重，watermark 怎么解决乱序聚合。</p>
+<h2 id="第-5-章--编排测试与数据质量">第 5 章 · 编排、测试与数据质量</h2>
+<p><strong>学什么</strong>：让管道从&quot;能跑&quot;到&quot;可运维&quot;。这是初级和资深数据工程师的分水岭。</p>
+<ul><li><strong>编排</strong>：Airflow（存量最大）或 Dagster（更现代，资产导向）。核心不是工具而是原则：<strong>幂等性</strong>（重跑不产生副作用）、<strong>回填</strong>（backfill）设计、依赖管理、失败重试与告警。</li><li><strong>数据测试</strong>：dbt tests（唯一性/非空/引用完整性/接受值域）、Great Expectations 做更复杂的分布和统计断言。</li><li><strong>数据可观测性</strong>：新鲜度、数据量、schema 变更、分布漂移四类监控；数据事故（data downtime）的响应流程。</li></ul>
+<p><strong>本体视角</strong>：数据质量约束的表达在图数据世界有个平行标准——<a href="../../wiki/shacl.html">SHACL</a> 之于 RDF，就是 Great Expectations 之于表格数据：都是&quot;封闭世界假设下的数据校验&quot;。对照着看能加深对两边的理解。</p>
+<p><strong>资料</strong>：Dagster 官方 Dagster University（免费）；Airflow 官方文档 + 《Data Pipelines with Apache Airflow》；Great Expectations 官方教程。</p>
+<p><strong>过关标准</strong>：能设计一条支持任意日期回填、失败自动重试、关键表带质量断言的日级管道。</p>
+<h2 id="第-6-章--治理元数据与语义层ontology-核心章">第 6 章 · 治理、元数据与语义层（Ontology 核心章）</h2>
+<p><strong>学什么</strong>：当数据规模超过&quot;几个人都认识所有表&quot;的程度，&quot;数据意味着什么&quot;就成了瓶颈。这一章是 <strong>Ontology 在数据工程里的核心位置</strong>。</p>
+<ul><li><strong>数据目录与血缘</strong>：DataHub / Amundsen / OpenMetadata，让人能搜到数据、看到上下游。注意它们的底层元数据模型就是<strong>图</strong>——DataHub 的实体-切面（entity-aspect）模型本质上是一个知识图谱。</li><li><strong>语义层（Semantic Layer）</strong>：在物理表之上定义统一的业务指标（&quot;收入&quot;到底怎么算），dbt Semantic Layer / Cube / Looker 的 LookML 都是这个思路。语义层解决的正是本体要解决的问题——共享的概念定义——只是表达力更弱、更贴近 BI 场景。</li><li><strong>业务词汇表与主数据管理（MDM）</strong>：业务术语的规范化管理。词汇表的标准化表达就是 <a href="../../wiki/skos.html">SKOS</a>；主数据的跨系统对齐，严肃做法是引入共享本体。</li><li><strong>本体工程实操</strong>：到这里正式接入语义技术栈——<a href="../../wiki/rdf.html">RDF</a> 表达事实、<a href="../../wiki/owl.html">OWL</a> 定义领域概念、<a href="../../wiki/sparql.html">SPARQL</a> 查询、<a href="../../wiki/shacl.html">SHACL</a> 校验，构建企业<a href="../../wiki/knowledge-graph.html">知识图谱</a>。本站的<a href="../../wiki/semantic-web-stack.html">语义网标准栈</a>卡片是这套标准的一图流索引，<a href="../ai/notes/ontology-standards.html">本体标准全景</a>长文有各标准的详解和选型表。</li><li><strong>合规基础</strong>：GDPR/个保法的最小必要原则、PII 识别与脱敏、数据分级。</li></ul>
+<p><strong>资料</strong>：DAMA-DMBOK（治理框架全书，工具书查阅式读，不必通读）；《Semantic Web for the Working Ontologist》（Allemang &amp; Hendler，Ontology 实操最好的一本）；《Building Knowledge Graphs: A Practitioner&#39;s Guide》（Barrasa 等，O&#39;Reilly 免费领，偏工程落地）；本站<a href="topics/ai/notes/ontology-101.html">本体开发 101</a> 可作动手入门。</p>
+<p><strong>过关标准</strong>：能给一个多系统企业设计&quot;数据目录 + 业务词汇表 + 指标语义层&quot;的三层语义方案，并说清哪一层用轻量约定、哪一层值得上 OWL 本体。</p>
+<h2 id="第-7-章--架构范式与前沿">第 7 章 · 架构范式与前沿</h2>
+<p><strong>学什么</strong>：把前面的组件拼成组织级架构，并看清正在发生的合流。</p>
+<ul><li><strong>Lambda / Kappa</strong>：批流分治与批流一体的历史演进，理解为什么业界在向流批一体收敛。</li><li><strong>Data Mesh</strong>：四原则——领域所有权、数据即产品、自助平台、联邦治理。它是组织架构层面的方案，不是技术栈。</li><li><strong>Data Fabric</strong>：与 Data Mesh 相对的技术路线，核心主张是<strong>用元数据知识图谱自动化数据集成与发现</strong>——这是 Ontology 从&quot;学术支线&quot;回到数据工程主线的最明确信号：Fabric 的定义里显式依赖本体和<a href="../../wiki/knowledge-graph.html">知识图谱</a>。</li><li><strong>LLM 与数据工程的交汇</strong>：GraphRAG（用知识图谱增强检索问答）、Text-to-SQL 依赖语义层提供业务口径、LLM 辅助元数据生成。这是本站 AI 主题与数据工程主题的交汇点，背景见长文<a href="../ai/notes/agent-ontology.html">本体论与 AI Agent</a>。</li></ul>
+<p><strong>资料</strong>：Zhamak Dehghani《Data Mesh》（或先读她在 martinfowler.com 的两篇原始文章）；Gartner 的 Data Fabric 综述类文章；微软 GraphRAG 论文与开源实现。</p>
+<p><strong>过关标准</strong>：能对比 Data Mesh 和 Data Fabric 各自解决什么问题、对团队的要求差异，并判断一个给定组织更适合哪条路。</p>
+<h2 id="第-8-章--学习顺序与资料总表">第 8 章 · 学习顺序与资料总表</h2>
+<h3 id="建议顺序">建议顺序</h3>
+<ol><li><strong>打地基</strong>（第 0 章）：SQL 和 Python 练到不假思索，贯穿始终不单独占期。</li><li><strong>建模 + 数仓</strong>（第 1-2 章）：先 Kimball 后 dbt，这是就业和实战的最短路径，做一个端到端 dbt 项目收尾。</li><li><strong>底层原理</strong>（第 3 章 + DDIA 通读）：有了实践再读原理，收获翻倍。</li><li><strong>流处理</strong>（第 4 章）：Kafka 概念 → Flink 上手。</li><li><strong>工程化</strong>（第 5 章）：给自己的项目补编排、测试、质量监控。</li><li><strong>语义与治理</strong>（第 6 章）：接上已有的本体知识储备，做一个&quot;数据目录 + 词汇表&quot;小实验。</li><li><strong>架构视野</strong>（第 7 章）：读架构范式，回头重构自己项目的叙事。</li></ol>
+<h3 id="书目总表">书目总表</h3>
+<div class="doc-table-wrap"><table><thead><tr><th>书/资源</th><th>对应章节</th><th>读法</th></tr></thead><tbody><tr><td>《Fundamentals of Data Engineering》</td><td>全局地图</td><td>先通读，建立框架</td></tr><tr><td>《Designing Data-Intensive Applications》</td><td>3、4 章理论底座</td><td>整本精读，最重要的一本</td></tr><tr><td>《The Data Warehouse Toolkit》(Kimball)</td><td>第 1 章</td><td>精读前 6 章</td></tr><tr><td>dbt Fundamentals（官方免费课）</td><td>第 2 章</td><td>动手跟做</td></tr><tr><td>《Learning Spark》第 2 版</td><td>第 2 章</td><td>通读 + 查阅</td></tr><tr><td>《Kafka 权威指南》第 2 版</td><td>第 4 章</td><td>通读前半</td></tr><tr><td>《Data Pipelines with Apache Airflow》</td><td>第 5 章</td><td>选读</td></tr><tr><td>DAMA-DMBOK</td><td>第 6 章</td><td>工具书查阅</td></tr><tr><td>《Semantic Web for the Working Ontologist》</td><td>第 6 章</td><td>精读，Ontology 实操主教材</td></tr><tr><td>《Building Knowledge Graphs》(O&#39;Reilly)</td><td>第 6 章</td><td>通读，工程落地视角</td></tr><tr><td>《Data Mesh》(Dehghani)</td><td>第 7 章</td><td>先读作者博客文，需要再读书</td></tr></tbody></table></div>
+<h3 id="与本站知识网络的联动">与本站知识网络的联动</h3>
+<p>Ontology 支线的概念地基已在 wiki 就位：<a href="../../wiki/ontology.html">本体</a>、<a href="../../wiki/semantic-web-stack.html">语义网标准栈</a>、<a href="../../wiki/knowledge-graph.html">知识图谱</a>及各标准卡片。数据工程侧新增<a href="../../wiki/dimensional-modeling.html">维度建模</a>、<a href="../../wiki/semantic-layer.html">语义层</a>、<a href="../../wiki/data-fabric.html">数据编织</a>三张卡片，作为两条主线的接点。学到对应章节时从卡片跳回长文即可。</p>
+    </article>
+  </main>
+</div>
+</body>
+</html>

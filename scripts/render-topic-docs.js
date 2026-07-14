@@ -290,6 +290,7 @@ function backlinksHtml(sources) {
 function navSection(mdRootRel) {
   if (mdRootRel.startsWith("wiki/")) return "wiki";
   if (mdRootRel.startsWith("topics/investment/")) return "investment";
+  if (mdRootRel.startsWith("topics/data-engineering/")) return "data-engineering";
   return "ai";
 }
 
@@ -298,6 +299,7 @@ function pageTemplate({ title, sourcePath, updated, bodyHtml, outDirAbs, section
   const homeRel = relFrom(outDirAbs, "index.html");
   const aiRel = relFrom(outDirAbs, "ai.html");
   const investmentRel = relFrom(outDirAbs, "investment.html");
+  const dataEngineeringRel = relFrom(outDirAbs, "data-engineering.html");
   const wikiRel = relFrom(outDirAbs, "wiki/index.html");
   const navClass = key => (key === section ? ' class="active"' : "");
   const sourceLine = updated ? `${sourcePath} · 更新于 ${updated}` : sourcePath;
@@ -321,6 +323,7 @@ function pageTemplate({ title, sourcePath, updated, bodyHtml, outDirAbs, section
       <a href="${escapeHtml(homeRel)}"${navClass("home")}>首页</a>
       <a href="${escapeHtml(aiRel)}"${navClass("ai")}>AI</a>
       <a href="${escapeHtml(investmentRel)}"${navClass("investment")}>投资</a>
+      <a href="${escapeHtml(dataEngineeringRel)}"${navClass("data-engineering")}>数据工程</a>
       <a href="${escapeHtml(wikiRel)}"${navClass("wiki")}>Wiki</a>
     </nav>
   </header>

@@ -1,5 +1,12 @@
 # Study Workspace · 迭代日志
 
+## 2026-07-14 · v4.7 新开数据工程主题
+
+- 应用户要求新开 `topics/data-engineering/` 主题(第三个主题): `roadmap.md` 九章学习路线, 双主线设计——管道工程(SQL/建模/数仓/存储/流处理/编排质量)+ 语义工程(Ontology 支线挂在第 1 章建模和第 6 章治理), 与既有本体系 wiki 卡片互相引用。
+- Wiki ingest: 新增 3 张接点卡片 `dimensional-modeling`/`semantic-layer`/`data-fabric`, index 加"数据工程"分区, log 追加记录。
+- 站点接入: 新增入口页 `data-engineering.html`; 渲染脚本导航加"数据工程"项并全量重渲染; 首页/AI/投资三页导航同步, 首页加主题入口卡、"最近沉淀"条目和"主题现状"项; `pages.yml` 发布清单加入口页。
+- 文档同步: AGENTS.md(决策树主题清单/目录职责/主题现状/边界)、CLAUDE.md、DIRECTORY_STRUCTURE.md。
+
 ## 2026-07-13 · v4.6 知识 Wiki 上线(卡帕西 LLM Wiki 模式)
 
 - 新增顶层 `wiki/`: LLM 维护的概念卡片网络, 平铺存放, 与 `topics/` 长文互补(卡片从长文提炼并链回)。首批 10 张本体标准卡片 + `index.md` 目录 + `log.md` 操作日志。

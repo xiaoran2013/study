@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>维度建模 · 个人学习工作台</title>
+<link rel="stylesheet" href="../_assets/style.css?v=20260711-static">
+</head>
+<body>
+<div class="page doc-page">
+  <header class="site-header">
+    <a class="site-brand" href="../index.html">
+      <strong>个人学习工作台</strong>
+      <span>AI 自动内容生成与学习沉淀</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="../index.html">首页</a>
+      <a href="../ai.html">AI</a>
+      <a href="../investment.html">投资</a>
+      <a href="../data-engineering.html">数据工程</a>
+      <a href="index.html" class="active">Wiki</a>
+    </nav>
+  </header>
+
+  <section class="page-intro doc-intro">
+    <div>
+      <span class="topic-kicker">Document</span>
+      <h1>维度建模</h1>
+      <p>wiki/dimensional-modeling.md · 更新于 2026-07-14</p>
+    </div>
+  </section>
+
+  <main class="doc-shell">
+    <article class="doc-content">
+<h1 id="维度建模">维度建模</h1>
+<p>维度建模是分析型数据仓库的主流建模方法，由 Ralph Kimball 系统化：把业务过程拆成<strong>事实表</strong>（可度量的事件，如一笔订单）和<strong>维度表</strong>（分析视角，如用户、商品、时间），组成星型模型。核心纪律是先声明<strong>粒度</strong>（一行事实代表什么），再决定维度和度量。</p>
+<p>几个关键构件：</p>
+<ul><li><strong>缓慢变化维（SCD）</strong>：维度属性随时间变化时的处理策略——Type 1 覆盖、Type 2 加行留历史。</li><li><strong>一致性维度与总线矩阵</strong>：多个事实表共享同一套维度定义，让不同业务过程的分析结果可以对得上。</li><li><strong>雪花化</strong>：维度再规范化拆表，一般不推荐，牺牲易用性换的存储在列存时代不值钱。</li></ul>
+<h2 id="与本体的关系">与本体的关系</h2>
+<p>维度建模和<a href="ontology.html">本体</a>是概念建模的两种严格程度：总线矩阵里的&quot;一致性维度&quot;就是朴素的共享本体——全组织对&quot;客户&quot;&quot;商品&quot;用同一套定义。区别在表达力和推理能力：维度模型服务 SQL 聚合查询，本体（<a href="rdfs.html">RDFS</a>/<a href="owl.html">OWL</a>）服务跨系统语义对齐和自动推理。需要统一业务口径但不需要推理时，中间态是<a href="semantic-layer.html">语义层</a>。</p>
+<h2 id="深入阅读">深入阅读</h2>
+<ul><li><a href="../topics/data-engineering/roadmap.html">数据工程学习路线 · 第 1 章</a>（本站长文）</li><li>Kimball《The Data Warehouse Toolkit》第 3 版，方法论原典</li></ul>
+<hr>
+<p><strong>被引用于</strong>: <a href="semantic-layer.html">语义层（Semantic Layer）</a></p>
+    </article>
+  </main>
+</div>
+</body>
+</html>
