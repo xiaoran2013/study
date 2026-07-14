@@ -14,7 +14,7 @@ updated: 2026-07-14
 
 语义层解决的正是[本体](ontology.md)要解决的核心问题——**共享的概念定义**——只是表达力更弱：没有类层次推理、没有开放世界语义，换来的是贴近 SQL、BI 工具即插即用。可以把它看作面向分析场景的轻量本体；当需要跨系统对齐、机器推理时，才升级到 [OWL](owl.md) + [知识图谱](knowledge-graph.md)的完整栈。业务词汇表这条平行线的标准化表达则是 [SKOS](skos.md)。
 
-LLM 时代语义层重新升温：Text-to-SQL 要产出正确口径的查询，前提是有机器可读的指标定义——这也是 Agent 需要语义层的同一个理由（见[本体论与 AI Agent](../topics/ai/notes/agent-ontology.md)）。
+LLM 时代语义层重新升温：Text-to-SQL 要产出正确口径的查询，前提是有机器可读的指标定义——这也是 Agent 需要语义层的同一个理由（见[本体论与 AI Agent](../topics/ai/notes/agent-ontology.md)）。把"语义定义 + 动作 + 权限"整合到极致的商业形态是 [Palantir Ontology](palantir-ontology.md)。
 
 ## 深入阅读
 

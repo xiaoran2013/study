@@ -16,7 +16,7 @@ updated: 2026-07-13
 
 ## 为什么 Agent 时代重新重要
 
-Agent 大量失败的地方恰恰是"理解业务语义"这一层（什么算一个已完成的订单），而不是语言生成。本体作为语义层给数据赋予含义、支持自动推理、充当多 Agent 协作的公共契约。详见长文[本体论与 AI Agent](../topics/ai/notes/agent-ontology.md)。
+Agent 大量失败的地方恰恰是"理解业务语义"这一层（什么算一个已完成的订单），而不是语言生成。本体作为语义层给数据赋予含义、支持自动推理、充当多 Agent 协作的公共契约。详见长文[本体论与 AI Agent](../topics/ai/notes/agent-ontology.md)；生产级范本见 [Palantir Ontology](palantir-ontology.md)。
 
 ## 深入阅读
 

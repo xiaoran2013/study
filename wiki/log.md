@@ -2,6 +2,10 @@
 
 追加式记录，格式: `## [YYYY-MM-DD] ingest|lint|refactor · 摘要`，新的在上。
 
+## [2026-07-14] ingest · Palantir Ontology 长文 + 1 张卡片
+
+来源: `topics/ai/notes/palantir-ontology.md`。新建卡片 palantir-ontology；ontology、semantic-layer 两卡补链。
+
 ## [2026-07-14] ingest · 数据工程主题上线，提炼 3 张接点卡片
 
 来源: `topics/data-engineering/roadmap.md`。新建卡片: dimensional-modeling、semantic-layer、data-fabric，均与本体系卡片（ontology/knowledge-graph/rdfs/owl/skos/shacl 等）互链并链回路线长文；index 新增"数据工程"分区。

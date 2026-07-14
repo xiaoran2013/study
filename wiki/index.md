@@ -14,6 +14,7 @@ LLM 持续维护的概念卡片网络（卡帕西 LLM Wiki 模式）：每张卡
 - [SPARQL](sparql.md) · RDF 界的 SQL
 - [SHACL](shacl.md) · 封闭世界的数据校验标准
 - [顶层本体](top-level-ontology.md) · ISO 21838 与 BFO/DOLCE/TUpper
+- [Palantir Ontology](palantir-ontology.md) · 本体驱动企业运营的私有实现，语义+动能+治理
 
 ## 数据工程
 

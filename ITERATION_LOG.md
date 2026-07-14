@@ -1,5 +1,10 @@
 # Study Workspace · 迭代日志
 
+## 2026-07-14 · 新增笔记: Palantir Ontology 架构与实践
+
+- 新增 `topics/ai/notes/palantir-ontology.md`: 设计哲学(建模决策而非数据)、语义/动能双层元素、Language-Engine-Toolchain 与后端微服务(OMS/Funnel/OSS)、AIP Agent 治理模型、企业案例(Airbus/NHS/医疗/供应链)与自建借鉴点。
+- Wiki ingest: 新卡片 `palantir-ontology`, ontology/semantic-layer 两卡补链(本体系与数据工程系卡片经此打通); ai.html 加卡片, 首页最近沉淀更新。
+
 ## 2026-07-14 · v4.7 新开数据工程主题
 
 - 应用户要求新开 `topics/data-engineering/` 主题(第三个主题): `roadmap.md` 九章学习路线, 双主线设计——管道工程(SQL/建模/数仓/存储/流处理/编排质量)+ 语义工程(Ontology 支线挂在第 1 章建模和第 6 章治理), 与既有本体系 wiki 卡片互相引用。
