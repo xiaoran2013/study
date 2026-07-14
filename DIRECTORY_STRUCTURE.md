@@ -24,6 +24,7 @@
 ├── ITERATION_LOG.md           # 迭代记录
 ├── _assets/                   # 样式等前端资源
 ├── topics/                    # 学习内容(见第 3 节)
+├── wiki/                      # 概念卡片网络(平铺, LLM 维护)
 ├── scripts/                   # 自动化脚本
 ├── _sources/                  # 原始材料(本地, 不进 Git)
 ├── .github/workflows/         # Pages 发布工作流
@@ -69,14 +70,15 @@ topics/
 
 ## 5. 发布包规则
 
-GitHub Actions 构建 `.pages/` 后发布, 只包含: 根目录入口 HTML、公开项目文档(md)、`_assets/*.css`、`topics/`、`.nojekyll`。
+GitHub Actions 构建 `.pages/` 后发布, 只包含: 根目录入口 HTML(含 `data-engineering.html`)、公开项目文档(md)、`_assets/*.css`、`topics/`、`wiki/`、`.nojekyll`。
 
 不包含: `_sources/`、`.env`/token/key、缓存和临时文件。
 
 ## 6. 新增位置速查
 
 1. 学习内容 → `topics/<主题>/`(按 AGENTS.md 决策树选子目录)。
-2. 自动化源码 → `scripts/`。
-3. 原始资料 → `_sources/<主题>/`。
-4. 私有任务/草稿/复盘 → 飞书。
-5. 不能判断 → 先问用户, 不新增顶层目录。
+2. 概念卡片 → `wiki/`(平铺, 见 AGENTS.md 第 5 节)。
+3. 自动化源码 → `scripts/`。
+4. 原始资料 → `_sources/<主题>/`。
+5. 私有任务/草稿/复盘 → 飞书。
+6. 不能判断 → 先问用户, 不新增顶层目录。

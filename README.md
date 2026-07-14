@@ -37,7 +37,8 @@ python3 -m http.server 8080
 ## 目录
 
 - `index.html`: 首页（沉淀流：最近沉淀 + 生长方式 + 主题现状）。
-- `ai.html` / `investment.html`: 主题入口页。
+- `ai.html` / `investment.html` / `data-engineering.html`: 主题入口页。
+- `wiki/`: 跨主题概念卡片网络（目录 `wiki/index.html`）。
 - `topics/<主题>/`: 学习内容，主题内按 `roadmap.md` + 系列子目录 + `notes/` 分层。
 - `_assets/`: 样式。
 - `_sources/`: AI 处理用的原始材料（本地保留，不进入 Git 历史）。
